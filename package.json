@@ -7,6 +7,7 @@
     "type": "git",
     "url": "git@github.com:braintree/card-validator"
   },
+  "homepage": "https://github.com/braintree/card-validator",
   "scripts": {
     "test": "gulp lint && mocha test/**/*.js",
     "build": "gulp build"
