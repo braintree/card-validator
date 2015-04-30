@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A library for validating credit card fields",
   "main": "index.js",
+  "browser": "dist/card-validator.js",
   "repository": {
     "type": "git",
     "url": "git@github.com:braintree/card-validator"
