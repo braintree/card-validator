@@ -18,11 +18,11 @@ var config = {
       all: './src/**/*.js',
       main: './index.js',
       watch: './public/js/**/*.js',
-      output: 'app.built.js',
-      min: 'app.built.min.js'
+      output: 'card-validator.js',
+      min: 'card-validator.min.js'
     }
   },
-  dist: { js: 'dist/js' }
+  dist: { js: 'dist' }
 };
 
 gulp.task('lint', function () {
@@ -32,7 +32,10 @@ gulp.task('lint', function () {
 });
 
 gulp.task('js', ['lint'], function () {
-  return browserify(config.src.js.main)
+  return browserify({
+      entries: config.src.js.main,
+      standalone: 'card-validator'
+    })
     .bundle()
     .pipe(source(config.src.js.output))
     .pipe(streamify(size()))
