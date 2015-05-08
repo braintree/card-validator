@@ -38,7 +38,7 @@ if (numberValidation.card) {
     pattern: '^3[47][\\s\\d]*$',
     isAmex: true,
     gaps: [4, 10],
-    length: 15,
+    lengths: [15],
     code: {name: 'CID', size: 4}
   },
   isPotentiallyValid: true, // if false, indicates there is no way the card could be valid

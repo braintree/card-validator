@@ -19,7 +19,7 @@ function isEmptyObject(object) {
 }
 
 function cardNumber(value) {
-  var cardType;
+  var cardType, valid, i;
 
   if (isNumber(value)) {
     value = String(value);
@@ -33,32 +33,28 @@ function cardNumber(value) {
 
   if (!/^\d*$/.test(value)) { return verification(null, false, false); }
 
-  // TODO: Just letting these go here as validPartials
-  // The optimal solution would be to have a separate
-  // set of regexes for partial validations
-
-  // Discover cannot be determined until we have 4 digits
-  if (value.length <= 3 && value[0] === '6') {
-    return verification(null, true, false);
-  }
-
-  // Non-discover cards
-  if (value.length <= 1 && /^(5|4|3)/.test(value)) { return verification(null, true, false); }
-
   cardType = getCardType(value);
   if (isEmptyObject(cardType)) { return verification(null, false, false); }
 
-  // Recognized as card but not long enough yet: validPartial
-  if (value.length < cardType.length) {
+  if (cardType.type === 'unionpay') { // UnionPay is not Luhn 10 compliant
+    valid = true;
+  } else {
+    valid = luhn10(value);
+  }
+
+  for (i = 0; i < cardType.lengths.length; i++) {
+    if (cardType.lengths[i] === value.length) {
+      return verification(cardType, valid, valid);
+    }
+  }
+
+  maxLength = Math.max.apply(null, cardType.lengths);
+
+  if (value.length < maxLength) {
     return verification(cardType, true, false);
   }
 
-  if (value.length > cardType.length) {
-    return verification(cardType, false, false);
-  }
-
-  var valid = luhn10(value);
-  return verification(cardType, valid, valid);
+  return verification(cardType, false, false);
 }
 
 module.exports = cardNumber;

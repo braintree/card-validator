@@ -8,15 +8,15 @@ describe('number validates', function () {
       ['',
         {card: null, isPotentiallyValid: true, isValid: false}],
       ['6',
-        {card: null, isPotentiallyValid: true, isValid: false}],
+        {card: 'maestro', isPotentiallyValid: true, isValid: false}],
       ['60',
-        {card: null, isPotentiallyValid: true, isValid: false}],
+        {card: 'maestro', isPotentiallyValid: true, isValid: false}],
       ['601',
-        {card: null, isPotentiallyValid: true, isValid: false}],
+        {card: 'maestro', isPotentiallyValid: true, isValid: false}],
       ['6011',
         {card: 'discover', isPotentiallyValid: true, isValid: false}],
       ['4',
-        {card: null, isPotentiallyValid: true, isValid: false}],
+        {card: 'visa', isPotentiallyValid: true, isValid: false}],
       ['41',
         {card: 'visa', isPotentiallyValid: true, isValid: false}],
       ['411',
@@ -32,19 +32,29 @@ describe('number validates', function () {
     table([
       ['123',
         {card: null, isPotentiallyValid: false, isValid: false}],
-      ['4012888888881881', // Valid Visa
+      ['4012888888881881',
         {card: 'visa', isPotentiallyValid: true, isValid: true}],
-      ['4111111111111111', // Valid Visa
+      ['6288997715452584',
+        {card: 'unionpay', isPotentiallyValid: true, isValid: true}],
+      ['6282001509099283',
+        {card: 'unionpay', isPotentiallyValid: true, isValid: true}],
+      ['6269992058134322',
+        {card: 'unionpay', isPotentiallyValid: true, isValid: true}],
+      ['6240008631401148',
+        {card: 'unionpay', isPotentiallyValid: true, isValid: true}],
+      ['6221558812340000', // UnionPay is not always Luhn10 valid
+        {card: 'unionpay', isPotentiallyValid: true, isValid: true}],
+      ['4111111111111111',
         {card: 'visa', isPotentiallyValid: true, isValid: true}],
-      ['6011000990139424', // Valid Discover
+      ['4111111111111111',
+        {card: 'visa', isPotentiallyValid: true, isValid: true}],
+      ['6011000990139424',
         {card: 'discover', isPotentiallyValid: true, isValid: true}],
       ['411111y',
         {card: null, isPotentiallyValid: false, isValid: false}],
       ['41111111111111111111', // Too long
         {card: 'visa', isPotentiallyValid: false, isValid: false}],
-      ['1111111111111111', // Right length but not luhn
-        {card: null, isPotentiallyValid: false, isValid: false}],
-      ['4111111111111112', // Visa but no luhn
+      ['4111111111111112', // right lenght, not Luhn
         {card: 'visa', isPotentiallyValid: false, isValid: false}],
     ]);
   });
