@@ -36,7 +36,11 @@ function cardNumber(value) {
   cardType = getCardType(value);
   if (isEmptyObject(cardType)) { return verification(null, false, false); }
 
-  valid = luhn10(value);
+  if (cardType.type === 'unionpay') { // UnionPay is not Luhn 10 compliant
+    valid = true;
+  } else {
+    valid = luhn10(value);
+  }
 
   for (i = 0; i < cardType.lengths.length; i++) {
     if (cardType.lengths[i] === value.length) {
