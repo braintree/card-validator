@@ -6,6 +6,14 @@ A typical use case in a credit card form is to notify the user if the data they 
 
 Credit Card Validator will also provide a determined card type (using [credit-card-type](https://github.com/braintree/credit-card-type)). This is useful for scenarios in which you wish to render an accompanying payment method icon (Visa, MasterCard, etc.). Additionally, by having access to the current card type, you can better manage the state of your credit card form as a whole. For example, if you detect a user is entering (or has entered) an American Express card number, you can update the `maxlength` attribute of your `CVV` input element from 3 to 4 and even update the corresponding `label` from 'CVV' to 'CID'.
 
+## Download
+
+You can install `card-validator` either through `npm` or download a UMD bundle directly from the [Releases](https://github.com/braintree/card-validator/releases) tags.
+
+```
+npm install card-validator
+```
+
 ## Example
 
 ```javascript
