@@ -31,10 +31,8 @@ gulp.task('lint', function () {
 });
 
 gulp.task('js', ['lint'], function () {
-    return browserify({
-      entries: config.src.js.main,
-      standalone: 'cardValidator'
-    })
+    return browserify({standalone: 'cardValidator'})
+    .add(config.src.js.main)
     .bundle()
     .pipe(source(config.src.js.output))
     .pipe(streamify(size()))
