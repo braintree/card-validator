@@ -19,7 +19,7 @@ function isEmptyObject(object) {
 }
 
 function cardNumber(value) {
-  var cardType, valid, i;
+  var cardType, valid, i, maxLength;
 
   if (isNumber(value)) {
     value = String(value);
