@@ -1,3 +1,8 @@
+2.0.1
+=====
+
+- The npm module now includes built files under `dist/`.
+
 2.0.0
 =====
 
