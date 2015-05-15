@@ -8,7 +8,7 @@ Credit Card Validator will also provide a determined card type (using [credit-ca
 
 ## Download
 
-You can install `card-validator` either through `npm` or download a UMD bundle directly from the [Releases](https://github.com/braintree/card-validator/releases) tags. The npm module also includes the built, UMD bundle under `dist/`
+You can install `card-validator` through `npm`. The npm module also includes the built, UMD bundle and its minified variant under `dist/`
 
 ```
 npm install card-validator
