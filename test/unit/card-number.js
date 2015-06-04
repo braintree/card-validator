@@ -79,7 +79,7 @@ describe('number validates', function () {
     ]);
   });
 
-  describe('Mastercard', function () {
+  describe('MasterCard', function () {
     table([
       ['55555555',
         {card: 'master-card', isPotentiallyValid: true, isValid: false}],
