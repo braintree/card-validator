@@ -1,3 +1,8 @@
+unreleased
+==========
+
+- Update `credit-card-type` to 3.0.0
+
 2.0.1
 =====
 

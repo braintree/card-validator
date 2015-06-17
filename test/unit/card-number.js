@@ -8,11 +8,11 @@ describe('number validates', function () {
       ['',
         {card: null, isPotentiallyValid: true, isValid: false}],
       ['6',
-        {card: 'maestro', isPotentiallyValid: true, isValid: false}],
-      ['60',
-        {card: 'maestro', isPotentiallyValid: true, isValid: false}],
+        {card: null, isPotentiallyValid: true, isValid: false}],
+        ['60',
+        {card: null, isPotentiallyValid: true, isValid: false}],
       ['601',
-        {card: 'maestro', isPotentiallyValid: true, isValid: false}],
+        {card: null, isPotentiallyValid: true, isValid: false}],
       ['6011',
         {card: 'discover', isPotentiallyValid: true, isValid: false}],
       ['4',
@@ -24,14 +24,16 @@ describe('number validates', function () {
       ['',
         {card: null, isPotentiallyValid: true, isValid: false}],
       ['x',
-        {card: null, isPotentiallyValid: false, isValid: false}]
+        {card: null, isPotentiallyValid: false, isValid: false}],
+      ['1',
+        {card: null, isPotentiallyValid: true, isValid: false}],
+      ['123',
+        {card: null, isPotentiallyValid: true, isValid: false}],
     ]);
   });
 
   describe('normal cases', function () {
     table([
-      ['123',
-        {card: null, isPotentiallyValid: false, isValid: false}],
       ['4012888888881881',
         {card: 'visa', isPotentiallyValid: true, isValid: true}],
       ['6288997715452584',
@@ -112,8 +114,6 @@ describe('number validates', function () {
     table([
       ['',
         {card: null, isPotentiallyValid: true, isValid: false}],
-      ['1',
-        {card: null, isPotentiallyValid: false, isValid: false}],
       ['foo',
         {card: null, isPotentiallyValid: false, isValid: false}],
       [{},
@@ -121,7 +121,7 @@ describe('number validates', function () {
       [[],
         {card: null, isPotentiallyValid: false, isValid: false}],
       [32908234,
-        {card: null, isPotentiallyValid: false, isValid: false}],
+        {card: null, isPotentiallyValid: true, isValid: false}],
       [4111111111111111,
         {card: 'visa', isPotentiallyValid: true, isValid: true}],
       [true,

@@ -34,7 +34,7 @@ function cardNumber(value) {
   if (!/^\d*$/.test(value)) { return verification(null, false, false); }
 
   cardType = getCardType(value);
-  if (isEmptyObject(cardType)) { return verification(null, false, false); }
+  if (isEmptyObject(cardType)) { return verification(null, true, false); }
 
   if (cardType.type === 'unionpay') { // UnionPay is not Luhn 10 compliant
     valid = true;
