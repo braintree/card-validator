@@ -1,7 +1,7 @@
 unreleased
 ==========
 
-- Update `credit-card-type` to 3.0.0
+- Update `credit-card-type` to 4.0.0
 
 2.0.1
 =====
