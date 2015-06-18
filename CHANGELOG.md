@@ -1,5 +1,5 @@
-unreleased
-==========
+2.0.2
+=====
 
 - Update `credit-card-type` to 4.0.0
 
