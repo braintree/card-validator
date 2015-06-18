@@ -1,25 +1,15 @@
 var isString = require('lodash.isstring');
 var extend = require('lodash.assign');
 var luhn10 = require('./luhn-10');
-var getCardType = require('credit-card-type');
+var getCardTypes = require('credit-card-type');
 var isNumber = require('lodash.isnumber');
 
 function verification(card, isPotentiallyValid, isValid) {
   return extend({}, {card: card, isPotentiallyValid: isPotentiallyValid, isValid: isValid});
 }
 
-function isEmptyObject(object) {
-  var key;
-
-  for (key in object) {
-    if (object.hasOwnProperty(key)) { return false; }
-  }
-
-  return true;
-}
-
 function cardNumber(value) {
-  var cardType, valid, i, maxLength;
+  var potentialTypes, cardType, valid, i, maxLength;
 
   if (isNumber(value)) {
     value = String(value);
@@ -27,16 +17,21 @@ function cardNumber(value) {
 
   if (!isString(value)) { return verification(null, false, false); }
 
-  if (value === '') { return verification(null, true, false); }
-
   value = value.replace(/\-|\s/g, '');
 
   if (!/^\d*$/.test(value)) { return verification(null, false, false); }
 
-  cardType = getCardType(value);
-  if (isEmptyObject(cardType)) { return verification(null, false, false); }
+  potentialTypes = getCardTypes(value);
 
-  if (cardType.type === 'unionpay') { // UnionPay is not Luhn 10 compliant
+  if (potentialTypes.length === 0) {
+    return verification(null, false, false);
+  } else if (potentialTypes.length !== 1) {
+    return verification(null, true, false);
+  }
+
+  cardType = potentialTypes[0];
+
+  if (cardType.type === 'unionpay') {  // UnionPay is not Luhn 10 compliant
     valid = true;
   } else {
     valid = luhn10(value);
