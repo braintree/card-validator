@@ -9,10 +9,8 @@ describe('number validates', function () {
         {card: null, isPotentiallyValid: true, isValid: false}],
       ['6',
         {card: null, isPotentiallyValid: true, isValid: false}],
-        ['60',
-        {card: null, isPotentiallyValid: true, isValid: false}],
       ['601',
-        {card: null, isPotentiallyValid: true, isValid: false}],
+        {card: 'discover', isPotentiallyValid: true, isValid: false}],
       ['6011',
         {card: 'discover', isPotentiallyValid: true, isValid: false}],
       ['4',
@@ -25,10 +23,8 @@ describe('number validates', function () {
         {card: null, isPotentiallyValid: true, isValid: false}],
       ['x',
         {card: null, isPotentiallyValid: false, isValid: false}],
-      ['1',
-        {card: null, isPotentiallyValid: true, isValid: false}],
       ['123',
-        {card: null, isPotentiallyValid: true, isValid: false}],
+        {card: null, isPotentiallyValid: false, isValid: false}],
     ]);
   });
 
@@ -74,6 +70,8 @@ describe('number validates', function () {
 
   describe('Discover', function () {
     table([
+      ['60',
+        {card: 'discover', isPotentiallyValid: true, isValid: false}],
       ['6011111',
         {card: 'discover', isPotentiallyValid: true, isValid: false}],
       ['6011111111111117',
@@ -103,6 +101,10 @@ describe('number validates', function () {
 
   describe('JCB', function () {
     table([
+      ['1',
+        {card: 'jcb', isPotentiallyValid: true, isValid: false}],
+      ['2',
+        {card: 'jcb', isPotentiallyValid: true, isValid: false}],
       ['3530111',
         {card: 'jcb', isPotentiallyValid: true, isValid: false}],
       ['3530111333300000',
@@ -120,8 +122,10 @@ describe('number validates', function () {
         {card: null, isPotentiallyValid: false, isValid: false}],
       [[],
         {card: null, isPotentiallyValid: false, isValid: false}],
+      ['32908234',
+        {card: null, isPotentiallyValid: false, isValid: false}],
       [32908234,
-        {card: null, isPotentiallyValid: true, isValid: false}],
+        {card: null, isPotentiallyValid: false, isValid: false}],
       [4111111111111111,
         {card: 'visa', isPotentiallyValid: true, isValid: true}],
       [true,
