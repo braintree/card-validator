@@ -43,7 +43,7 @@ if (numberValidation.card) {
   card: {
     niceType: 'American Express',
     type: 'american-express',
-    pattern: '^3[47][\\s\\d]*$',
+    pattern: '^3([47]\\d*)?$',
     isAmex: true,
     gaps: [4, 10],
     lengths: [15],
@@ -95,7 +95,7 @@ A fake session where a user is entering a card number may look like:
     </tr>
     <tr>
       <td><code>'60'</code></td>
-      <td><code>null</code></td>
+      <td><code>'discover'</code></td>
       <td><strong>true</strong></td>
       <td>false</td>
       <td>no</td>
@@ -103,7 +103,7 @@ A fake session where a user is entering a card number may look like:
     </tr>
     <tr>
       <td><code>'601'</code></td>
-      <td><code>null</code></td>
+      <td><code>'discover'</code></td>
       <td><strong>true</strong></td>
       <td>false</td>
       <td>no</td>
@@ -119,7 +119,7 @@ A fake session where a user is entering a card number may look like:
     </tr>
     <tr>
       <td><code>'601'</code></td>
-      <td><code>null</code></td>
+      <td><code>'discover'</code></td>
       <td><strong>true</strong></td>
       <td>false</td>
       <td>no</td>
@@ -127,7 +127,7 @@ A fake session where a user is entering a card number may look like:
     </tr>
     <tr>
       <td><code>'60'</code></td>
-      <td><code>null</code></td>
+      <td><code>'discover'</code></td>
       <td><strong>true</strong></td>
       <td>false</td>
       <td>no</td>
@@ -167,7 +167,7 @@ A fake session where a user is entering a card number may look like:
     </tr>
     <tr>
       <td><code>'4'</code></td>
-      <td><code>null</code></td>
+      <td><code>'visa'</code></td>
       <td><strong>true</strong></td>
       <td>false</td>
       <td>no</td>
@@ -191,7 +191,7 @@ A fake session where a user is entering a card number may look like:
     </tr>
     <tr>
       <td><code>'4111111111111111'</code></td>
-      <td><code>visa</code></td>
+      <td><code>'visa'</code></td>
       <td><strong>true</strong></td>
       <td><strong>true</strong></td>
       <td>no</td>
