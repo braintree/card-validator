@@ -37,7 +37,7 @@ describe('expirationYear', function () {
       ['20015', {isValid: false, isPotentiallyValid: false}]
     ],
 
-    'returns null for incomplete strings': [
+    'returns the appropriate values for incomplete strings': [
       ['', {isValid: false, isPotentiallyValid: true}],
       ['2', {isValid: false, isPotentiallyValid: true}],
       ['9', {isValid: false, isPotentiallyValid: true}],
