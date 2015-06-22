@@ -1,53 +1,105 @@
 var expect = require('chai').expect;
 var expirationMonth = require('../../src/expiration-month');
 
+var currentMonth = new Date().getMonth() + 1;
+var previousMonth = currentMonth - 1 || 1;
+var nextMonth = currentMonth < 12 ? currentMonth + 1 : currentMonth;
+
 describe('expirationMonth', function () {
+  var FALSE_VALIDATION = {isValid: false, isPotentiallyValid: false, isValidForThisYear: false};
+  var TRUE_VALIDATION = {isValid: true, isPotentiallyValid: true, isValidForThisYear: true};
+
   var describes = {
     'returns false if not a string': [
-      [[], {isValid: false, isPotentiallyValid: false}],
-      [{}, {isValid: false, isPotentiallyValid: false}],
-      [null, {isValid: false, isPotentiallyValid: false}],
-      [undefined, {isValid: false, isPotentiallyValid: false}],
-      [Infinity, {isValid: false, isPotentiallyValid: false}],
-      [0 / 0, {isValid: false, isPotentiallyValid: false}],
-      [0, {isValid: false, isPotentiallyValid: false}],
-      [1, {isValid: false, isPotentiallyValid: false}],
-      [2, {isValid: false, isPotentiallyValid: false}],
-      [12, {isValid: false, isPotentiallyValid: false}],
-      [13, {isValid: false, isPotentiallyValid: false}],
-      [-1, {isValid: false, isPotentiallyValid: false}],
-      [-12, {isValid: false, isPotentiallyValid: false}]
+      [[], FALSE_VALIDATION],
+      [{}, FALSE_VALIDATION],
+      [null, FALSE_VALIDATION],
+      [undefined, FALSE_VALIDATION],
+      [Infinity, FALSE_VALIDATION],
+      [0 / 0, FALSE_VALIDATION],
+      [0, FALSE_VALIDATION],
+      [1, FALSE_VALIDATION],
+      [2, FALSE_VALIDATION],
+      [12, FALSE_VALIDATION],
+      [13, FALSE_VALIDATION],
+      [-1, FALSE_VALIDATION],
+      [-12, FALSE_VALIDATION]
     ],
 
     'returns false for malformed strings': [
-      ['foo', {isValid: false, isPotentiallyValid: false}],
-      ['1.2', {isValid: false, isPotentiallyValid: false}],
-      ['1/20', {isValid: false, isPotentiallyValid: false}],
-      ['1 2', {isValid: false, isPotentiallyValid: false}],
-      ['1 ', {isValid: false, isPotentiallyValid: false}],
-      [' 1', {isValid: false, isPotentiallyValid: false}]
+      ['foo', FALSE_VALIDATION],
+      ['1.2', FALSE_VALIDATION],
+      ['1/20', FALSE_VALIDATION],
+      ['1 2', FALSE_VALIDATION],
+      ['1 ', FALSE_VALIDATION],
+      [' 1', FALSE_VALIDATION]
     ],
 
     'returns null for incomplete input': [
-      ['', {isValid: false, isPotentiallyValid: true}],
-      ['0', {isValid: false, isPotentiallyValid: true}]
+      ['', {isValid: false, isPotentiallyValid: true, isValidForThisYear: false}],
+      ['0', {isValid: false, isPotentiallyValid: true, isValidForThisYear: false}]
     ],
 
     'valid month': [
-      ['1', {isValid: true, isPotentiallyValid: true}],
-      ['2', {isValid: true, isPotentiallyValid: true}],
-      ['5', {isValid: true, isPotentiallyValid: true}],
-      ['02', {isValid: true, isPotentiallyValid: true}],
-      ['12', {isValid: true, isPotentiallyValid: true}]
+      [currentMonth.toString(), TRUE_VALIDATION],
+      [nextMonth.toString(), TRUE_VALIDATION],
+      [
+        '1',
+        {
+          isValid: true,
+          isPotentiallyValid: true,
+          isValidForThisYear: currentMonth <= 1
+        }
+      ],
+      [
+        '2',
+        {
+          isValid: true,
+          isPotentiallyValid: true,
+          isValidForThisYear: currentMonth <= 2
+        }
+      ],
+      [
+        '5',
+        {
+          isValid: true,
+          isPotentiallyValid: true,
+          isValidForThisYear: currentMonth <= 5
+        }
+      ],
+      [
+        '02',
+        {
+          isValid: true,
+          isPotentiallyValid: true,
+          isValidForThisYear: currentMonth <= 2
+        }
+      ],
+      [
+        '12',
+        {
+          isValid: true,
+          isPotentiallyValid: true,
+          isValidForThisYear: currentMonth <= 12
+        }
+      ]
     ],
 
     'invalid month': [
-      ['14', {isValid: false, isPotentiallyValid: false}],
-      ['30', {isValid: false, isPotentiallyValid: false}],
-      ['-6', {isValid: false, isPotentiallyValid: false}],
-      ['20', {isValid: false, isPotentiallyValid: false}],
-      ['-1', {isValid: false, isPotentiallyValid: false}],
-      ['13', {isValid: false, isPotentiallyValid: false}]
+      ['14', FALSE_VALIDATION],
+      ['30', FALSE_VALIDATION],
+      ['-6', FALSE_VALIDATION],
+      ['20', FALSE_VALIDATION],
+      ['-1', FALSE_VALIDATION],
+      ['13', FALSE_VALIDATION],
+      [
+        previousMonth.toString(),
+        {
+          isValid: true,
+          isPotentiallyValid: true,
+          isValidForThisYear: currentMonth <= 2
+        }
+      ]
     ]
   };
 
