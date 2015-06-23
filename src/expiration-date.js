@@ -13,7 +13,7 @@ function verification(isValid, isPotentiallyValid, month, year) {
 }
 
 function expirationDate(value) {
-  var date, monthValid, yearValid;
+  var date, monthValid, yearValid, isValidForThisYear;
 
   if (!isString(value)) {
     return verification(false, false, null, null);
@@ -24,8 +24,15 @@ function expirationDate(value) {
   monthValid = expirationMonth(date.month);
   yearValid = expirationYear(date.year);
 
-  if (monthValid.isValid && yearValid.isValid) {
-    return verification(true, true, date.month, date.year);
+  if (yearValid.isValid) {
+    if (yearValid.isCurrentYear) {
+      isValidForThisYear = monthValid.isValidForThisYear;
+      return verification(isValidForThisYear, isValidForThisYear, date.month, date.year);
+    }
+
+    if (monthValid.isValid) {
+      return verification(true, true, date.month, date.year);
+    }
   }
 
   if (monthValid.isPotentiallyValid && yearValid.isPotentiallyValid) {

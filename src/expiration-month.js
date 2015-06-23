@@ -1,11 +1,16 @@
 var isString = require('lodash.isstring');
 
-function verification(isValid, isPotentiallyValid) {
-  return {isValid: isValid, isPotentiallyValid: isPotentiallyValid};
+function verification(isValid, isPotentiallyValid, isValidForThisYear) {
+  return {
+    isValid: isValid,
+    isPotentiallyValid: isPotentiallyValid,
+    isValidForThisYear: isValidForThisYear || false
+  };
 }
 
 function expirationMonth(value) {
   var month, result;
+  var currentMonth = new Date().getMonth() + 1;
 
   if (!isString(value)) {
     return verification(false, false);
@@ -25,7 +30,7 @@ function expirationMonth(value) {
 
   result = month > 0 && month < 13;
 
-  return verification(result, result);
+  return verification(result, result, result && month >= currentMonth);
 }
 
 module.exports = expirationMonth;

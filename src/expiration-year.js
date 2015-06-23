@@ -1,12 +1,16 @@
 var isString = require('lodash.isstring');
 var maxYear = 19;
 
-function verification(isValid, isPotentiallyValid) {
-  return {isValid: isValid, isPotentiallyValid: isPotentiallyValid};
+function verification(isValid, isPotentiallyValid, isCurrentYear) {
+  return {
+    isValid: isValid,
+    isPotentiallyValid: isPotentiallyValid,
+    isCurrentYear: isCurrentYear || false
+  };
 }
 
 function expirationYear(value) {
-  var currentFirstTwo, currentYear, firstTwo, len, twoDigitYear, valid;
+  var currentFirstTwo, currentYear, firstTwo, len, twoDigitYear, valid, isCurrentYear;
 
   if (!isString(value)) {
     return verification(false, false);
@@ -41,12 +45,14 @@ function expirationYear(value) {
   twoDigitYear = Number(String(currentYear).substr(2, 2));
 
   if (len === 2) {
+    isCurrentYear = twoDigitYear === value;
     valid = value >= twoDigitYear && value <= twoDigitYear + maxYear;
   } else if (len === 4) {
+    isCurrentYear = currentYear === value;
     valid = value >= currentYear && value <= currentYear + maxYear;
   }
 
-  return verification(valid, valid);
+  return verification(valid, valid, isCurrentYear);
 }
 
 module.exports = expirationYear;
