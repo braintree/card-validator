@@ -1,3 +1,8 @@
+2.1.0
+=====
+
+- Contextually validate month based on current year.
+
 2.0.2
 =====
 
