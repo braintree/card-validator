@@ -1,7 +1,7 @@
 2.1.0
 =====
 
-- Contextually validate month based on current year.
+- Contextually validate month based on current date.
 
 2.0.2
 =====
