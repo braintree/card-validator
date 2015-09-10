@@ -27,7 +27,7 @@ var types = [
   {
     niceType: 'MasterCard',
     type: 'master-card',
-    pattern: '^5[1-5]\\d*$',
+    pattern: '^5([1-5]\\d*)?$',
     gaps: [4, 8, 12],
     lengths: [16],
     code: {
@@ -38,7 +38,7 @@ var types = [
   {
     niceType: 'American Express',
     type: 'american-express',
-    pattern: '^3[47]\\d*$',
+    pattern: '^3([47]\\d*)?$',
     isAmex: true,
     gaps: [4, 10],
     lengths: [15],
@@ -50,7 +50,7 @@ var types = [
   {
     niceType: 'DinersClub',
     type: 'diners-club',
-    pattern: '^3(0[0-5]|[689])\\d*$',
+    pattern: '^3((0([0-5]\\d*)?)|[689]\\d*)?$',
     gaps: [4, 10],
     lengths: [14],
     code: {
@@ -61,7 +61,7 @@ var types = [
   {
     niceType: 'Discover',
     type: 'discover',
-    pattern: '^6(011|5|4[4-9])\\d*$',
+    pattern: '^6(0|01|011\\d*|5\\d*|4|4[4-9]\\d*)?$',
     gaps: [4, 8, 12],
     lengths: [16],
     code: {
@@ -72,7 +72,7 @@ var types = [
   {
     niceType: 'JCB',
     type: 'jcb',
-    pattern: '^(2131|1800|35)\\d*$',
+    pattern: '^((2|21|213|2131\\d*)|(1|18|180|1800\\d*)|(3|35\\d*))$',
     gaps: [4, 8, 12],
     lengths: [16],
     code: {
@@ -83,7 +83,7 @@ var types = [
   {
     niceType: 'UnionPay',
     type: 'unionpay',
-    pattern: '^62\\d*$',
+    pattern: '^6(2\\d*)?$',
     gaps: [4, 8, 12],
     lengths: [16, 17, 18, 19],
     code: {
@@ -94,7 +94,7 @@ var types = [
   {
     niceType: 'Maestro',
     type: 'maestro',
-    pattern: '^(50|5[6-9]|6)\\d*$',
+    pattern: '^((5((0|[6-9])\\d*)?)|(6|6[37]\\d*))$',
     gaps: [4, 8, 12],
     lengths: [12, 13, 14, 15, 16, 17, 18, 19],
     code: {
@@ -104,29 +104,31 @@ var types = [
   }
 ];
 
-module.exports = function getCardType(cardNumber) {
-  var key, value;
-  var noMatch = {};
+module.exports = function getCardTypes(cardNumber) {
+  var i, value;
+  var result = [];
 
-  if (!isString(cardNumber)) { return noMatch; }
+  if (!isString(cardNumber)) { return result; }
 
-  for (key in types) {
-    if (!types.hasOwnProperty(key)) { continue; }
+  if (cardNumber === '') { return clone(types); }
 
-    value = types[key];
+  for (i = 0; i < types.length; i++) {
+    value = types[i];
 
-    if (RegExp(value.pattern).test(cardNumber)) { return clone(value); }
+    if (RegExp(value.pattern).test(cardNumber)) {
+      result.push(clone(value));
+    }
   }
 
-  return noMatch;
+  return result;
 };
 
 },{"lodash.clonedeep":3,"lodash.isstring":27}],3:[function(require,module,exports){
 /**
- * lodash 3.0.0 (Custom Build) <https://lodash.com/>
+ * lodash 3.0.2 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
  * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
- * Based on Underscore.js 1.7.0 <http://underscorejs.org/LICENSE>
+ * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
  * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  * Available under MIT license <https://lodash.com/license>
  */
@@ -134,17 +136,17 @@ var baseClone = require('lodash._baseclone'),
     bindCallback = require('lodash._bindcallback');
 
 /**
- * Creates a deep clone of `value`. If `customizer` is provided it is invoked
+ * Creates a deep clone of `value`. If `customizer` is provided it's invoked
  * to produce the cloned values. If `customizer` returns `undefined` cloning
  * is handled by the method instead. The `customizer` is bound to `thisArg`
- * and invoked with two argument; (value [, index|key, object]).
+ * and invoked with up to three argument; (value [, index|key, object]).
  *
- * **Note:** This method is loosely based on the structured clone algorithm.
+ * **Note:** This method is loosely based on the
+ * [structured clone algorithm](http://www.w3.org/TR/html5/infrastructure.html#internal-structured-cloning-algorithm).
  * The enumerable properties of `arguments` objects and objects created by
  * constructors other than `Object` are cloned to plain `Object` objects. An
  * empty object is returned for uncloneable values such as functions, DOM nodes,
- * Maps, Sets, and WeakMaps. See the [HTML5 specification](http://www.w3.org/TR/html5/infrastructure.html#internal-structured-cloning-algorithm)
- * for more details.
+ * Maps, Sets, and WeakMaps.
  *
  * @static
  * @memberOf _
@@ -166,19 +168,22 @@ var baseClone = require('lodash._baseclone'),
  *
  * // using a customizer callback
  * var el = _.cloneDeep(document.body, function(value) {
- *   return _.isElement(value) ? value.cloneNode(true) : undefined;
+ *   if (_.isElement(value)) {
+ *     return value.cloneNode(true);
+ *   }
  * });
  *
- * body === document.body
+ * el === document.body
  * // => false
- * body.nodeName
+ * el.nodeName
  * // => BODY
- * body.childNodes.length;
+ * el.childNodes.length;
  * // => 20
  */
 function cloneDeep(value, customizer, thisArg) {
-  customizer = typeof customizer == 'function' && bindCallback(customizer, thisArg, 1);
-  return baseClone(value, true, customizer);
+  return typeof customizer == 'function'
+    ? baseClone(value, true, bindCallback(customizer, thisArg, 3))
+    : baseClone(value, true);
 }
 
 module.exports = cloneDeep;
@@ -186,7 +191,7 @@ module.exports = cloneDeep;
 },{"lodash._baseclone":4,"lodash._bindcallback":14}],4:[function(require,module,exports){
 (function (global){
 /**
- * lodash 3.1.0 (Custom Build) <https://lodash.com/>
+ * lodash 3.3.0 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
  * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
@@ -198,7 +203,6 @@ var arrayCopy = require('lodash._arraycopy'),
     baseAssign = require('lodash._baseassign'),
     baseFor = require('lodash._basefor'),
     isArray = require('lodash.isarray'),
-    isNative = require('lodash.isnative'),
     keys = require('lodash.keys');
 
 /** `Object#toString` result references. */
@@ -252,31 +256,14 @@ var objectProto = Object.prototype;
 var hasOwnProperty = objectProto.hasOwnProperty;
 
 /**
- * Used to resolve the [`toStringTag`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-object.prototype.tostring)
+ * Used to resolve the [`toStringTag`](http://ecma-international.org/ecma-262/6.0/#sec-object.prototype.tostring)
  * of values.
  */
 var objToString = objectProto.toString;
 
 /** Native method references. */
-var ArrayBuffer = isNative(ArrayBuffer = global.ArrayBuffer) && ArrayBuffer,
-    bufferSlice = isNative(bufferSlice = ArrayBuffer && new ArrayBuffer(0).slice) && bufferSlice,
-    floor = Math.floor,
-    Uint8Array = isNative(Uint8Array = global.Uint8Array) && Uint8Array;
-
-/** Used to clone array buffers. */
-var Float64Array = (function() {
-  // Safari 5 errors when using an array buffer to initialize a typed array
-  // where the array buffer's `byteLength` is not a multiple of the typed
-  // array's `BYTES_PER_ELEMENT`.
-  try {
-    var func = isNative(func = global.Float64Array) && func,
-        result = new func(new ArrayBuffer(10), 0, 1) && func;
-  } catch(e) {}
-  return result;
-}());
-
-/** Used as the size, in bytes, of each `Float64Array` element. */
-var FLOAT64_BYTES_PER_ELEMENT = Float64Array ? Float64Array.BYTES_PER_ELEMENT : 0;
+var ArrayBuffer = global.ArrayBuffer,
+    Uint8Array = global.Uint8Array;
 
 /**
  * The base implementation of `_.clone` without support for argument juggling
@@ -324,7 +311,7 @@ function baseClone(value, isDeep, customizer, key, object, stackA, stackB) {
         : (object ? value : {});
     }
   }
-  // Check for circular references and return corresponding clone.
+  // Check for circular references and return its corresponding clone.
   stackA || (stackA = []);
   stackB || (stackB = []);
 
@@ -366,26 +353,11 @@ function baseForOwn(object, iteratee) {
  * @returns {ArrayBuffer} Returns the cloned array buffer.
  */
 function bufferClone(buffer) {
-  return bufferSlice.call(buffer, 0);
-}
-if (!bufferSlice) {
-  // PhantomJS has `ArrayBuffer` and `Uint8Array` but not `Float64Array`.
-  bufferClone = !(ArrayBuffer && Uint8Array) ? constant(null) : function(buffer) {
-    var byteLength = buffer.byteLength,
-        floatLength = Float64Array ? floor(byteLength / FLOAT64_BYTES_PER_ELEMENT) : 0,
-        offset = floatLength * FLOAT64_BYTES_PER_ELEMENT,
-        result = new ArrayBuffer(byteLength);
+  var result = new ArrayBuffer(buffer.byteLength),
+      view = new Uint8Array(result);
 
-    if (floatLength) {
-      var view = new Float64Array(result, 0, floatLength);
-      view.set(new Float64Array(buffer, 0, floatLength));
-    }
-    if (byteLength != offset) {
-      view = new Uint8Array(result, offset);
-      view.set(new Uint8Array(buffer, offset));
-    }
-    return result;
-  };
+  view.set(new Uint8Array(buffer));
+  return result;
 }
 
 /**
@@ -485,35 +457,13 @@ function isObject(value) {
   // Avoid a V8 JIT bug in Chrome 19-20.
   // See https://code.google.com/p/v8/issues/detail?id=2291 for more details.
   var type = typeof value;
-  return type == 'function' || (!!value && type == 'object');
-}
-
-/**
- * Creates a function that returns `value`.
- *
- * @static
- * @memberOf _
- * @category Utility
- * @param {*} value The value to return from the new function.
- * @returns {Function} Returns the new function.
- * @example
- *
- * var object = { 'user': 'fred' };
- * var getter = _.constant(object);
- *
- * getter() === object;
- * // => true
- */
-function constant(value) {
-  return function() {
-    return value;
-  };
+  return !!value && (type == 'object' || type == 'function');
 }
 
 module.exports = baseClone;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"lodash._arraycopy":5,"lodash._arrayeach":6,"lodash._baseassign":7,"lodash._basefor":9,"lodash.isarray":10,"lodash.isnative":11,"lodash.keys":12}],5:[function(require,module,exports){
+},{"lodash._arraycopy":5,"lodash._arrayeach":6,"lodash._baseassign":7,"lodash._basefor":9,"lodash.isarray":10,"lodash.keys":11}],5:[function(require,module,exports){
 /**
  * lodash 3.0.0 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -579,7 +529,7 @@ module.exports = arrayEach;
 
 },{}],7:[function(require,module,exports){
 /**
- * lodash 3.1.1 (Custom Build) <https://lodash.com/>
+ * lodash 3.2.0 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
  * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
@@ -587,11 +537,7 @@ module.exports = arrayEach;
  * Available under MIT license <https://lodash.com/license>
  */
 var baseCopy = require('lodash._basecopy'),
-    isNative = require('lodash.isnative'),
     keys = require('lodash.keys');
-
-/** Native method references. */
-var getOwnPropertySymbols = isNative(getOwnPropertySymbols = Object.getOwnPropertySymbols) && getOwnPropertySymbols;
 
 /**
  * The base implementation of `_.assign` without support for argument juggling,
@@ -602,86 +548,15 @@ var getOwnPropertySymbols = isNative(getOwnPropertySymbols = Object.getOwnProper
  * @param {Object} source The source object.
  * @returns {Object} Returns `object`.
  */
-var baseAssign = function(object, source) {
+function baseAssign(object, source) {
   return source == null
     ? object
-    : baseCopy(source, getSymbols(source), baseCopy(source, keys(source), object));
-};
-
-/**
- * Creates an array of the own symbols of `object`.
- *
- * @private
- * @param {Object} object The object to query.
- * @returns {Array} Returns the array of symbols.
- */
-var getSymbols = !getOwnPropertySymbols ? constant([]) : function(object) {
-  return getOwnPropertySymbols(toObject(object));
-};
-
-/**
- * Converts `value` to an object if it is not one.
- *
- * @private
- * @param {*} value The value to process.
- * @returns {Object} Returns the object.
- */
-function toObject(value) {
-  return isObject(value) ? value : Object(value);
-}
-
-/**
- * Checks if `value` is the [language type](https://es5.github.io/#x8) of `Object`.
- * (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
- *
- * @static
- * @memberOf _
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is an object, else `false`.
- * @example
- *
- * _.isObject({});
- * // => true
- *
- * _.isObject([1, 2, 3]);
- * // => true
- *
- * _.isObject(1);
- * // => false
- */
-function isObject(value) {
-  // Avoid a V8 JIT bug in Chrome 19-20.
-  // See https://code.google.com/p/v8/issues/detail?id=2291 for more details.
-  var type = typeof value;
-  return type == 'function' || (!!value && type == 'object');
-}
-
-/**
- * Creates a function that returns `value`.
- *
- * @static
- * @memberOf _
- * @category Utility
- * @param {*} value The value to return from the new function.
- * @returns {Function} Returns the new function.
- * @example
- *
- * var object = { 'user': 'fred' };
- * var getter = _.constant(object);
- *
- * getter() === object;
- * // => true
- */
-function constant(value) {
-  return function() {
-    return value;
-  };
+    : baseCopy(source, keys(source), object);
 }
 
 module.exports = baseAssign;
 
-},{"lodash._basecopy":8,"lodash.isnative":11,"lodash.keys":12}],8:[function(require,module,exports){
+},{"lodash._basecopy":8,"lodash.keys":11}],8:[function(require,module,exports){
 /**
  * lodash 3.0.1 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -717,10 +592,10 @@ module.exports = baseCopy;
 
 },{}],9:[function(require,module,exports){
 /**
- * lodash 3.0.1 (Custom Build) <https://lodash.com/>
+ * lodash 3.0.2 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
  * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
- * Based on Underscore.js 1.8.2 <http://underscorejs.org/LICENSE>
+ * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
  * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  * Available under MIT license <https://lodash.com/license>
  */
@@ -728,7 +603,7 @@ module.exports = baseCopy;
 /**
  * The base implementation of `baseForIn` and `baseForOwn` which iterates
  * over `object` properties returned by `keysFunc` invoking `iteratee` for
- * each property. Iterator functions may exit iteration early by explicitly
+ * each property. Iteratee functions may exit iteration early by explicitly
  * returning `false`.
  *
  * @private
@@ -764,7 +639,7 @@ function createBaseFor(fromRight) {
 }
 
 /**
- * Converts `value` to an object if it is not one.
+ * Converts `value` to an object if it's not one.
  *
  * @private
  * @param {*} value The value to process.
@@ -798,14 +673,14 @@ function isObject(value) {
   // Avoid a V8 JIT bug in Chrome 19-20.
   // See https://code.google.com/p/v8/issues/detail?id=2291 for more details.
   var type = typeof value;
-  return type == 'function' || (!!value && type == 'object');
+  return !!value && (type == 'object' || type == 'function');
 }
 
 module.exports = baseFor;
 
 },{}],10:[function(require,module,exports){
 /**
- * lodash 3.0.2 (Custom Build) <https://lodash.com/>
+ * lodash 3.0.4 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
  * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
@@ -817,31 +692,8 @@ module.exports = baseFor;
 var arrayTag = '[object Array]',
     funcTag = '[object Function]';
 
-/**
- * Used to match `RegExp` [special characters](http://www.regular-expressions.info/characters.html#special).
- * In addition to special characters the forward slash is escaped to allow for
- * easier `eval` use and `Function` compilation.
- */
-var reRegExpChars = /[.*+?^${}()|[\]\/\\]/g,
-    reHasRegExpChars = RegExp(reRegExpChars.source);
-
 /** Used to detect host constructors (Safari > 5). */
 var reIsHostCtor = /^\[object .+?Constructor\]$/;
-
-/**
- * Converts `value` to a string if it is not one. An empty string is returned
- * for `null` or `undefined` values.
- *
- * @private
- * @param {*} value The value to process.
- * @returns {string} Returns the string.
- */
-function baseToString(value) {
-  if (typeof value == 'string') {
-    return value;
-  }
-  return value == null ? '' : (value + '');
-}
 
 /**
  * Checks if `value` is object-like.
@@ -860,31 +712,47 @@ var objectProto = Object.prototype;
 /** Used to resolve the decompiled source of functions. */
 var fnToString = Function.prototype.toString;
 
+/** Used to check objects for own properties. */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
 /**
- * Used to resolve the [`toStringTag`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-object.prototype.tostring)
+ * Used to resolve the [`toStringTag`](http://ecma-international.org/ecma-262/6.0/#sec-object.prototype.tostring)
  * of values.
  */
 var objToString = objectProto.toString;
 
 /** Used to detect if a method is native. */
 var reIsNative = RegExp('^' +
-  escapeRegExp(objToString)
-  .replace(/toString|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$'
+  fnToString.call(hasOwnProperty).replace(/[\\^$.*+?()[\]{}|]/g, '\\$&')
+  .replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$'
 );
 
 /* Native method references for those with the same name as other `lodash` methods. */
-var nativeIsArray = isNative(nativeIsArray = Array.isArray) && nativeIsArray;
+var nativeIsArray = getNative(Array, 'isArray');
 
 /**
- * Used as the [maximum length](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-number.max_safe_integer)
+ * Used as the [maximum length](http://ecma-international.org/ecma-262/6.0/#sec-number.max_safe_integer)
  * of an array-like value.
  */
-var MAX_SAFE_INTEGER = Math.pow(2, 53) - 1;
+var MAX_SAFE_INTEGER = 9007199254740991;
+
+/**
+ * Gets the native function at `key` of `object`.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @param {string} key The key of the method to get.
+ * @returns {*} Returns the function if it's native, else `undefined`.
+ */
+function getNative(object, key) {
+  var value = object == null ? undefined : object[key];
+  return isNative(value) ? value : undefined;
+}
 
 /**
  * Checks if `value` is a valid array-like length.
  *
- * **Note:** This function is based on [`ToLength`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-tolength).
+ * **Note:** This function is based on [`ToLength`](http://ecma-international.org/ecma-262/6.0/#sec-tolength).
  *
  * @private
  * @param {*} value The value to check.
@@ -915,6 +783,56 @@ var isArray = nativeIsArray || function(value) {
 };
 
 /**
+ * Checks if `value` is classified as a `Function` object.
+ *
+ * @static
+ * @memberOf _
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is correctly classified, else `false`.
+ * @example
+ *
+ * _.isFunction(_);
+ * // => true
+ *
+ * _.isFunction(/abc/);
+ * // => false
+ */
+function isFunction(value) {
+  // The use of `Object#toString` avoids issues with the `typeof` operator
+  // in older versions of Chrome and Safari which return 'function' for regexes
+  // and Safari 8 equivalents which return 'object' for typed array constructors.
+  return isObject(value) && objToString.call(value) == funcTag;
+}
+
+/**
+ * Checks if `value` is the [language type](https://es5.github.io/#x8) of `Object`.
+ * (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+ *
+ * @static
+ * @memberOf _
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an object, else `false`.
+ * @example
+ *
+ * _.isObject({});
+ * // => true
+ *
+ * _.isObject([1, 2, 3]);
+ * // => true
+ *
+ * _.isObject(1);
+ * // => false
+ */
+function isObject(value) {
+  // Avoid a V8 JIT bug in Chrome 19-20.
+  // See https://code.google.com/p/v8/issues/detail?id=2291 for more details.
+  var type = typeof value;
+  return !!value && (type == 'object' || type == 'function');
+}
+
+/**
  * Checks if `value` is a native function.
  *
  * @static
@@ -934,164 +852,29 @@ function isNative(value) {
   if (value == null) {
     return false;
   }
-  if (objToString.call(value) == funcTag) {
+  if (isFunction(value)) {
     return reIsNative.test(fnToString.call(value));
   }
   return isObjectLike(value) && reIsHostCtor.test(value);
-}
-
-/**
- * Escapes the `RegExp` special characters "\", "/", "^", "$", ".", "|", "?",
- * "*", "+", "(", ")", "[", "]", "{" and "}" in `string`.
- *
- * @static
- * @memberOf _
- * @category String
- * @param {string} [string=''] The string to escape.
- * @returns {string} Returns the escaped string.
- * @example
- *
- * _.escapeRegExp('[lodash](https://lodash.com/)');
- * // => '\[lodash\]\(https:\/\/lodash\.com\/\)'
- */
-function escapeRegExp(string) {
-  string = baseToString(string);
-  return (string && reHasRegExpChars.test(string))
-    ? string.replace(reRegExpChars, '\\$&')
-    : string;
 }
 
 module.exports = isArray;
 
 },{}],11:[function(require,module,exports){
 /**
- * lodash 3.0.2 (Custom Build) <https://lodash.com/>
+ * lodash 3.1.2 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
  * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
  * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  * Available under MIT license <https://lodash.com/license>
  */
+var getNative = require('lodash._getnative'),
+    isArguments = require('lodash.isarguments'),
+    isArray = require('lodash.isarray');
 
-/** `Object#toString` result references. */
-var funcTag = '[object Function]';
-
-/**
- * Used to match `RegExp` [special characters](http://www.regular-expressions.info/characters.html#special).
- * In addition to special characters the forward slash is escaped to allow for
- * easier `eval` use and `Function` compilation.
- */
-var reRegExpChars = /[.*+?^${}()|[\]\/\\]/g,
-    reHasRegExpChars = RegExp(reRegExpChars.source);
-
-/** Used to detect host constructors (Safari > 5). */
-var reIsHostCtor = /^\[object .+?Constructor\]$/;
-
-/**
- * Converts `value` to a string if it is not one. An empty string is returned
- * for `null` or `undefined` values.
- *
- * @private
- * @param {*} value The value to process.
- * @returns {string} Returns the string.
- */
-function baseToString(value) {
-  if (typeof value == 'string') {
-    return value;
-  }
-  return value == null ? '' : (value + '');
-}
-
-/**
- * Checks if `value` is object-like.
- *
- * @private
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
- */
-function isObjectLike(value) {
-  return !!value && typeof value == 'object';
-}
-
-/** Used for native method references. */
-var objectProto = Object.prototype;
-
-/** Used to resolve the decompiled source of functions. */
-var fnToString = Function.prototype.toString;
-
-/**
- * Used to resolve the [`toStringTag`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-object.prototype.tostring)
- * of values.
- */
-var objToString = objectProto.toString;
-
-/** Used to detect if a method is native. */
-var reIsNative = RegExp('^' +
-  escapeRegExp(objToString)
-  .replace(/toString|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$'
-);
-
-/**
- * Checks if `value` is a native function.
- *
- * @static
- * @memberOf _
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a native function, else `false`.
- * @example
- *
- * _.isNative(Array.prototype.push);
- * // => true
- *
- * _.isNative(_);
- * // => false
- */
-function isNative(value) {
-  if (value == null) {
-    return false;
-  }
-  if (objToString.call(value) == funcTag) {
-    return reIsNative.test(fnToString.call(value));
-  }
-  return isObjectLike(value) && reIsHostCtor.test(value);
-}
-
-/**
- * Escapes the `RegExp` special characters "\", "/", "^", "$", ".", "|", "?",
- * "*", "+", "(", ")", "[", "]", "{" and "}" in `string`.
- *
- * @static
- * @memberOf _
- * @category String
- * @param {string} [string=''] The string to escape.
- * @returns {string} Returns the escaped string.
- * @example
- *
- * _.escapeRegExp('[lodash](https://lodash.com/)');
- * // => '\[lodash\]\(https:\/\/lodash\.com\/\)'
- */
-function escapeRegExp(string) {
-  string = baseToString(string);
-  return (string && reHasRegExpChars.test(string))
-    ? string.replace(reRegExpChars, '\\$&')
-    : string;
-}
-
-module.exports = isNative;
-
-},{}],12:[function(require,module,exports){
-/**
- * lodash 3.0.7 (Custom Build) <https://lodash.com/>
- * Build: `lodash modern modularize exports="npm" -o ./`
- * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
- * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
- * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
- * Available under MIT license <https://lodash.com/license>
- */
-var isArguments = require('lodash.isarguments'),
-    isArray = require('lodash.isarray'),
-    isNative = require('lodash.isnative');
+/** Used to detect unsigned integer values. */
+var reIsUint = /^\d+$/;
 
 /** Used for native method references. */
 var objectProto = Object.prototype;
@@ -1099,54 +882,14 @@ var objectProto = Object.prototype;
 /** Used to check objects for own properties. */
 var hasOwnProperty = objectProto.hasOwnProperty;
 
-/** Native method references. */
-var propertyIsEnumerable = objectProto.propertyIsEnumerable;
-
 /* Native method references for those with the same name as other `lodash` methods. */
-var nativeKeys = isNative(nativeKeys = Object.keys) && nativeKeys;
+var nativeKeys = getNative(Object, 'keys');
 
 /**
- * Used as the [maximum length](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-number.max_safe_integer)
+ * Used as the [maximum length](http://ecma-international.org/ecma-262/6.0/#sec-number.max_safe_integer)
  * of an array-like value.
  */
-var MAX_SAFE_INTEGER = Math.pow(2, 53) - 1;
-
-/**
- * An object environment feature flags.
- *
- * @static
- * @memberOf _
- * @type Object
- */
-var support = {};
-
-(function(x) {
-  var Ctor = function() { this.x = x; },
-      args = arguments,
-      object = { '0': x, 'length': x },
-      props = [];
-
-  Ctor.prototype = { 'valueOf': x, 'y': x };
-  for (var key in new Ctor) { props.push(key); }
-
-  /**
-   * Detect if `arguments` object indexes are non-enumerable.
-   *
-   * In Firefox < 4, IE < 9, PhantomJS, and Safari < 5.1 `arguments` object
-   * indexes are non-enumerable. Chrome < 25 and Node.js < 0.11.0 treat
-   * `arguments` object indexes as non-enumerable and fail `hasOwnProperty`
-   * checks for indexes that exceed the number of function parameters and
-   * whose associated argument values are `0`.
-   *
-   * @memberOf _.support
-   * @type boolean
-   */
-  try {
-    support.nonEnumArgs = !propertyIsEnumerable.call(args, 1);
-  } catch(e) {
-    support.nonEnumArgs = true;
-  }
-}(1, 0));
+var MAX_SAFE_INTEGER = 9007199254740991;
 
 /**
  * The base implementation of `_.property` without support for deep paths.
@@ -1193,7 +936,7 @@ function isArrayLike(value) {
  * @returns {boolean} Returns `true` if `value` is a valid index, else `false`.
  */
 function isIndex(value, length) {
-  value = +value;
+  value = (typeof value == 'number' || reIsUint.test(value)) ? +value : -1;
   length = length == null ? MAX_SAFE_INTEGER : length;
   return value > -1 && value % 1 == 0 && value < length;
 }
@@ -1201,7 +944,7 @@ function isIndex(value, length) {
 /**
  * Checks if `value` is a valid array-like length.
  *
- * **Note:** This function is based on [`ToLength`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-tolength).
+ * **Note:** This function is based on [`ToLength`](http://ecma-international.org/ecma-262/6.0/#sec-tolength).
  *
  * @private
  * @param {*} value The value to check.
@@ -1224,8 +967,8 @@ function shimKeys(object) {
       propsLength = props.length,
       length = propsLength && object.length;
 
-  var allowIndexes = length && isLength(length) &&
-    (isArray(object) || (support.nonEnumArgs && isArguments(object)));
+  var allowIndexes = !!length && isLength(length) &&
+    (isArray(object) || isArguments(object));
 
   var index = -1,
       result = [];
@@ -1263,14 +1006,14 @@ function isObject(value) {
   // Avoid a V8 JIT bug in Chrome 19-20.
   // See https://code.google.com/p/v8/issues/detail?id=2291 for more details.
   var type = typeof value;
-  return type == 'function' || (!!value && type == 'object');
+  return !!value && (type == 'object' || type == 'function');
 }
 
 /**
  * Creates an array of the own enumerable property names of `object`.
  *
  * **Note:** Non-object values are coerced to objects. See the
- * [ES spec](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-object.keys)
+ * [ES spec](http://ecma-international.org/ecma-262/6.0/#sec-object.keys)
  * for more details.
  *
  * @static
@@ -1294,7 +1037,7 @@ function isObject(value) {
  * // => ['0', '1']
  */
 var keys = !nativeKeys ? shimKeys : function(object) {
-  var Ctor = object != null && object.constructor;
+  var Ctor = object == null ? undefined : object.constructor;
   if ((typeof Ctor == 'function' && Ctor.prototype === object) ||
       (typeof object != 'function' && isArrayLike(object))) {
     return shimKeys(object);
@@ -1333,7 +1076,7 @@ function keysIn(object) {
   }
   var length = object.length;
   length = (length && isLength(length) &&
-    (isArray(object) || (support.nonEnumArgs && isArguments(object))) && length) || 0;
+    (isArray(object) || isArguments(object)) && length) || 0;
 
   var Ctor = object.constructor,
       index = -1,
@@ -1355,9 +1098,9 @@ function keysIn(object) {
 
 module.exports = keys;
 
-},{"lodash.isarguments":13,"lodash.isarray":10,"lodash.isnative":11}],13:[function(require,module,exports){
+},{"lodash._getnative":12,"lodash.isarguments":13,"lodash.isarray":10}],12:[function(require,module,exports){
 /**
- * lodash 3.0.2 (Custom Build) <https://lodash.com/>
+ * lodash 3.9.1 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
  * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
@@ -1366,7 +1109,10 @@ module.exports = keys;
  */
 
 /** `Object#toString` result references. */
-var argsTag = '[object Arguments]';
+var funcTag = '[object Function]';
+
+/** Used to detect host constructors (Safari > 5). */
+var reIsHostCtor = /^\[object .+?Constructor\]$/;
 
 /**
  * Checks if `value` is object-like.
@@ -1382,17 +1128,150 @@ function isObjectLike(value) {
 /** Used for native method references. */
 var objectProto = Object.prototype;
 
+/** Used to resolve the decompiled source of functions. */
+var fnToString = Function.prototype.toString;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
 /**
- * Used to resolve the [`toStringTag`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-object.prototype.tostring)
+ * Used to resolve the [`toStringTag`](http://ecma-international.org/ecma-262/6.0/#sec-object.prototype.tostring)
  * of values.
  */
 var objToString = objectProto.toString;
 
+/** Used to detect if a method is native. */
+var reIsNative = RegExp('^' +
+  fnToString.call(hasOwnProperty).replace(/[\\^$.*+?()[\]{}|]/g, '\\$&')
+  .replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$'
+);
+
 /**
- * Used as the [maximum length](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-number.max_safe_integer)
+ * Gets the native function at `key` of `object`.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @param {string} key The key of the method to get.
+ * @returns {*} Returns the function if it's native, else `undefined`.
+ */
+function getNative(object, key) {
+  var value = object == null ? undefined : object[key];
+  return isNative(value) ? value : undefined;
+}
+
+/**
+ * Checks if `value` is classified as a `Function` object.
+ *
+ * @static
+ * @memberOf _
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is correctly classified, else `false`.
+ * @example
+ *
+ * _.isFunction(_);
+ * // => true
+ *
+ * _.isFunction(/abc/);
+ * // => false
+ */
+function isFunction(value) {
+  // The use of `Object#toString` avoids issues with the `typeof` operator
+  // in older versions of Chrome and Safari which return 'function' for regexes
+  // and Safari 8 equivalents which return 'object' for typed array constructors.
+  return isObject(value) && objToString.call(value) == funcTag;
+}
+
+/**
+ * Checks if `value` is the [language type](https://es5.github.io/#x8) of `Object`.
+ * (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+ *
+ * @static
+ * @memberOf _
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an object, else `false`.
+ * @example
+ *
+ * _.isObject({});
+ * // => true
+ *
+ * _.isObject([1, 2, 3]);
+ * // => true
+ *
+ * _.isObject(1);
+ * // => false
+ */
+function isObject(value) {
+  // Avoid a V8 JIT bug in Chrome 19-20.
+  // See https://code.google.com/p/v8/issues/detail?id=2291 for more details.
+  var type = typeof value;
+  return !!value && (type == 'object' || type == 'function');
+}
+
+/**
+ * Checks if `value` is a native function.
+ *
+ * @static
+ * @memberOf _
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a native function, else `false`.
+ * @example
+ *
+ * _.isNative(Array.prototype.push);
+ * // => true
+ *
+ * _.isNative(_);
+ * // => false
+ */
+function isNative(value) {
+  if (value == null) {
+    return false;
+  }
+  if (isFunction(value)) {
+    return reIsNative.test(fnToString.call(value));
+  }
+  return isObjectLike(value) && reIsHostCtor.test(value);
+}
+
+module.exports = getNative;
+
+},{}],13:[function(require,module,exports){
+/**
+ * lodash 3.0.4 (Custom Build) <https://lodash.com/>
+ * Build: `lodash modern modularize exports="npm" -o ./`
+ * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
+ * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+ * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ * Available under MIT license <https://lodash.com/license>
+ */
+
+/**
+ * Checks if `value` is object-like.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+ */
+function isObjectLike(value) {
+  return !!value && typeof value == 'object';
+}
+
+/** Used for native method references. */
+var objectProto = Object.prototype;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+/** Native method references. */
+var propertyIsEnumerable = objectProto.propertyIsEnumerable;
+
+/**
+ * Used as the [maximum length](http://ecma-international.org/ecma-262/6.0/#sec-number.max_safe_integer)
  * of an array-like value.
  */
-var MAX_SAFE_INTEGER = Math.pow(2, 53) - 1;
+var MAX_SAFE_INTEGER = 9007199254740991;
 
 /**
  * The base implementation of `_.property` without support for deep paths.
@@ -1433,7 +1312,7 @@ function isArrayLike(value) {
 /**
  * Checks if `value` is a valid array-like length.
  *
- * **Note:** This function is based on [`ToLength`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-tolength).
+ * **Note:** This function is based on [`ToLength`](http://ecma-international.org/ecma-262/6.0/#sec-tolength).
  *
  * @private
  * @param {*} value The value to check.
@@ -1460,7 +1339,8 @@ function isLength(value) {
  * // => false
  */
 function isArguments(value) {
-  return isObjectLike(value) && isArrayLike(value) && objToString.call(value) == argsTag;
+  return isObjectLike(value) && isArrayLike(value) &&
+    hasOwnProperty.call(value, 'callee') && !propertyIsEnumerable.call(value, 'callee');
 }
 
 module.exports = isArguments;
@@ -1534,7 +1414,7 @@ module.exports = bindCallback;
 
 },{}],15:[function(require,module,exports){
 /**
- * lodash 3.1.0 (Custom Build) <https://lodash.com/>
+ * lodash 3.2.0 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
  * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
@@ -1543,15 +1423,7 @@ module.exports = bindCallback;
  */
 var baseAssign = require('lodash._baseassign'),
     createAssigner = require('lodash._createassigner'),
-    isNative = require('lodash.isnative'),
     keys = require('lodash.keys');
-
-/** Used for native method references. */
-var arrayProto = Array.prototype;
-
-/** Native method references. */
-var getOwnPropertySymbols = isNative(getOwnPropertySymbols = Object.getOwnPropertySymbols) && getOwnPropertySymbols,
-    push = arrayProto.push;
 
 /**
  * A specialized version of `_.assign` for customizing assigned values without
@@ -1565,10 +1437,8 @@ var getOwnPropertySymbols = isNative(getOwnPropertySymbols = Object.getOwnProper
  * @returns {Object} Returns `object`.
  */
 function assignWith(object, source, customizer) {
-  var props = keys(source);
-  push.apply(props, getSymbols(source));
-
   var index = -1,
+      props = keys(source),
       length = props.length;
 
   while (++index < length) {
@@ -1585,55 +1455,6 @@ function assignWith(object, source, customizer) {
 }
 
 /**
- * Creates an array of the own symbols of `object`.
- *
- * @private
- * @param {Object} object The object to query.
- * @returns {Array} Returns the array of symbols.
- */
-var getSymbols = !getOwnPropertySymbols ? constant([]) : function(object) {
-  return getOwnPropertySymbols(toObject(object));
-};
-
-/**
- * Converts `value` to an object if it is not one.
- *
- * @private
- * @param {*} value The value to process.
- * @returns {Object} Returns the object.
- */
-function toObject(value) {
-  return isObject(value) ? value : Object(value);
-}
-
-/**
- * Checks if `value` is the [language type](https://es5.github.io/#x8) of `Object`.
- * (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
- *
- * @static
- * @memberOf _
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is an object, else `false`.
- * @example
- *
- * _.isObject({});
- * // => true
- *
- * _.isObject([1, 2, 3]);
- * // => true
- *
- * _.isObject(1);
- * // => false
- */
-function isObject(value) {
-  // Avoid a V8 JIT bug in Chrome 19-20.
-  // See https://code.google.com/p/v8/issues/detail?id=2291 for more details.
-  var type = typeof value;
-  return type == 'function' || (!!value && type == 'object');
-}
-
-/**
  * Assigns own enumerable properties of source object(s) to the destination
  * object. Subsequent sources overwrite property assignments of previous sources.
  * If `customizer` is provided it is invoked to produce the assigned values.
@@ -1642,7 +1463,6 @@ function isObject(value) {
  *
  * **Note:** This method mutates `object` and is based on
  * [`Object.assign`](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-object.assign).
- *
  *
  * @static
  * @memberOf _
@@ -1672,37 +1492,15 @@ var assign = createAssigner(function(object, source, customizer) {
     : baseAssign(object, source);
 });
 
-/**
- * Creates a function that returns `value`.
- *
- * @static
- * @memberOf _
- * @category Utility
- * @param {*} value The value to return from the new function.
- * @returns {Function} Returns the new function.
- * @example
- *
- * var object = { 'user': 'fred' };
- * var getter = _.constant(object);
- *
- * getter() === object;
- * // => true
- */
-function constant(value) {
-  return function() {
-    return value;
-  };
-}
-
 module.exports = assign;
 
-},{"lodash._baseassign":16,"lodash._createassigner":18,"lodash.isnative":22,"lodash.keys":23}],16:[function(require,module,exports){
+},{"lodash._baseassign":16,"lodash._createassigner":18,"lodash.keys":22}],16:[function(require,module,exports){
 module.exports=require(7)
-},{"/Users/mrak/Developer/Braintree/card-validator/node_modules/credit-card-type/node_modules/lodash.clonedeep/node_modules/lodash._baseclone/node_modules/lodash._baseassign/index.js":7,"lodash._basecopy":17,"lodash.isnative":22,"lodash.keys":23}],17:[function(require,module,exports){
+},{"/Users/nvioli/git/card-validator/node_modules/credit-card-type/node_modules/lodash.clonedeep/node_modules/lodash._baseclone/node_modules/lodash._baseassign/index.js":7,"lodash._basecopy":17,"lodash.keys":22}],17:[function(require,module,exports){
 module.exports=require(8)
-},{"/Users/mrak/Developer/Braintree/card-validator/node_modules/credit-card-type/node_modules/lodash.clonedeep/node_modules/lodash._baseclone/node_modules/lodash._baseassign/node_modules/lodash._basecopy/index.js":8}],18:[function(require,module,exports){
+},{"/Users/nvioli/git/card-validator/node_modules/credit-card-type/node_modules/lodash.clonedeep/node_modules/lodash._baseclone/node_modules/lodash._baseassign/node_modules/lodash._basecopy/index.js":8}],18:[function(require,module,exports){
 /**
- * lodash 3.1.0 (Custom Build) <https://lodash.com/>
+ * lodash 3.1.1 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
  * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
@@ -1727,19 +1525,19 @@ function createAssigner(assigner) {
   return restParam(function(object, sources) {
     var index = -1,
         length = object == null ? 0 : sources.length,
-        customizer = length > 2 && sources[length - 2],
-        guard = length > 2 && sources[2],
-        thisArg = length > 1 && sources[length - 1];
+        customizer = length > 2 ? sources[length - 2] : undefined,
+        guard = length > 2 ? sources[2] : undefined,
+        thisArg = length > 1 ? sources[length - 1] : undefined;
 
     if (typeof customizer == 'function') {
       customizer = bindCallback(customizer, thisArg, 5);
       length -= 2;
     } else {
-      customizer = typeof thisArg == 'function' ? thisArg : null;
+      customizer = typeof thisArg == 'function' ? thisArg : undefined;
       length -= (customizer ? 1 : 0);
     }
     if (guard && isIterateeCall(sources[0], sources[1], guard)) {
-      customizer = length < 3 ? null : customizer;
+      customizer = length < 3 ? undefined : customizer;
       length = 1;
     }
     while (++index < length) {
@@ -1756,9 +1554,9 @@ module.exports = createAssigner;
 
 },{"lodash._bindcallback":19,"lodash._isiterateecall":20,"lodash.restparam":21}],19:[function(require,module,exports){
 module.exports=require(14)
-},{"/Users/mrak/Developer/Braintree/card-validator/node_modules/credit-card-type/node_modules/lodash.clonedeep/node_modules/lodash._bindcallback/index.js":14}],20:[function(require,module,exports){
+},{"/Users/nvioli/git/card-validator/node_modules/credit-card-type/node_modules/lodash.clonedeep/node_modules/lodash._bindcallback/index.js":14}],20:[function(require,module,exports){
 /**
- * lodash 3.0.7 (Custom Build) <https://lodash.com/>
+ * lodash 3.0.9 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
  * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
@@ -1766,11 +1564,14 @@ module.exports=require(14)
  * Available under MIT license <https://lodash.com/license>
  */
 
+/** Used to detect unsigned integer values. */
+var reIsUint = /^\d+$/;
+
 /**
  * Used as the [maximum length](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-number.max_safe_integer)
  * of an array-like value.
  */
-var MAX_SAFE_INTEGER = Math.pow(2, 53) - 1;
+var MAX_SAFE_INTEGER = 9007199254740991;
 
 /**
  * The base implementation of `_.property` without support for deep paths.
@@ -1817,7 +1618,7 @@ function isArrayLike(value) {
  * @returns {boolean} Returns `true` if `value` is a valid index, else `false`.
  */
 function isIndex(value, length) {
-  value = +value;
+  value = (typeof value == 'number' || reIsUint.test(value)) ? +value : -1;
   length = length == null ? MAX_SAFE_INTEGER : length;
   return value > -1 && value % 1 == 0 && value < length;
 }
@@ -1882,7 +1683,7 @@ function isObject(value) {
   // Avoid a V8 JIT bug in Chrome 19-20.
   // See https://code.google.com/p/v8/issues/detail?id=2291 for more details.
   var type = typeof value;
-  return type == 'function' || (!!value && type == 'object');
+  return !!value && (type == 'object' || type == 'function');
 }
 
 module.exports = isIterateeCall;
@@ -1958,13 +1759,13 @@ module.exports = restParam;
 
 },{}],22:[function(require,module,exports){
 module.exports=require(11)
-},{"/Users/mrak/Developer/Braintree/card-validator/node_modules/credit-card-type/node_modules/lodash.clonedeep/node_modules/lodash._baseclone/node_modules/lodash.isnative/index.js":11}],23:[function(require,module,exports){
+},{"/Users/nvioli/git/card-validator/node_modules/credit-card-type/node_modules/lodash.clonedeep/node_modules/lodash._baseclone/node_modules/lodash.keys/index.js":11,"lodash._getnative":23,"lodash.isarguments":24,"lodash.isarray":25}],23:[function(require,module,exports){
 module.exports=require(12)
-},{"/Users/mrak/Developer/Braintree/card-validator/node_modules/credit-card-type/node_modules/lodash.clonedeep/node_modules/lodash._baseclone/node_modules/lodash.keys/index.js":12,"lodash.isarguments":24,"lodash.isarray":25,"lodash.isnative":22}],24:[function(require,module,exports){
+},{"/Users/nvioli/git/card-validator/node_modules/credit-card-type/node_modules/lodash.clonedeep/node_modules/lodash._baseclone/node_modules/lodash.keys/node_modules/lodash._getnative/index.js":12}],24:[function(require,module,exports){
 module.exports=require(13)
-},{"/Users/mrak/Developer/Braintree/card-validator/node_modules/credit-card-type/node_modules/lodash.clonedeep/node_modules/lodash._baseclone/node_modules/lodash.keys/node_modules/lodash.isarguments/index.js":13}],25:[function(require,module,exports){
+},{"/Users/nvioli/git/card-validator/node_modules/credit-card-type/node_modules/lodash.clonedeep/node_modules/lodash._baseclone/node_modules/lodash.keys/node_modules/lodash.isarguments/index.js":13}],25:[function(require,module,exports){
 module.exports=require(10)
-},{"/Users/mrak/Developer/Braintree/card-validator/node_modules/credit-card-type/node_modules/lodash.clonedeep/node_modules/lodash._baseclone/node_modules/lodash.isarray/index.js":10}],26:[function(require,module,exports){
+},{"/Users/nvioli/git/card-validator/node_modules/credit-card-type/node_modules/lodash.clonedeep/node_modules/lodash._baseclone/node_modules/lodash.isarray/index.js":10}],26:[function(require,module,exports){
 /**
  * lodash 3.0.1 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -2084,25 +1885,15 @@ module.exports = isString;
 var isString = require('lodash.isstring');
 var extend = require('lodash.assign');
 var luhn10 = require('./luhn-10');
-var getCardType = require('credit-card-type');
+var getCardTypes = require('credit-card-type');
 var isNumber = require('lodash.isnumber');
 
 function verification(card, isPotentiallyValid, isValid) {
   return extend({}, {card: card, isPotentiallyValid: isPotentiallyValid, isValid: isValid});
 }
 
-function isEmptyObject(object) {
-  var key;
-
-  for (key in object) {
-    if (object.hasOwnProperty(key)) { return false; }
-  }
-
-  return true;
-}
-
 function cardNumber(value) {
-  var cardType, valid, i, maxLength;
+  var potentialTypes, cardType, valid, i, maxLength;
 
   if (isNumber(value)) {
     value = String(value);
@@ -2110,16 +1901,21 @@ function cardNumber(value) {
 
   if (!isString(value)) { return verification(null, false, false); }
 
-  if (value === '') { return verification(null, true, false); }
-
   value = value.replace(/\-|\s/g, '');
 
   if (!/^\d*$/.test(value)) { return verification(null, false, false); }
 
-  cardType = getCardType(value);
-  if (isEmptyObject(cardType)) { return verification(null, false, false); }
+  potentialTypes = getCardTypes(value);
 
-  if (cardType.type === 'unionpay') { // UnionPay is not Luhn 10 compliant
+  if (potentialTypes.length === 0) {
+    return verification(null, false, false);
+  } else if (potentialTypes.length !== 1) {
+    return verification(null, true, false);
+  }
+
+  cardType = potentialTypes[0];
+
+  if (cardType.type === 'unionpay') {  // UnionPay is not Luhn 10 compliant
     valid = true;
   } else {
     valid = luhn10(value);
@@ -2180,7 +1976,7 @@ function verification(isValid, isPotentiallyValid, month, year) {
 }
 
 function expirationDate(value) {
-  var date, monthValid, yearValid;
+  var date, monthValid, yearValid, isValidForThisYear;
 
   if (!isString(value)) {
     return verification(false, false, null, null);
@@ -2191,8 +1987,15 @@ function expirationDate(value) {
   monthValid = expirationMonth(date.month);
   yearValid = expirationYear(date.year);
 
-  if (monthValid.isValid && yearValid.isValid) {
-    return verification(true, true, date.month, date.year);
+  if (yearValid.isValid) {
+    if (yearValid.isCurrentYear) {
+      isValidForThisYear = monthValid.isValidForThisYear;
+      return verification(isValidForThisYear, isValidForThisYear, date.month, date.year);
+    }
+
+    if (monthValid.isValid) {
+      return verification(true, true, date.month, date.year);
+    }
   }
 
   if (monthValid.isPotentiallyValid && yearValid.isPotentiallyValid) {
@@ -2207,12 +2010,17 @@ module.exports = expirationDate;
 },{"./expiration-month":31,"./expiration-year":32,"./parse-date":34,"lodash.isstring":27}],31:[function(require,module,exports){
 var isString = require('lodash.isstring');
 
-function verification(isValid, isPotentiallyValid) {
-  return {isValid: isValid, isPotentiallyValid: isPotentiallyValid};
+function verification(isValid, isPotentiallyValid, isValidForThisYear) {
+  return {
+    isValid: isValid,
+    isPotentiallyValid: isPotentiallyValid,
+    isValidForThisYear: isValidForThisYear || false
+  };
 }
 
 function expirationMonth(value) {
   var month, result;
+  var currentMonth = new Date().getMonth() + 1;
 
   if (!isString(value)) {
     return verification(false, false);
@@ -2232,7 +2040,7 @@ function expirationMonth(value) {
 
   result = month > 0 && month < 13;
 
-  return verification(result, result);
+  return verification(result, result, result && month >= currentMonth);
 }
 
 module.exports = expirationMonth;
@@ -2241,12 +2049,16 @@ module.exports = expirationMonth;
 var isString = require('lodash.isstring');
 var maxYear = 19;
 
-function verification(isValid, isPotentiallyValid) {
-  return {isValid: isValid, isPotentiallyValid: isPotentiallyValid};
+function verification(isValid, isPotentiallyValid, isCurrentYear) {
+  return {
+    isValid: isValid,
+    isPotentiallyValid: isPotentiallyValid,
+    isCurrentYear: isCurrentYear || false
+  };
 }
 
 function expirationYear(value) {
-  var currentFirstTwo, currentYear, firstTwo, len, twoDigitYear, valid;
+  var currentFirstTwo, currentYear, firstTwo, len, twoDigitYear, valid, isCurrentYear;
 
   if (!isString(value)) {
     return verification(false, false);
@@ -2281,12 +2093,14 @@ function expirationYear(value) {
   twoDigitYear = Number(String(currentYear).substr(2, 2));
 
   if (len === 2) {
+    isCurrentYear = twoDigitYear === value;
     valid = value >= twoDigitYear && value <= twoDigitYear + maxYear;
   } else if (len === 4) {
+    isCurrentYear = currentYear === value;
     valid = value >= currentYear && value <= currentYear + maxYear;
   }
 
-  return verification(valid, valid);
+  return verification(valid, valid, isCurrentYear);
 }
 
 module.exports = expirationYear;
