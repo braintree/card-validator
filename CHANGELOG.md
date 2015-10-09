@@ -1,5 +1,5 @@
-UNRELEASED
-==========
+2.2.0
+=====
 
 - CVV validator can accept an array of possible length values
 
