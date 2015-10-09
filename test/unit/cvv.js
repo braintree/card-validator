@@ -7,6 +7,7 @@ describe('cvv', function () {
       'potentiallyValid': [
         ['', {isValid: false, isPotentiallyValid: true}],
         ['1', {isValid: false, isPotentiallyValid: true}],
+        ['1', {isValid: false, isPotentiallyValid: true}, [3,4]],
         ['12', {isValid: false, isPotentiallyValid: true}]
       ],
 
@@ -14,12 +15,15 @@ describe('cvv', function () {
         ['000', {isValid: true, isPotentiallyValid: true}],
         ['0000', {isValid: true, isPotentiallyValid: true}, 4],
         ['123', {isValid: true, isPotentiallyValid: true}],
-        ['1234', {isValid: true, isPotentiallyValid: true}, 4]
+        ['1234', {isValid: true, isPotentiallyValid: true}, 4],
+        ['1234', {isValid: true, isPotentiallyValid: true}, [3,4]],
+        ['123', {isValid: true, isPotentiallyValid: true}, [3,4]]
       ],
 
       'returns false for invalid strings': [
         ['12345', {isValid: false, isPotentiallyValid: false}],
-          ['foo', {isValid: false, isPotentiallyValid: false}],
+        ['12345', {isValid: false, isPotentiallyValid: false}, [3,4]],
+        ['foo', {isValid: false, isPotentiallyValid: false}],
         ['-123', {isValid: false, isPotentiallyValid: false}],
         ['12 34', {isValid: false, isPotentiallyValid: false}],
         ['12/34', {isValid: false, isPotentiallyValid: false}],
