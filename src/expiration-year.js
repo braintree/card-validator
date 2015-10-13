@@ -1,4 +1,4 @@
-var isString = require('lodash.isstring');
+var isString = require('lodash/lang/isString');
 var maxYear = 19;
 
 function verification(isValid, isPotentiallyValid, isCurrentYear) {

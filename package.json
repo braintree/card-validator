@@ -39,8 +39,6 @@
   },
   "dependencies": {
     "credit-card-type": "^4.0.0",
-    "lodash.assign": "^3.0.0",
-    "lodash.isnumber": "^3.0.1",
-    "lodash.isstring": "^3.0.1"
+    "lodash": "3.10.1"
   }
 }

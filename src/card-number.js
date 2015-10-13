@@ -1,8 +1,8 @@
-var isString = require('lodash.isstring');
-var extend = require('lodash.assign');
+var isString = require('lodash/lang/isString');
+var extend = require('lodash/object/assign');
 var luhn10 = require('./luhn-10');
 var getCardTypes = require('credit-card-type');
-var isNumber = require('lodash.isnumber');
+var isNumber = require('lodash/lang/isNumber');
 
 function verification(card, isPotentiallyValid, isValid) {
   return extend({}, {card: card, isPotentiallyValid: isPotentiallyValid, isValid: isValid});

@@ -1,4 +1,4 @@
-var isString = require('lodash.isstring');
+var isString = require('lodash/lang/isString');
 
 function verification(isValid, isPotentiallyValid, isValidForThisYear) {
   return {
