@@ -1,3 +1,8 @@
+2.2.1
+=====
+
+- Use one Lodash dependency
+
 2.2.0
 =====
 
