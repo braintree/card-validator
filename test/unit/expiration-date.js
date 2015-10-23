@@ -87,6 +87,8 @@ describe('expirationDate validates', function () {
       ['12' + nextYear, {isValid: true, isPotentiallyValid: true, month: '12', year: nextYear.toString()}],
       ['01' + nextYear, {isValid: true, isPotentiallyValid: true, month: '01', year: nextYear.toString()}],
       ['09' + nextYear, {isValid: true, isPotentiallyValid: true, month: '09', year: nextYear.toString()}],
+      ['1' + (twoDigitYear + 1), {isValid: true, isPotentiallyValid: true, month: '1',  year: (twoDigitYear + 1).toString()}],
+      ['9' + (twoDigitYear + 1), {isValid: true, isPotentiallyValid: true, month: '9',  year: (twoDigitYear + 1).toString()}],
       ['1219', {isValid: true, isPotentiallyValid: true, month: '12', year: '19'}],
       ['0116', {isValid: true, isPotentiallyValid: true, month: '01', year: '16'}]
     ],
