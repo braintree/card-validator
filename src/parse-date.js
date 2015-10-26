@@ -1,5 +1,7 @@
+var expirationYear = require('./expiration-year');
+
 function parseDate(value) {
-  var month, len;
+  var month, len, year, yearValid;
 
   if (value.match('/')) {
     value = value.split(/\s*\/\s*/g);
@@ -10,7 +12,16 @@ function parseDate(value) {
     };
   }
 
-  len = value[0] === '0' || value.length > 5 || value.length === 4 || value.length === 3 ? 2 : 1;
+  len = value[0] === '0' || value.length > 5 || value.length === 4 ? 2 : 1;
+
+  if (value.length === 3 && value[0] === '1') {
+    year = value.substr(1, 2);
+    yearValid = expirationYear(year);
+    if (!yearValid.isValid) {
+      len = 2;
+    }
+  }
+
   month = value.substr(0, len);
 
   return {
