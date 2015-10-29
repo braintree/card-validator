@@ -57,7 +57,7 @@ describe('number validates', function () {
     ]);
   });
 
-  describe('weird formatting', function () {
+  describe.only('weird formatting', function () {
     table([
       ['4111-1111-1111-1111',
         {card: 'visa', isPotentiallyValid: true, isValid: true}],
@@ -153,8 +153,8 @@ function table(tests) {
     it('isPotentiallyValid: is ' + expected.isPotentiallyValid + ' for ' + number, function () {
       expect(actual.isPotentiallyValid).to.equal(expected.isPotentiallyValid);
     });
-    it('valid: is ' + expected.valid + ' for ' + number, function () {
-      expect(actual.valid).to.equal(expected.valid);
+    it('valid: is ' + expected.isValid + ' for ' + number, function () {
+      expect(actual.isValid).to.equal(expected.isValid);
     });
   });
 }
