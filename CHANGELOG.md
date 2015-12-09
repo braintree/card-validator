@@ -1,3 +1,8 @@
+2.2.2
+=====
+
+- Fixes 3-digit expiration date handling, such as 220 being Feb, 2020
+
 2.2.1
 =====
 
