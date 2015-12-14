@@ -57,7 +57,7 @@ describe('number validates', function () {
     ]);
   });
 
-  describe.only('weird formatting', function () {
+  describe('weird formatting', function () {
     table([
       ['4111-1111-1111-1111',
         {card: 'visa', isPotentiallyValid: true, isValid: true}],
