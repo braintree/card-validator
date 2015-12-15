@@ -1,3 +1,8 @@
+2.2.3
+=====
+
+- Fixes CVV validation to not always validate 3-digit values as `isValid: true`
+
 2.2.2
 =====
 
