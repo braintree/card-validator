@@ -17,10 +17,10 @@ function parseDate(value) {
     };
   }
 
-  len = value[0] === '0' || value.length > 5 || value.length === 4 ? 2 : 1;
+  len = value[0] === '0' || value.length > 5 ? 2 : 1;
 
-  if (value.length === 3 && value[0] === '1') {
-    year = value.substr(1, 2);
+  if (value[0] === '1') {
+    year = value.substr(1);
     yearValid = expirationYear(year);
     if (!yearValid.isValid) {
       len = 2;

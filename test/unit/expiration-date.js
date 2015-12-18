@@ -142,6 +142,7 @@ describe('expirationDate validates', function () {
     'ambiguous expiration dates with no slashes': [
       ['011', {isValid: false, isPotentiallyValid: true, month: null, year: null}],
       ['111', {isValid: false, isPotentiallyValid: true, month: null, year: null}],
+      ['2202', {isValid: false, isPotentiallyValid: true, month: null, year: null}],
       ['01201', {isValid: false, isPotentiallyValid: true, month: null, year: null}],
       ['01211', {isValid: false, isPotentiallyValid: false, month: null, year: null}],
       ['01199', {isValid: false, isPotentiallyValid: false, month: null, year: null}],
