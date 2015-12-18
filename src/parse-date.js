@@ -1,11 +1,16 @@
 var expirationYear = require('./expiration-year');
+var isArray = require('lodash/lang/isArray');
 
 function parseDate(value) {
   var month, len, year, yearValid;
 
   if (value.match('/')) {
     value = value.split(/\s*\/\s*/g);
+  } else if (value.match(' ')) {
+    value = value.split(/ +/g);
+  }
 
+  if (isArray(value)) {
     return {
       month: value[0],
       year: value.slice(1).join()
