@@ -173,6 +173,7 @@ describe('expirationDate validates', function () {
 
     'malformed strings': [
       ['foo', {isValid: false, isPotentiallyValid: false, month: null, year: null}],
+      ['0120197', {isValid: false, isPotentiallyValid: false, month: null, year: null}],
       ['1.2', {isValid: false, isPotentiallyValid: false, month: null, year: null}],
       [' 1', {isValid: false, isPotentiallyValid: true, month: null, year: null}],
       ['01 / 20015', {isValid: false, isPotentiallyValid: false, month: null, year: null}],

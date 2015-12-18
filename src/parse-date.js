@@ -31,7 +31,7 @@ function parseDate(value) {
 
   return {
     month: month,
-    year: value.substr(month.length, 4)
+    year: value.substr(month.length)
   };
 }
 
