@@ -93,8 +93,8 @@ describe('expirationDate validates', function () {
       ['9' + nextYear, {isValid: true, isPotentiallyValid: true, month: '9', year: nextYear.toString()}],
       ['1' + (twoDigitYear + 1), {isValid: true, isPotentiallyValid: true, month: '1',  year: (twoDigitYear + 1).toString()}],
       ['9' + (twoDigitYear + 1), {isValid: true, isPotentiallyValid: true, month: '9',  year: (twoDigitYear + 1).toString()}],
-      ['1219', {isValid: true, isPotentiallyValid: true, month: '12', year: '19'}],
-      ['0116', {isValid: true, isPotentiallyValid: true, month: '01', year: '16'}]
+      ['12' + (twoDigitYear + 1), {isValid: true, isPotentiallyValid: true, month: '12', year: (twoDigitYear + 1).toString()}],
+      ['01' + (twoDigitYear + 1), {isValid: true, isPotentiallyValid: true, month: '01', year: (twoDigitYear + 1).toString()}]
     ],
 
     'valid space separated month and year': [
@@ -132,8 +132,8 @@ describe('expirationDate validates', function () {
       [' ', {isValid: false, isPotentiallyValid: true, month: null, year: null}],
       ['  ', {isValid: false, isPotentiallyValid: true, month: null, year: null}],
       ['1111', {isValid: false, isPotentiallyValid: false, month: null, year: null}],
-      ['002016', {isValid: false, isPotentiallyValid: false, month: null, year: null}],
-      ['132016', {isValid: false, isPotentiallyValid: false, month: null, year: null}],
+      ['00' + nextYear, {isValid: false, isPotentiallyValid: false, month: null, year: null}],
+      ['13' + nextYear, {isValid: false, isPotentiallyValid: false, month: null, year: null}],
       ['011999', {isValid: false, isPotentiallyValid: false, month: null, year: null}],
       ['011999', {isValid: false, isPotentiallyValid: false, month: null, year: null}],
       ['012100', {isValid: false, isPotentiallyValid: false, month: null, year: null}]
