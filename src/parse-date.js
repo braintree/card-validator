@@ -22,7 +22,7 @@ function parseDate(value) {
   if (value[0] === '1') {
     year = value.substr(1);
     yearValid = expirationYear(year);
-    if (!yearValid.isValid) {
+    if (!yearValid.isPotentiallyValid) {
       len = 2;
     }
   }
