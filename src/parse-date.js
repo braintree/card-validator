@@ -4,9 +4,9 @@ var isArray = require('lodash/lang/isArray');
 function parseDate(value) {
   var month, len, year, yearValid;
 
-  if (value.match('/')) {
+  if (/\//.test(value)) {
     value = value.split(/\s*\/\s*/g);
-  } else if (value.match(' ')) {
+  } else if (/\s/.test(value)) {
     value = value.split(/ +/g);
   }
 
