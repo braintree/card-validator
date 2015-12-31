@@ -93,23 +93,47 @@ describe('expirationDate validates', function () {
       ['9' + nextYear, {isValid: true, isPotentiallyValid: true, month: '9', year: nextYear.toString()}],
       ['1' + (twoDigitYear + 1), {isValid: true, isPotentiallyValid: true, month: '1',  year: (twoDigitYear + 1).toString()}],
       ['9' + (twoDigitYear + 1), {isValid: true, isPotentiallyValid: true, month: '9',  year: (twoDigitYear + 1).toString()}],
-      ['1219', {isValid: true, isPotentiallyValid: true, month: '12', year: '19'}],
-      ['0116', {isValid: true, isPotentiallyValid: true, month: '01', year: '16'}]
+      ['12' + (twoDigitYear + 1), {isValid: true, isPotentiallyValid: true, month: '12', year: (twoDigitYear + 1).toString()}],
+      ['01' + (twoDigitYear + 1), {isValid: true, isPotentiallyValid: true, month: '01', year: (twoDigitYear + 1).toString()}]
     ],
 
     'valid space separated month and year': [
       ['01 ' + (currentYear + 4), {isValid: true, isPotentiallyValid: true, month: '01', year: (currentYear + 4).toString()}],
       ['01 ' + (currentYear + 5), {isValid: true, isPotentiallyValid: true, month: '01', year: (currentYear + 5).toString()}],
       ['01 ' + (twoDigitYear + 4), {isValid: true, isPotentiallyValid: true, month: '01', year: (twoDigitYear + 4).toString()}],
-      ['01 ' + (twoDigitYear + 6), {isValid: true, isPotentiallyValid: true, month: '01', year: (twoDigitYear + 6).toString()}]
+      ['01 ' + (twoDigitYear + 6), {isValid: true, isPotentiallyValid: true, month: '01', year: (twoDigitYear + 6).toString()}],
+      ['1 ' + (currentYear + 4), {isValid: true, isPotentiallyValid: true, month: '1', year: (currentYear + 4).toString()}],
+      ['1 ' + (currentYear + 5), {isValid: true, isPotentiallyValid: true, month: '1', year: (currentYear + 5).toString()}],
+      ['1 ' + (twoDigitYear + 4), {isValid: true, isPotentiallyValid: true, month: '1', year: (twoDigitYear + 4).toString()}],
+      ['1 ' + (twoDigitYear + 5), {isValid: true, isPotentiallyValid: true, month: '1', year: (twoDigitYear + 5).toString()}],
+      ['9 ' + (currentYear + 4), {isValid: true, isPotentiallyValid: true, month: '9', year: (currentYear + 4).toString()}],
+      ['9 ' + (currentYear + 5), {isValid: true, isPotentiallyValid: true, month: '9', year: (currentYear + 5).toString()}]
+    ],
+
+    'ambiguous space separated month and year': [
+      ['1 2', {isValid: false, isPotentiallyValid: true, month: null, year: null}],
+      ['1 202', {isValid: false, isPotentiallyValid: true, month: null, year: null}],
+      ['1 ', {isValid: false, isPotentiallyValid: true, month: null, year: null}],
+      ['12 2', {isValid: false, isPotentiallyValid: true, month: null, year: null}],
+      ['12 202', {isValid: false, isPotentiallyValid: true, month: null, year: null}],
+      ['12 ', {isValid: false, isPotentiallyValid: true, month: null, year: null}]
+    ],
+
+    'invalid space separated month and year': [
+      ['11 11', {isValid: false, isPotentiallyValid: false, month: null, year: null}],
+      ['00 ' + nextYear, {isValid: false, isPotentiallyValid: false, month: null, year: null}],
+      ['13 ' + nextYear, {isValid: false, isPotentiallyValid: false, month: null, year: null}],
+      ['01 1999', {isValid: false, isPotentiallyValid: false, month: null, year: null}],
+      ['01 1999', {isValid: false, isPotentiallyValid: false, month: null, year: null}],
+      ['01 2100', {isValid: false, isPotentiallyValid: false, month: null, year: null}]
     ],
 
     'invalid expiration dates with no slashes': [
       [' ', {isValid: false, isPotentiallyValid: true, month: null, year: null}],
       ['  ', {isValid: false, isPotentiallyValid: true, month: null, year: null}],
       ['1111', {isValid: false, isPotentiallyValid: false, month: null, year: null}],
-      ['002016', {isValid: false, isPotentiallyValid: false, month: null, year: null}],
-      ['132016', {isValid: false, isPotentiallyValid: false, month: null, year: null}],
+      ['00' + nextYear, {isValid: false, isPotentiallyValid: false, month: null, year: null}],
+      ['13' + nextYear, {isValid: false, isPotentiallyValid: false, month: null, year: null}],
       ['011999', {isValid: false, isPotentiallyValid: false, month: null, year: null}],
       ['011999', {isValid: false, isPotentiallyValid: false, month: null, year: null}],
       ['012100', {isValid: false, isPotentiallyValid: false, month: null, year: null}]
@@ -118,6 +142,8 @@ describe('expirationDate validates', function () {
     'ambiguous expiration dates with no slashes': [
       ['011', {isValid: false, isPotentiallyValid: true, month: null, year: null}],
       ['111', {isValid: false, isPotentiallyValid: true, month: null, year: null}],
+      ['2202', {isValid: false, isPotentiallyValid: true, month: null, year: null}],
+      ['1202', {isValid: false, isPotentiallyValid: true, month: null, year: null}],
       ['01201', {isValid: false, isPotentiallyValid: true, month: null, year: null}],
       ['01211', {isValid: false, isPotentiallyValid: false, month: null, year: null}],
       ['01199', {isValid: false, isPotentiallyValid: false, month: null, year: null}],
@@ -148,9 +174,8 @@ describe('expirationDate validates', function () {
 
     'malformed strings': [
       ['foo', {isValid: false, isPotentiallyValid: false, month: null, year: null}],
+      ['0120197', {isValid: false, isPotentiallyValid: false, month: null, year: null}],
       ['1.2', {isValid: false, isPotentiallyValid: false, month: null, year: null}],
-      ['1 2', {isValid: false, isPotentiallyValid: false, month: null, year: null}],
-      ['1 ', {isValid: false, isPotentiallyValid: true, month: null, year: null}],
       [' 1', {isValid: false, isPotentiallyValid: true, month: null, year: null}],
       ['01 / 20015', {isValid: false, isPotentiallyValid: false, month: null, year: null}],
       ['15  / 2016', {isValid: false, isPotentiallyValid: false, month: null, year: null}],
