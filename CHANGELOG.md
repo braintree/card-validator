@@ -1,3 +1,10 @@
+2.2.4
+=====
+
+- Fixes validation of space separated expiration dates
+- Fixes potential validity of slashless expiration dates
+- Fixes validation of expiration dates that are too long
+
 2.2.3
 =====
 
