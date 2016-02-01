@@ -24,13 +24,13 @@ function expirationDate(value) {
   monthValid = expirationMonth(date.month);
   yearValid = expirationYear(date.year);
 
-  if (yearValid.isValid) {
+  if (monthValid.isValid) {
     if (yearValid.isCurrentYear) {
       isValidForThisYear = monthValid.isValidForThisYear;
       return verification(isValidForThisYear, isValidForThisYear, date.month, date.year);
     }
 
-    if (monthValid.isValid) {
+    if (yearValid.isValid) {
       return verification(true, true, date.month, date.year);
     }
   }

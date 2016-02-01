@@ -178,7 +178,7 @@ describe('expirationDate validates', function () {
       ['1.2', {isValid: false, isPotentiallyValid: false, month: null, year: null}],
       [' 1', {isValid: false, isPotentiallyValid: true, month: null, year: null}],
       ['01 / 20015', {isValid: false, isPotentiallyValid: false, month: null, year: null}],
-      ['15  / 2016', {isValid: false, isPotentiallyValid: false, month: null, year: null}],
+      ['15  / ' + currentYear, {isValid: false, isPotentiallyValid: false, month: null, year: null}],
       ['01 / 2016 / 2016', {isValid: false, isPotentiallyValid: false, month: null, year: null}],
       ['01 / 16/2016', {isValid: false, isPotentiallyValid: false, month: null, year: null}],
       ['01 / 2016 / 01 / 2016', {isValid: false, isPotentiallyValid: false, month: null, year: null}]

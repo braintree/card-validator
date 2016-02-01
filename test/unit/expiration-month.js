@@ -80,7 +80,7 @@ describe('expirationMonth', function () {
         {
           isValid: true,
           isPotentiallyValid: true,
-          isValidForThisYear: currentMonth <= 12
+          isValidForThisYear: true
         }
       ]
     ],
@@ -95,9 +95,9 @@ describe('expirationMonth', function () {
       [
         previousMonth.toString(),
         {
-          isValid: true,
+          isValid: currentMonth !== 1,
           isPotentiallyValid: true,
-          isValidForThisYear: currentMonth <= 2
+          isValidForThisYear: false
         }
       ]
     ]
