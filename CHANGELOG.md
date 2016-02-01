@@ -1,3 +1,10 @@
+2.2.5
+=====
+
+- Fixes expiration date results when year is current year and month is invalid
+- Update files in `dist/`
+- Readme clarifications
+
 2.2.4
 =====
 

@@ -1,6 +1,6 @@
 {
   "name": "card-validator",
-  "version": "2.2.4",
+  "version": "2.2.5",
   "description": "A library for validating credit card fields",
   "main": "index.js",
   "repository": {

@@ -1530,17 +1530,6 @@ function includes(array, thing) {
   return false;
 }
 
-function min(array) {
-  var minimum = DEFAULT_LENGTH;
-  var i = 0;
-
-  for (; i < array.length; i++) {
-    minimum = array[i] < minimum ? array[i] : minimum;
-  }
-
-  return minimum;
-}
-
 function max(array) {
   var maximum = DEFAULT_LENGTH;
   var i = 0;
@@ -1563,7 +1552,7 @@ function cvv(value, maxLength) {
   if (!isString(value)) { return verification(false, false); }
   if (!/^\d*$/.test(value)) { return verification(false, false); }
   if (includes(maxLength, value.length)) { return verification(true, true); }
-  if (value.length < min(maxLength)) { return verification(false, true); }
+  if (value.length < Math.min.apply(null, maxLength)) { return verification(false, true); }
   if (value.length > max(maxLength)) { return verification(false, false); }
 
   return verification(true, true);
@@ -1598,13 +1587,13 @@ function expirationDate(value) {
   monthValid = expirationMonth(date.month);
   yearValid = expirationYear(date.year);
 
-  if (yearValid.isValid) {
+  if (monthValid.isValid) {
     if (yearValid.isCurrentYear) {
       isValidForThisYear = monthValid.isValidForThisYear;
       return verification(isValidForThisYear, isValidForThisYear, date.month, date.year);
     }
 
-    if (monthValid.isValid) {
+    if (yearValid.isValid) {
       return verification(true, true, date.month, date.year);
     }
   }
@@ -1725,30 +1714,46 @@ module.exports = function luhn10(a,b,c,d,e) {
 };
 
 },{}],47:[function(require,module,exports){
+var expirationYear = require('./expiration-year');
+var isArray = require('lodash/lang/isArray');
+
 function parseDate(value) {
-  var month, len;
+  var month, len, year, yearValid;
 
-  if (value.match('/')) {
+  if (/\//.test(value)) {
     value = value.split(/\s*\/\s*/g);
+  } else if (/\s/.test(value)) {
+    value = value.split(/ +/g);
+  }
 
+  if (isArray(value)) {
     return {
       month: value[0],
       year: value.slice(1).join()
     };
   }
 
-  len = value[0] === '0' || value.length > 5 || value.length === 4 || value.length === 3 ? 2 : 1;
+  len = value[0] === '0' || value.length > 5 ? 2 : 1;
+
+  if (value[0] === '1') {
+    year = value.substr(1);
+    yearValid = expirationYear(year);
+    if (!yearValid.isPotentiallyValid) {
+      len = 2;
+    }
+  }
+
   month = value.substr(0, len);
 
   return {
     month: month,
-    year: value.substr(month.length, 4)
+    year: value.substr(month.length)
   };
 }
 
 module.exports = parseDate;
 
-},{}],48:[function(require,module,exports){
+},{"./expiration-year":45,"lodash/lang/isArray":31}],48:[function(require,module,exports){
 var isString = require('lodash/lang/isString');
 
 function verification(isValid, isPotentiallyValid) {
