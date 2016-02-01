@@ -8,7 +8,7 @@ Credit Card Validator will also provide a determined card type (using [credit-ca
 
 ## Download
 
-You can install `card-validator` through `npm`. The npm module also includes the built, UMD bundle and its minified variant under `dist/`. If you use the pre-built versions in the browser, the top-level function `cardValidator` is exposed and can be interacted with as below.
+You can install `card-validator` through `npm`. The npm module also includes the built, UMD bundle and its minified variant under `dist/`. If you use the pre-built versions in the browser, the top-level function `cardValidator` is exposed.
 
 ```
 npm install card-validator
