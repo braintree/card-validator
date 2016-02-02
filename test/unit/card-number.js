@@ -90,6 +90,19 @@ describe('number validates', function () {
     ]);
   });
 
+  describe('Maestro', function () {
+    table([
+      ['500000000000', {card: 'maestro', isPotentiallyValid: true, isValid: false}],
+      ['500000000000061', {card: 'maestro', isPotentiallyValid: true, isValid: false}],
+      ['5000000000000611', {card: 'maestro', isPotentiallyValid: true, isValid: true}],
+      ['5000000000000612', {card: 'maestro', isPotentiallyValid: true, isValid: false}],
+      ['500000000000000005', {card: 'maestro', isPotentiallyValid: true, isValid: false}],
+      ['5000000000000000005', {card: 'maestro', isPotentiallyValid: true, isValid: true}],
+      ['5000000000000000001', {card: 'maestro', isPotentiallyValid: false, isValid: false}],
+      ['50000000000000000009', {card: 'maestro', isPotentiallyValid: false, isValid: false}],
+    ]);
+  });
+
   describe('Amex', function () {
     table([
       ['3782',
