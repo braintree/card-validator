@@ -9,7 +9,7 @@ function verification(card, isPotentiallyValid, isValid) {
 }
 
 function cardNumber(value) {
-  var potentialTypes, cardType, valid, i, maxLength;
+  var potentialTypes, cardType, isPotentiallyValid, isValid, i, maxLength;
 
   if (isNumber(value)) {
     value = String(value);
@@ -32,24 +32,21 @@ function cardNumber(value) {
   cardType = potentialTypes[0];
 
   if (cardType.type === 'unionpay') {  // UnionPay is not Luhn 10 compliant
-    valid = true;
+    isValid = true;
   } else {
-    valid = luhn10(value);
-  }
-
-  for (i = 0; i < cardType.lengths.length; i++) {
-    if (cardType.lengths[i] === value.length) {
-      return verification(cardType, valid, valid);
-    }
+    isValid = luhn10(value);
   }
 
   maxLength = Math.max.apply(null, cardType.lengths);
 
-  if (value.length < maxLength) {
-    return verification(cardType, true, false);
+  for (i = 0; i < cardType.lengths.length; i++) {
+    if (cardType.lengths[i] === value.length) {
+      isPotentiallyValid = (value.length !== maxLength) || isValid;
+      return verification(cardType, isPotentiallyValid, isValid);
+    }
   }
 
-  return verification(cardType, false, false);
+  return verification(cardType, value.length < maxLength, false);
 }
 
 module.exports = cardNumber;
