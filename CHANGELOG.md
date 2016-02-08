@@ -1,3 +1,9 @@
+2.2.6
+=====
+
+- Fixes cases where card numbers were incorrectly reported as `isPotentiallyValid: false` when more digits could still be entered
+  - issue #20 and PR #21
+
 2.2.5
 =====
 
