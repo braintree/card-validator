@@ -1,9 +1,12 @@
+'use strict';
+
 var expect = require('chai').expect;
 var expirationYear = require('../../src/expiration-year');
 var currentYear = new Date().getFullYear();
 
 function yearsFromNow(fromNow, digits) {
   var result = String(currentYear + fromNow);
+
   if (digits === 2) {
     result = result.substr(2, 2);
   }
@@ -18,7 +21,7 @@ describe('expirationYear', function () {
       [[], FALSE_VALIDATION],
       [{}, FALSE_VALIDATION],
       [null, FALSE_VALIDATION],
-      [undefined, FALSE_VALIDATION],
+      [undefined, FALSE_VALIDATION], // eslint-disable-line no-undefined
       [Infinity, FALSE_VALIDATION],
       [0 / 0, FALSE_VALIDATION],
       [0, FALSE_VALIDATION],
@@ -88,6 +91,7 @@ describe('expirationYear', function () {
 
   Object.keys(describes).forEach(function (key) {
     var tests = describes[key];
+
     describe(key, function () {
       tests.forEach(function (test) {
         var arg = test[0];
@@ -95,7 +99,7 @@ describe('expirationYear', function () {
 
         it('returns ' + JSON.stringify(output) + ' for "' + arg + '"', function () {
           expect(expirationYear(arg)).to.deep.equal(output);
-        })
+        });
       });
     });
   });

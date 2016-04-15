@@ -1,3 +1,5 @@
+'use strict';
+
 var isString = require('lodash/lang/isString');
 var DEFAULT_LENGTH = 3;
 

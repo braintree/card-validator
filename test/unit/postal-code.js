@@ -1,3 +1,5 @@
+'use strict';
+
 var expect = require('chai').expect;
 var postalCode = require('../../src/postal-code');
 
@@ -43,6 +45,7 @@ describe('postalCode', function () {
 
   Object.keys(describes).forEach(function (key) {
     var tests = describes[key];
+
     describe(key, function () {
       tests.forEach(function (test) {
         var arg = test[0];
@@ -50,9 +53,8 @@ describe('postalCode', function () {
 
         it('returns ' + JSON.stringify(output) + ' for "' + arg + '"', function () {
           expect(postalCode(arg)).to.deep.equal(output);
-        })
+        });
       });
     });
   });
-
 });

@@ -1,14 +1,16 @@
+'use strict';
+
 var expect = require('chai').expect;
 var cvv = require('../../src/cvv');
 
 describe('cvv', function () {
   describe('values', function () {
     var describes = {
-      'potentiallyValid': [
+      potentiallyValid: [
         ['', {isValid: false, isPotentiallyValid: true}],
         ['1', {isValid: false, isPotentiallyValid: true}],
-        ['1', {isValid: false, isPotentiallyValid: true}, [3,4]],
-        ['1', {isValid: false, isPotentiallyValid: true}, [4,3]],
+        ['1', {isValid: false, isPotentiallyValid: true}, [3, 4]],
+        ['1', {isValid: false, isPotentiallyValid: true}, [4, 3]],
         ['12', {isValid: false, isPotentiallyValid: true}],
         ['123', {isValid: false, isPotentiallyValid: true}, 4]
       ],
@@ -18,13 +20,13 @@ describe('cvv', function () {
         ['0000', {isValid: true, isPotentiallyValid: true}, 4],
         ['123', {isValid: true, isPotentiallyValid: true}],
         ['1234', {isValid: true, isPotentiallyValid: true}, 4],
-        ['1234', {isValid: true, isPotentiallyValid: true}, [3,4]],
-        ['123', {isValid: true, isPotentiallyValid: true}, [3,4]]
+        ['1234', {isValid: true, isPotentiallyValid: true}, [3, 4]],
+        ['123', {isValid: true, isPotentiallyValid: true}, [3, 4]]
       ],
 
       'returns false for invalid strings': [
         ['12345', {isValid: false, isPotentiallyValid: false}],
-        ['12345', {isValid: false, isPotentiallyValid: false}, [3,4]],
+        ['12345', {isValid: false, isPotentiallyValid: false}, [3, 4]],
         ['1234', {isValid: false, isPotentiallyValid: false}],
         ['1234', {isValid: false, isPotentiallyValid: false}, 3],
         ['foo', {isValid: false, isPotentiallyValid: false}],
@@ -50,6 +52,7 @@ describe('cvv', function () {
 
     Object.keys(describes).forEach(function (key) {
       var tests = describes[key];
+
       describe(key, function () {
         tests.forEach(function (test) {
           var arg = test[0];
@@ -58,7 +61,7 @@ describe('cvv', function () {
 
           it('returns ' + JSON.stringify(output) + ' for "' + arg + '"', function () {
             expect(cvv(arg, maxLength)).to.deep.equal(output);
-          })
+          });
         });
       });
     });

@@ -1,3 +1,5 @@
+'use strict';
+
 var expect = require('chai').expect;
 var expirationDate = require('../../src/expiration-date');
 
@@ -91,8 +93,8 @@ describe('expirationDate validates', function () {
       ['09' + nextYear, {isValid: true, isPotentiallyValid: true, month: '09', year: nextYear.toString()}],
       ['1' + nextYear, {isValid: true, isPotentiallyValid: true, month: '1', year: nextYear.toString()}],
       ['9' + nextYear, {isValid: true, isPotentiallyValid: true, month: '9', year: nextYear.toString()}],
-      ['1' + (twoDigitYear + 1), {isValid: true, isPotentiallyValid: true, month: '1',  year: (twoDigitYear + 1).toString()}],
-      ['9' + (twoDigitYear + 1), {isValid: true, isPotentiallyValid: true, month: '9',  year: (twoDigitYear + 1).toString()}],
+      ['1' + (twoDigitYear + 1), {isValid: true, isPotentiallyValid: true, month: '1', year: (twoDigitYear + 1).toString()}],
+      ['9' + (twoDigitYear + 1), {isValid: true, isPotentiallyValid: true, month: '9', year: (twoDigitYear + 1).toString()}],
       ['12' + (twoDigitYear + 1), {isValid: true, isPotentiallyValid: true, month: '12', year: (twoDigitYear + 1).toString()}],
       ['01' + (twoDigitYear + 1), {isValid: true, isPotentiallyValid: true, month: '01', year: (twoDigitYear + 1).toString()}]
     ],
@@ -160,7 +162,7 @@ describe('expirationDate validates', function () {
       [[], {isValid: false, isPotentiallyValid: false, month: null, year: null}],
       [{}, {isValid: false, isPotentiallyValid: false, month: null, year: null}],
       [null, {isValid: false, isPotentiallyValid: false, month: null, year: null}],
-      [undefined, {isValid: false, isPotentiallyValid: false, month: null, year: null}],
+      [undefined, {isValid: false, isPotentiallyValid: false, month: null, year: null}], // eslint-disable-line no-undefined
       [Infinity, {isValid: false, isPotentiallyValid: false, month: null, year: null}],
       [0 / 0, {isValid: false, isPotentiallyValid: false, month: null, year: null}],
       [0, {isValid: false, isPotentiallyValid: false, month: null, year: null}],
@@ -185,17 +187,18 @@ describe('expirationDate validates', function () {
     ]
   };
 
-Object.keys(describes).forEach(function (key) {
-  var tests = describes[key];
-  describe(key, function () {
-    tests.forEach(function (test) {
-      var arg = test[0];
-      var output = test[1];
+  Object.keys(describes).forEach(function (key) {
+    var tests = describes[key];
 
-      it('and returns ' + JSON.stringify(output) + ' for "' + arg + '"', function () {
-        expect(expirationDate(arg)).to.deep.equal(output);
-      })
+    describe(key, function () {
+      tests.forEach(function (test) {
+        var arg = test[0];
+        var output = test[1];
+
+        it('and returns ' + JSON.stringify(output) + ' for "' + arg + '"', function () {
+          expect(expirationDate(arg)).to.deep.equal(output);
+        });
+      });
     });
   });
-});
 });
