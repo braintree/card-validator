@@ -1,8 +1,9 @@
+'use strict';
+
 var expect = require('chai').expect;
 var cardNumber = require('../../src/card-number');
 
 describe('number validates', function () {
-
   describe('partial validation sequences', function () {
     table([
       ['',
@@ -24,7 +25,7 @@ describe('number validates', function () {
       ['x',
         {card: null, isPotentiallyValid: false, isValid: false}],
       ['123',
-        {card: null, isPotentiallyValid: false, isValid: false}],
+        {card: null, isPotentiallyValid: false, isValid: false}]
     ]);
   });
 
@@ -53,7 +54,7 @@ describe('number validates', function () {
       ['41111111111111111111', // Too long
         {card: 'visa', isPotentiallyValid: false, isValid: false}],
       ['4111111111111112', // right lenght, not Luhn
-        {card: 'visa', isPotentiallyValid: false, isValid: false}],
+        {card: 'visa', isPotentiallyValid: false, isValid: false}]
     ]);
   });
 
@@ -64,7 +65,7 @@ describe('number validates', function () {
       ['4111 1111 1111 1111',
         {card: 'visa', isPotentiallyValid: true, isValid: true}],
       ['601 1 1 1  1 1 1 1   1 1 1 1 1 7',
-        {card: 'discover', isPotentiallyValid: true, isValid: true}],
+        {card: 'discover', isPotentiallyValid: true, isValid: true}]
     ]);
   });
 
@@ -75,7 +76,7 @@ describe('number validates', function () {
       ['6011111',
         {card: 'discover', isPotentiallyValid: true, isValid: false}],
       ['6011111111111117',
-        {card: 'discover', isPotentiallyValid: true, isValid: true}],
+        {card: 'discover', isPotentiallyValid: true, isValid: true}]
     ]);
   });
 
@@ -86,7 +87,7 @@ describe('number validates', function () {
       ['5555555555554444',
         {card: 'master-card', isPotentiallyValid: true, isValid: true}],
       ['5555555555554446',
-        {card: 'master-card', isPotentiallyValid: false, isValid: false}],
+        {card: 'master-card', isPotentiallyValid: false, isValid: false}]
     ]);
   });
 
@@ -99,7 +100,7 @@ describe('number validates', function () {
       ['500000000000000005', {card: 'maestro', isPotentiallyValid: true, isValid: false}],
       ['5000000000000000005', {card: 'maestro', isPotentiallyValid: true, isValid: true}],
       ['5000000000000000001', {card: 'maestro', isPotentiallyValid: false, isValid: false}],
-      ['50000000000000000009', {card: 'maestro', isPotentiallyValid: false, isValid: false}],
+      ['50000000000000000009', {card: 'maestro', isPotentiallyValid: false, isValid: false}]
     ]);
   });
 
@@ -108,7 +109,7 @@ describe('number validates', function () {
       ['3782',
         {card: 'american-express', isPotentiallyValid: true, isValid: false}],
       ['378282246310005',
-        {card: 'american-express', isPotentiallyValid: true, isValid: true}],
+        {card: 'american-express', isPotentiallyValid: true, isValid: true}]
     ]);
   });
 
@@ -121,7 +122,7 @@ describe('number validates', function () {
       ['3530111',
         {card: 'jcb', isPotentiallyValid: true, isValid: false}],
       ['3530111333300000',
-        {card: 'jcb', isPotentiallyValid: true, isValid: true}],
+        {card: 'jcb', isPotentiallyValid: true, isValid: true}]
     ]);
   });
 
@@ -144,10 +145,9 @@ describe('number validates', function () {
       [true,
         {card: null, isPotentiallyValid: false, isValid: false}],
       [false,
-        {card: null, isPotentiallyValid: false, isValid: false}],
+        {card: null, isPotentiallyValid: false, isValid: false}]
     ]);
   });
-
 });
 
 function table(tests) {

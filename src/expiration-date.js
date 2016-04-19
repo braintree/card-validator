@@ -1,3 +1,5 @@
+'use strict';
+
 var parseDate = require('./parse-date');
 var expirationMonth = require('./expiration-month');
 var expirationYear = require('./expiration-year');

@@ -7,8 +7,6 @@ var streamify = require('gulp-streamify');
 var size = require('gulp-size');
 var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
-var watch = require('gulp-watch');
-var eslint = require('gulp-eslint');
 var del = require('del');
 
 var config = {
@@ -24,14 +22,8 @@ var config = {
   dist: 'dist'
 };
 
-gulp.task('lint', function () {
-  gulp.src([config.src.js.all])
-  .pipe(eslint())
-  .pipe(eslint.format());
-});
-
-gulp.task('js', ['lint'], function () {
-    return browserify({standalone: 'cardValidator'})
+gulp.task('js', function () {
+  return browserify({standalone: 'cardValidator'})
     .add(config.src.js.main)
     .bundle()
     .pipe(source(config.src.js.output))
@@ -44,7 +36,7 @@ gulp.task('js', ['lint'], function () {
 });
 
 gulp.task('clean', function (done) {
-  del([ config.dist ], done);
+  del([config.dist], done);
 });
 
 gulp.task('build', ['clean', 'js']);

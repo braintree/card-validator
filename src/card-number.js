@@ -1,3 +1,5 @@
+'use strict';
+
 var isString = require('lodash/lang/isString');
 var extend = require('lodash/object/assign');
 var luhn10 = require('./luhn-10');
@@ -41,7 +43,7 @@ function cardNumber(value) {
 
   for (i = 0; i < cardType.lengths.length; i++) {
     if (cardType.lengths[i] === value.length) {
-      isPotentiallyValid = (value.length !== maxLength) || isValid;
+      isPotentiallyValid = value.length !== maxLength || isValid;
       return verification(cardType, isPotentiallyValid, isValid);
     }
   }

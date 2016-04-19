@@ -1,3 +1,5 @@
+'use strict';
+
 var expirationYear = require('./expiration-year');
 var isArray = require('lodash/lang/isArray');
 

@@ -1,3 +1,5 @@
+'use strict';
+
 var expect = require('chai').expect;
 var expirationMonth = require('../../src/expiration-month');
 
@@ -14,7 +16,7 @@ describe('expirationMonth', function () {
       [[], FALSE_VALIDATION],
       [{}, FALSE_VALIDATION],
       [null, FALSE_VALIDATION],
-      [undefined, FALSE_VALIDATION],
+      [undefined, FALSE_VALIDATION], // eslint-disable-line no-undefined
       [Infinity, FALSE_VALIDATION],
       [0 / 0, FALSE_VALIDATION],
       [0, FALSE_VALIDATION],
@@ -105,6 +107,7 @@ describe('expirationMonth', function () {
 
   Object.keys(describes).forEach(function (key) {
     var tests = describes[key];
+
     describe(key, function () {
       tests.forEach(function (test) {
         var arg = test[0];
@@ -112,7 +115,7 @@ describe('expirationMonth', function () {
 
         it('returns ' + JSON.stringify(output) + ' for "' + arg + '"', function () {
           expect(expirationMonth(arg)).to.deep.equal(output);
-        })
+        });
       });
     });
   });

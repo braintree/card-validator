@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = {
   number: require('./src/card-number'),
   expirationDate: require('./src/expiration-date'),
