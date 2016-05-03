@@ -10,6 +10,24 @@ function verification(card, isPotentiallyValid, isValid) {
   return extend({}, {card: card, isPotentiallyValid: isPotentiallyValid, isValid: isValid});
 }
 
+function isDualBranded(possibleCardTypes) {
+  var i, card;
+
+  if (possibleCardTypes.length !== 2) {
+    return false;
+  }
+
+  for (i = 0; i < possibleCardTypes.length; i++) {
+    card = possibleCardTypes[i];
+
+    if (card.type !== 'discover' && card.type !== 'unionpay') {
+      return false;
+    }
+  }
+
+  return true;
+}
+
 function cardNumber(value) {
   var potentialTypes, cardType, isPotentiallyValid, isValid, i, maxLength;
 
@@ -27,11 +45,13 @@ function cardNumber(value) {
 
   if (potentialTypes.length === 0) {
     return verification(null, false, false);
+  } else if (isDualBranded(potentialTypes)) {
+    cardType = potentialTypes[1];
   } else if (potentialTypes.length !== 1) {
     return verification(null, true, false);
+  } else {
+    cardType = potentialTypes[0];
   }
-
-  cardType = potentialTypes[0];
 
   if (cardType.type === 'unionpay') {  // UnionPay is not Luhn 10 compliant
     isValid = true;
