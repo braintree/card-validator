@@ -1,3 +1,8 @@
+2.2.8
+=====
+
+- Update `dist` to include version `4.0.3` of credit-card-type
+
 2.2.7
 =====
 
