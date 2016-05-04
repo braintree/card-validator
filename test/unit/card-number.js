@@ -117,7 +117,7 @@ describe('number validates', function () {
     table([
       ['1',
         {card: 'jcb', isPotentiallyValid: true, isValid: false}],
-      ['2',
+      ['21',
         {card: 'jcb', isPotentiallyValid: true, isValid: false}],
       ['3530111',
         {card: 'jcb', isPotentiallyValid: true, isValid: false}],
