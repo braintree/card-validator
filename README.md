@@ -16,6 +16,8 @@ npm install card-validator
 
 ## Example
 
+### Using a CommonJS build tool (browserify, webpack, etc)
+
 ```javascript
 var valid = require('card-validator');
 
@@ -28,6 +30,24 @@ if (!numberValidation.isPotentiallyValid) {
 if (numberValidation.card) {
   console.log(numberValidation.card.type); // 'visa'
 }
+```
+
+### Loading pre-bundled code in browser
+
+```html
+<!-- after downloading the bundled code from https://github.com/braintree/card-validator/blob/master/dist/card-validator.js -->
+<script src="path/to/card-validator.js"></script>
+<script>
+var numberValidation = cardValidator.number('4111');
+
+if (!numberValidation.isPotentiallyValid) {
+  renderInvalidCardNumber();
+}
+
+if (numberValidation.card) {
+  console.log(numberValidation.card.type); // 'visa'
+}
+</script>
 ```
 
 ## API
