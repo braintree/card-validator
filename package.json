@@ -13,7 +13,7 @@
     "test": "npm run lint && mocha test/**/*.js",
     "build": "npm run lint && gulp build"
   },
-  "author": "",
+  "author": "Braintree <code@getbraintree.com> (https://www.braintreepayments.com/)",
   "license": "MIT",
   "devDependencies": {
     "browserify": "^6.1.0",
