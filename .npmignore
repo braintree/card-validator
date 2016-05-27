@@ -1,4 +1,5 @@
 test/
+dist/
 gulpfile.js
 .travis.yml
 .gitignore
@@ -7,3 +8,4 @@ gulpfile.js
 .nvmrc
 bower.json
 .npmignore
+*.md
