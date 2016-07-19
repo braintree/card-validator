@@ -248,7 +248,7 @@ A fake session where a user is entering a card number may look like:
 | `'10/19'`<br/>`'10 / 19'`<br />`'1019'`<br/>`'10 19'`                                       | `{month: '10', year: '19'}`   |
 | `'10/2019'`<br/>`'10 / 2019'`<br />`'102019'`<br/>`'10 2019'`<br/>`'10 19'`                 | `{month: '10', year: '2019'}` |
 | `{month: '01', year: '19'}`<br/>`{month: '1', year: '19'}`<br/>`{month: 1, year: 19}`       | `{month: '01', year: '19'}`   |
-| `{month: '10', year: '2019'}`<br/>`{month: '1', year: '202019'}`<br/>`{month: 1, year: 19}` | `{month: '10', year: '2019'}` |
+| `{month: '10', year: '2019'}`<br/>`{month: '1', year: '2019'}`<br/>`{month: 1, year: 19}` | `{month: '10', year: '2019'}` |
 
 - - -
 
