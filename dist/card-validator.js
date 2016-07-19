@@ -13,122 +13,166 @@ module.exports = {
 },{"./src/card-number":29,"./src/cvv":30,"./src/expiration-date":31,"./src/expiration-month":32,"./src/expiration-year":33,"./src/postal-code":36}],2:[function(require,module,exports){
 'use strict';
 
-var types = [
-  {
-    niceType: 'Visa',
-    type: 'visa',
-    pattern: '^4\\d*$',
-    gaps: [4, 8, 12],
-    lengths: [16],
-    code: {
-      name: 'CVV',
-      size: 3
-    }
-  },
-  {
-    niceType: 'MasterCard',
-    type: 'master-card',
-    pattern: '^(5|5[1-5]\\d*|2|22|222|222[1-9]\\d*|2[3-6]\\d*|27[0-1]\\d*|2720\\d*)$',
-    gaps: [4, 8, 12],
-    lengths: [16],
-    code: {
-      name: 'CVC',
-      size: 3
-    }
-  },
-  {
-    niceType: 'American Express',
-    type: 'american-express',
-    pattern: '^3([47]\\d*)?$',
-    isAmex: true,
-    gaps: [4, 10],
-    lengths: [15],
-    code: {
-      name: 'CID',
-      size: 4
-    }
-  },
-  {
-    niceType: 'Diners Club',
-    type: 'diners-club',
-    pattern: '^3((0([0-5]\\d*)?)|[689]\\d*)?$',
-    gaps: [4, 10],
-    lengths: [14],
-    code: {
-      name: 'CVV',
-      size: 3
-    }
-  },
-  {
-    niceType: 'Discover',
-    type: 'discover',
-    pattern: '^6(0|01|011\\d*|5\\d*|4|4[4-9]\\d*)?$',
-    gaps: [4, 8, 12],
-    lengths: [16, 19],
-    code: {
-      name: 'CID',
-      size: 3
-    }
-  },
-  {
-    niceType: 'JCB',
-    type: 'jcb',
-    pattern: '^((2|21|213|2131\\d*)|(1|18|180|1800\\d*)|(3|35\\d*))$',
-    gaps: [4, 8, 12],
-    lengths: [16],
-    code: {
-      name: 'CVV',
-      size: 3
-    }
-  },
-  {
-    niceType: 'UnionPay',
-    type: 'unionpay',
-    pattern: '^6(2\\d*)?$',
-    gaps: [4, 8, 12],
-    lengths: [16, 17, 18, 19],
-    code: {
-      name: 'CVN',
-      size: 3
-    }
-  },
-  {
-    niceType: 'Maestro',
-    type: 'maestro',
-    pattern: '^((5((0|[6-9])\\d*)?)|(6|6[37]\\d*))$',
-    gaps: [4, 8, 12],
-    lengths: [12, 13, 14, 15, 16, 17, 18, 19],
-    code: {
-      name: 'CVC',
-      size: 3
-    }
-  }
-];
+var types = {};
+var VISA = 'visa';
+var MASTERCARD = 'master-card';
+var AMERICAN_EXPRESS = 'american-express';
+var DINERS_CLUB = 'diners-club';
+var DISCOVER = 'discover';
+var JCB = 'jcb';
+var UNIONPAY = 'unionpay';
+var MAESTRO = 'maestro';
+var CVV = 'CVV';
+var CID = 'CID';
+var CVC = 'CVC';
+var CVN = 'CVN';
 
-module.exports = function getCardTypes(cardNumber) {
-  var i, value;
+function clone(x) {
+  var pattern, dupe;
+
+  if (!x) { return null; }
+
+  pattern = x.pattern.source;
+  dupe = JSON.parse(JSON.stringify(x));
+  dupe.pattern = pattern;
+
+  return dupe;
+}
+
+types[VISA] = {
+  niceType: 'Visa',
+  type: VISA,
+  pattern: /^4\d*$/,
+  gaps: [4, 8, 12],
+  lengths: [16],
+  code: {
+    name: CVV,
+    size: 3
+  }
+};
+
+types[MASTERCARD] = {
+  niceType: 'MasterCard',
+  type: MASTERCARD,
+  pattern: /^(5|5[1-5]\d*|2|22|222|222[1-9]\d*|2[3-6]\d*|27[0-1]\d*|2720\d*)$/,
+  gaps: [4, 8, 12],
+  lengths: [16],
+  code: {
+    name: CVC,
+    size: 3
+  }
+};
+
+types[AMERICAN_EXPRESS] = {
+  niceType: 'American Express',
+  type: AMERICAN_EXPRESS,
+  pattern: /^3([47]\d*)?$/,
+  isAmex: true,
+  gaps: [4, 10],
+  lengths: [15],
+  code: {
+    name: CID,
+    size: 4
+  }
+};
+
+types[DINERS_CLUB] = {
+  niceType: 'Diners Club',
+  type: DINERS_CLUB,
+  pattern: /^3((0([0-5]\d*)?)|[689]\d*)?$/,
+  gaps: [4, 10],
+  lengths: [14],
+  code: {
+    name: CVV,
+    size: 3
+  }
+};
+
+types[DISCOVER] = {
+  niceType: 'Discover',
+  type: DISCOVER,
+  pattern: /^6(0|01|011\d*|5\d*|4|4[4-9]\d*)?$/,
+  gaps: [4, 8, 12],
+  lengths: [16, 19],
+  code: {
+    name: CID,
+    size: 3
+  }
+};
+
+types[JCB] = {
+  niceType: 'JCB',
+  type: JCB,
+  pattern: /^((2|21|213|2131\d*)|(1|18|180|1800\d*)|(3|35\d*))$/,
+  gaps: [4, 8, 12],
+  lengths: [16],
+  code: {
+    name: CVV,
+    size: 3
+  }
+};
+
+types[UNIONPAY] = {
+  niceType: 'UnionPay',
+  type: UNIONPAY,
+  pattern: /^6(2\d*)?$/,
+  gaps: [4, 8, 12],
+  lengths: [16, 17, 18, 19],
+  code: {
+    name: CVN,
+    size: 3
+  }
+};
+
+types[MAESTRO] = {
+  niceType: 'Maestro',
+  type: MAESTRO,
+  pattern: /^((5((0|[6-9])\d*)?)|(6|6[37]\d*))$/,
+  gaps: [4, 8, 12],
+  lengths: [12, 13, 14, 15, 16, 17, 18, 19],
+  code: {
+    name: CVC,
+    size: 3
+  }
+};
+
+function creditCardType(cardNumber) {
+  var type, value;
   var result = [];
 
   if (!(typeof cardNumber === 'string' || cardNumber instanceof String)) {
     return result;
   }
 
-  if (cardNumber === '') { return clone(types); }
+  for (type in types) {
+    if (!types.hasOwnProperty(type)) { continue; }
 
-  for (i = 0; i < types.length; i++) {
-    value = types[i];
+    value = types[type];
 
-    if (RegExp(value.pattern).test(cardNumber)) {
+    if (cardNumber.length === 0 || value.pattern.test(cardNumber)) {
       result.push(clone(value));
     }
   }
 
   return result;
+}
+
+creditCardType.getTypeInfo = function (type) {
+  return clone(types[type]);
 };
 
-function clone(x) {
-  return JSON.parse(JSON.stringify(x));
-}
+creditCardType.types = {
+  VISA: VISA,
+  MASTERCARD: MASTERCARD,
+  AMERICAN_EXPRESS: AMERICAN_EXPRESS,
+  DINERS_CLUB: DINERS_CLUB,
+  DISCOVER: DISCOVER,
+  JCB: JCB,
+  UNIONPAY: UNIONPAY,
+  MAESTRO: MAESTRO
+};
+
+module.exports = creditCardType;
 
 },{}],3:[function(require,module,exports){
 /** Used as the `TypeError` message for "Functions" methods. */
@@ -1137,12 +1181,18 @@ function verification(isValid, isPotentiallyValid, month, year) {
 function expirationDate(value) {
   var date, monthValid, yearValid, isValidForThisYear;
 
-  if (!isString(value)) {
+  if (isString(value)) {
+    value = value.replace(/^(\d\d) (\d\d(\d\d)?)$/, '$1/$2');
+    date = parseDate(value);
+  } else if (value !== null && typeof value === 'object') {
+    date = {
+      month: String(value.month),
+      year: String(value.year)
+    };
+  } else {
     return verification(false, false, null, null);
   }
 
-  value = value.replace(/^(\d\d) (\d\d(\d\d)?)$/, '$1/$2');
-  date = parseDate(value);
   monthValid = expirationMonth(date.month);
   yearValid = expirationYear(date.year);
 
@@ -1269,14 +1319,57 @@ function expirationYear(value) {
 module.exports = expirationYear;
 
 },{"lodash/lang/isString":24}],34:[function(require,module,exports){
+/*
+ * Luhn algorithm implementation in JavaScript
+ * Copyright (c) 2009 Nicholas C. Zakas
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
 'use strict';
-/*eslint-disable*/
 
-module.exports = function luhn10(a,b,c,d,e) {
-  for(d = +a[b = a.length-1], e=0; b--;)
-  c = +a[b], d += ++e % 2 ? 2 * c % 10 + (c > 4) : c;
-  return !(d%10)
-};
+function luhn10(identifier) {
+  var sum = 0;
+  var alt = false;
+  var i = identifier.length - 1;
+  var num;
+
+  while (i >= 0) {
+    num = parseInt(identifier.charAt(i), 10);
+
+    if (alt) {
+      num *= 2;
+      if (num > 9) {
+        num = (num % 10) + 1; // eslint-disable-line no-extra-parens
+      }
+    }
+
+    alt = !alt;
+
+    sum += num;
+
+    i--;
+  }
+
+  return sum % 10 === 0;
+}
+
+module.exports = luhn10;
 
 },{}],35:[function(require,module,exports){
 'use strict';
