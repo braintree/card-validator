@@ -1,3 +1,8 @@
+Unreleased
+=====
+
+- valid.expirationDate can take an object with month and year fields or a string value
+
 2.2.8
 =====
 

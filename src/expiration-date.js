@@ -17,12 +17,18 @@ function verification(isValid, isPotentiallyValid, month, year) {
 function expirationDate(value) {
   var date, monthValid, yearValid, isValidForThisYear;
 
-  if (!isString(value)) {
+  if (isString(value)) {
+    value = value.replace(/^(\d\d) (\d\d(\d\d)?)$/, '$1/$2');
+    date = parseDate(value);
+  } else if (value !== null && typeof value === 'object') {
+    date = {
+      month: String(value.month),
+      year: String(value.year)
+    };
+  } else {
     return verification(false, false, null, null);
   }
 
-  value = value.replace(/^(\d\d) (\d\d(\d\d)?)$/, '$1/$2');
-  date = parseDate(value);
   monthValid = expirationMonth(date.month);
   yearValid = expirationYear(date.year);
 
