@@ -308,6 +308,7 @@ The `postalCode` validation essentially tests for a valid string greater than 3 
 
 - The maximum expiration year is 19 years from now. ([view in source](src/expiration-year.js))
 - `valid.expirationDate` will only return `month:` and `year:` as strings if the two are valid, otherwise they will be `null`.
+- Since non-US postal codes are alpha-numeric, the `postalCode` will allow non-number characters to be used in validation.
 
 ## Development
 
