@@ -252,27 +252,57 @@ A fake session where a user is entering a card number may look like:
 
 - - -
 
-#### `valid.expirationMonth(value: string): boolean`
+#### `valid.expirationMonth(value: string): object`
 
 `expirationMonth` accepts 1 or 2 digit months. `1`, `01`, `10` are all valid entries.
 
+```javascript
+{
+  isValidForThisYear: false,
+  isPotentiallyValid: true,
+  isValid: true
+}
+```
+
 - - -
 
-#### `valid.expirationYear(value: string): boolean`
+#### `valid.expirationYear(value: string): object`
 
 `expirationYear` accepts 2 or 4 digit years. `16` and `2016` are both valid entries.
 
+```javascript
+{
+  isCurrentYear: false,
+  isPotentiallyValid: true,
+  isValid: true
+}
+```
+
 - - -
 
-#### `valid.cvv(value: string, maxLength: integer): boolean`
+#### `valid.cvv(value: string, maxLength: integer): object`
 
 The `cvv` validation by default tests for a numeric string of 3 characters in length. The `maxLength` can be overridden by passing in an `integer` as a second argument. You would typically switch this length from 3 to 4 in the case of an American Express card which expects a 4 digit CID.
 
+```javascript
+{
+  isPotentiallyValid: true,
+  isValid: true
+}
+```
+
 - - -
 
-#### `valid.postalCode(value: string): boolean`
+#### `valid.postalCode(value: string): object`
 
 The `postalCode` validation essentially tests for a valid string greater than 3 characters in length.
+
+```javascript
+{
+  isPotentiallyValid: true,
+  isValid: true
+}
+```
 
 ## Design decisions
 
