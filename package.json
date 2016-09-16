@@ -1,6 +1,6 @@
 {
   "name": "card-validator",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "description": "A library for validating credit card fields",
   "main": "index.js",
   "repository": {
@@ -33,7 +33,7 @@
     "vinyl-source-stream": "^1.0.0"
   },
   "dependencies": {
-    "credit-card-type": "^4.0.0",
+    "credit-card-type": "^5.0.0",
     "lodash": "3.10.1"
   }
 }

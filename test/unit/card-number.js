@@ -10,8 +10,10 @@ describe('number validates', function () {
         {card: null, isPotentiallyValid: true, isValid: false}],
       ['6',
         {card: null, isPotentiallyValid: true, isValid: false}],
+      ['60',
+        {card: null, isPotentiallyValid: true, isValid: false}],
       ['601',
-        {card: 'discover', isPotentiallyValid: true, isValid: false}],
+        {card: null, isPotentiallyValid: true, isValid: false}],
       ['6011',
         {card: 'discover', isPotentiallyValid: true, isValid: false}],
       ['4',
@@ -71,8 +73,6 @@ describe('number validates', function () {
 
   describe('Discover', function () {
     table([
-      ['60',
-        {card: 'discover', isPotentiallyValid: true, isValid: false}],
       ['6011111',
         {card: 'discover', isPotentiallyValid: true, isValid: false}],
       ['6011111111111117',
@@ -93,6 +93,7 @@ describe('number validates', function () {
 
   describe('Maestro', function () {
     table([
+      ['602011', {card: 'maestro', isPotentiallyValid: true, isValid: false}],
       ['500000000000', {card: 'maestro', isPotentiallyValid: true, isValid: false}],
       ['500000000000061', {card: 'maestro', isPotentiallyValid: true, isValid: false}],
       ['5000000000000611', {card: 'maestro', isPotentiallyValid: true, isValid: true}],

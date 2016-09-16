@@ -1,3 +1,8 @@
+2.3.1
+=====
+
+- correctly identify Maestro cards beginning with `6`
+
 2.3.0
 =====
 
