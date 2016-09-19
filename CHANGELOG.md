@@ -1,7 +1,8 @@
-2.3.1
+3.0.0
 =====
 
 - correctly identify Maestro cards beginning with `6`
+- __Breaking change__: The format of the `card` object returned has changed. `pattern` has been replaced by `prefixPattern` and `exactPattern`.
 
 2.3.0
 =====
