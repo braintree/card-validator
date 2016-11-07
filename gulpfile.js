@@ -10,7 +10,6 @@ var rename = require('gulp-rename');
 var del = require('del');
 
 var config = {
-  namespace: 'braintree',
   src: {
     js: {
       all: './src/**/*.js',
