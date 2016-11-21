@@ -1,6 +1,6 @@
 'use strict';
 
-var isString = require('lodash/lang/isString');
+var isString = require('lodash/isString');
 
 function verification(isValid, isPotentiallyValid, isValidForThisYear) {
   return {

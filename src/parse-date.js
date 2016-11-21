@@ -1,7 +1,7 @@
 'use strict';
 
 var expirationYear = require('./expiration-year');
-var isArray = require('lodash/lang/isArray');
+var isArray = require('lodash/isArray');
 
 function parseDate(value) {
   var month, len, year, yearValid;

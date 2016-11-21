@@ -3,7 +3,7 @@
 var parseDate = require('./parse-date');
 var expirationMonth = require('./expiration-month');
 var expirationYear = require('./expiration-year');
-var isString = require('lodash/lang/isString');
+var isString = require('lodash/isString');
 
 function verification(isValid, isPotentiallyValid, month, year) {
   return {

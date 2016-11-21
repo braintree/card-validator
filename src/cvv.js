@@ -1,6 +1,6 @@
 'use strict';
 
-var isString = require('lodash/lang/isString');
+var isString = require('lodash/isString');
 var DEFAULT_LENGTH = 3;
 
 function includes(array, thing) {

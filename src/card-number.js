@@ -1,10 +1,10 @@
 'use strict';
 
-var isString = require('lodash/lang/isString');
-var extend = require('lodash/object/assign');
+var isString = require('lodash/isString');
+var extend = require('lodash/assign');
 var luhn10 = require('./luhn-10');
 var getCardTypes = require('credit-card-type');
-var isNumber = require('lodash/lang/isNumber');
+var isNumber = require('lodash/isNumber');
 
 function verification(card, isPotentiallyValid, isValid) {
   return extend({}, {card: card, isPotentiallyValid: isPotentiallyValid, isValid: isValid});
