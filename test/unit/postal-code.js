@@ -22,6 +22,7 @@ describe('postalCode', function () {
     ],
 
     'accepts valid postal codes': [
+      ['123', {isValid: true, isPotentiallyValid: true}],
       ['1234', {isValid: true, isPotentiallyValid: true}],
       ['12345', {isValid: true, isPotentiallyValid: true}],
       ['12345', {isValid: true, isPotentiallyValid: true}],
@@ -35,11 +36,10 @@ describe('postalCode', function () {
       ['hello world', {isValid: true, isPotentiallyValid: true}]
     ],
 
-    'returns isPotentiallyValid for shorter-than-4 strings': [
+    'returns isPotentiallyValid for shorter-than-3 strings': [
       ['', {isValid: false, isPotentiallyValid: true}],
       ['1', {isValid: false, isPotentiallyValid: true}],
-      ['12', {isValid: false, isPotentiallyValid: true}],
-      ['123', {isValid: false, isPotentiallyValid: true}]
+      ['12', {isValid: false, isPotentiallyValid: true}]
     ]
   };
 
