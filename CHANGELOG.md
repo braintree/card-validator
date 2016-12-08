@@ -1,3 +1,8 @@
+UNRELEASED
+==========
+
+- Fix postal code validation to be valid if 3 or more characters
+
 3.0.0
 =====
 
