@@ -1,3 +1,8 @@
+unreleased
+==========
+
+- __Breaking change__: Remove `dist` files. You must use `npm` to use this module
+
 3.0.1
 =====
 

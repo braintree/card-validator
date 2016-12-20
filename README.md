@@ -8,7 +8,7 @@ Credit Card Validator will also provide a determined card type (using [credit-ca
 
 ## Download
 
-You can install `card-validator` through `npm`. The npm module also includes the built, UMD bundle and its minified variant under `dist/`. If you use the pre-built versions in the browser, the top-level function `cardValidator` is exposed.
+You can install `card-validator` through `npm`.
 
 ```
 npm install card-validator
@@ -30,24 +30,6 @@ if (!numberValidation.isPotentiallyValid) {
 if (numberValidation.card) {
   console.log(numberValidation.card.type); // 'visa'
 }
-```
-
-### Loading pre-bundled code in browser
-
-```html
-<!-- after downloading the bundled code from https://github.com/braintree/card-validator/blob/master/dist/card-validator.js -->
-<script src="path/to/card-validator.js"></script>
-<script>
-var numberValidation = cardValidator.number('4111');
-
-if (!numberValidation.isPotentiallyValid) {
-  renderInvalidCardNumber();
-}
-
-if (numberValidation.card) {
-  console.log(numberValidation.card.type); // 'visa'
-}
-</script>
 ```
 
 ## API
