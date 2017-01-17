@@ -93,17 +93,20 @@ describe('expirationMonth', function () {
       ['-6', FALSE_VALIDATION],
       ['20', FALSE_VALIDATION],
       ['-1', FALSE_VALIDATION],
-      ['13', FALSE_VALIDATION],
-      [
-        previousMonth.toString(),
-        {
-          isValid: currentMonth !== 1,
-          isPotentiallyValid: true,
-          isValidForThisYear: false
-        }
-      ]
+      ['13', FALSE_VALIDATION]
     ]
   };
+
+  if (currentMonth !== 1) {
+    describe['invalid month'].push([
+      previousMonth.toString(),
+      {
+        isValid: currentMonth !== 1,
+        isPotentiallyValid: true,
+        isValidForThisYear: false
+      }
+    ]);
+  }
 
   Object.keys(describes).forEach(function (key) {
     var tests = describes[key];
