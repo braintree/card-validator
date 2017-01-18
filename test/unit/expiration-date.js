@@ -16,15 +16,6 @@ describe('expirationDate validates', function () {
     var describes = {
       'within current year': [
         [
-          previousMonth + ' / ' + currentYear,
-          {
-            isValid: false,
-            isPotentiallyValid: false,
-            month: previousMonth.toString(),
-            year: currentYear.toString()
-          }
-        ],
-        [
           previousMonth + ' / ' + nextYear,
           {
             isValid: true,
@@ -54,7 +45,6 @@ describe('expirationDate validates', function () {
       ],
 
       'valid expiration dates with slashes': [
-        [previousMonth + ' / ' + currentYear, {isValid: false, isPotentiallyValid: false, month: previousMonth.toString(), year: currentYear.toString()}],
         [currentMonth + ' / ' + currentYear, {isValid: true, isPotentiallyValid: true, month: currentMonth.toString(), year: currentYear.toString()}],
         ['10 / ' + nextYear, {isValid: true, isPotentiallyValid: true, month: '10', year: nextYear.toString()}],
         ['10/' + nextYear, {isValid: true, isPotentiallyValid: true, month: '10', year: nextYear.toString()}],
@@ -188,6 +178,28 @@ describe('expirationDate validates', function () {
       ]
     };
 
+    if (currentMonth !== 1) {
+      describes['within current year'].push([
+        previousMonth + ' / ' + currentYear,
+        {
+          isValid: false,
+          isPotentiallyValid: false,
+          month: previousMonth.toString(),
+          year: currentYear.toString()
+        }
+      ]);
+
+      describes['valid expiration dates with slashes'].push([
+        previousMonth + ' / ' + currentYear,
+        {
+          isValid: false,
+          isPotentiallyValid: false,
+          month: previousMonth.toString(),
+          year: currentYear.toString()
+        }
+      ]);
+    }
+
     Object.keys(describes).forEach(function (key) {
       var tests = describes[key];
 
@@ -207,15 +219,6 @@ describe('expirationDate validates', function () {
   context('Object Argument', function () {
     var describes = {
       'within current year with number values': [
-        [
-          {month: previousMonth, year: currentYear},
-          {
-            isValid: false,
-            isPotentiallyValid: false,
-            month: previousMonth.toString(),
-            year: currentYear.toString()
-          }
-        ],
         [
           {month: previousMonth, year: nextYear},
           {
@@ -246,7 +249,6 @@ describe('expirationDate validates', function () {
       ],
 
       'valid expiration dates': [
-        [{month: previousMonth, year: currentYear}, {isValid: false, isPotentiallyValid: false, month: previousMonth.toString(), year: currentYear.toString()}],
         [{month: currentMonth, year: currentYear}, {isValid: true, isPotentiallyValid: true, month: currentMonth.toString(), year: currentYear.toString()}],
         [{month: '10', year: nextYear}, {isValid: true, isPotentiallyValid: true, month: '10', year: nextYear.toString()}],
         [{month: '01', year: twoDigitYear + 1}, {isValid: true, isPotentiallyValid: true, month: '01', year: (twoDigitYear + 1).toString()}],
@@ -274,6 +276,21 @@ describe('expirationDate validates', function () {
         [{month: '', year: ''}, {isValid: false, isPotentiallyValid: true, month: null, year: null}]
       ]
     };
+
+    if (currentMonth !== 1) {
+      describes['within current year with number values'].push([
+        {
+          month: previousMonth,
+          year: currentYear
+        },
+        {
+          isValid: false,
+          isPotentiallyValid: false,
+          month: previousMonth.toString(),
+          year: currentYear.toString()
+        }
+      ]);
+    }
 
     Object.keys(describes).forEach(function (key) {
       var tests = describes[key];
