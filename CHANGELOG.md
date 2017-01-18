@@ -2,6 +2,8 @@ unreleased
 ==========
 
 - __Breaking change__: Remove `dist` files. You must use `npm` to use this module
+- __Breaking change__: Remove support for primitive constructors like `new String()`
+- __Breaking change__: Drop support for Internet Explorer 8
 
 3.0.1
 =====
