@@ -1,6 +1,7 @@
 'use strict';
 
 var expirationYear = require('./expiration-year');
+var isArray = require('./lib/is-array');
 
 function parseDate(value) {
   var month, len, year, yearValid;
@@ -11,7 +12,7 @@ function parseDate(value) {
     value = value.split(/ +/g);
   }
 
-  if (Array.isArray(value)) {
+  if (isArray(value)) {
     return {
       month: value[0],
       year: value.slice(1).join()
