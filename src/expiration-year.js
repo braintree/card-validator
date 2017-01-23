@@ -1,6 +1,5 @@
 'use strict';
 
-var isString = require('lodash/lang/isString');
 var maxYear = 19;
 
 function verification(isValid, isPotentiallyValid, isCurrentYear) {
@@ -14,7 +13,7 @@ function verification(isValid, isPotentiallyValid, isCurrentYear) {
 function expirationYear(value) {
   var currentFirstTwo, currentYear, firstTwo, len, twoDigitYear, valid, isCurrentYear;
 
-  if (!isString(value)) {
+  if (typeof value !== 'string') {
     return verification(false, false);
   }
   if (value.replace(/\s/g, '') === '') {

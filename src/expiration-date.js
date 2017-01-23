@@ -3,7 +3,6 @@
 var parseDate = require('./parse-date');
 var expirationMonth = require('./expiration-month');
 var expirationYear = require('./expiration-year');
-var isString = require('lodash/lang/isString');
 
 function verification(isValid, isPotentiallyValid, month, year) {
   return {
@@ -17,7 +16,7 @@ function verification(isValid, isPotentiallyValid, month, year) {
 function expirationDate(value) {
   var date, monthValid, yearValid, isValidForThisYear;
 
-  if (isString(value)) {
+  if (typeof value === 'string') {
     value = value.replace(/^(\d\d) (\d\d(\d\d)?)$/, '$1/$2');
     date = parseDate(value);
   } else if (value !== null && typeof value === 'object') {

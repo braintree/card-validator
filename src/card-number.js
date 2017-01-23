@@ -1,23 +1,20 @@
 'use strict';
 
-var isString = require('lodash/lang/isString');
-var extend = require('lodash/object/assign');
 var luhn10 = require('./luhn-10');
 var getCardTypes = require('credit-card-type');
-var isNumber = require('lodash/lang/isNumber');
 
 function verification(card, isPotentiallyValid, isValid) {
-  return extend({}, {card: card, isPotentiallyValid: isPotentiallyValid, isValid: isValid});
+  return {card: card, isPotentiallyValid: isPotentiallyValid, isValid: isValid};
 }
 
 function cardNumber(value) {
   var potentialTypes, cardType, isPotentiallyValid, isValid, i, maxLength;
 
-  if (isNumber(value)) {
+  if (typeof value === 'number') {
     value = String(value);
   }
 
-  if (!isString(value)) { return verification(null, false, false); }
+  if (typeof value !== 'string') { return verification(null, false, false); }
 
   value = value.replace(/\-|\s/g, '');
 
