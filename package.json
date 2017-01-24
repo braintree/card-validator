@@ -10,30 +10,19 @@
   "homepage": "https://github.com/braintree/card-validator",
   "scripts": {
     "lint": "eslint .",
-    "test": "npm run lint && mocha test/**/*.js",
-    "build": "npm run lint && gulp build"
+    "test": "npm run lint && mocha test/**/*.js"
   },
   "author": "Braintree <code@getbraintree.com> (https://www.braintreepayments.com/)",
   "license": "MIT",
   "devDependencies": {
-    "browserify": "^6.1.0",
     "chai": "^2.1.2",
-    "del": "^1.1.0",
     "eslint": "2.7.0",
     "eslint-config-braintree": "1.0.0",
-    "gulp": "^3.8.8",
-    "gulp-rename": "^1.2.0",
-    "gulp-size": "^1.1.0",
-    "gulp-streamify": "0.0.5",
-    "gulp-uglify": "^1.0.2",
-    "gulp-watch": "^0.6.8",
     "mocha": "^3.0.0",
     "sinon": "^1.14.1",
-    "sinon-chai": "^2.7.0",
-    "vinyl-source-stream": "^1.0.0"
+    "sinon-chai": "^2.7.0"
   },
   "dependencies": {
-    "credit-card-type": "^5.0.0",
-    "lodash": "3.10.1"
+    "credit-card-type": "^5.0.0"
   }
 }

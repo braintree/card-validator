@@ -1,6 +1,5 @@
 'use strict';
 
-var isString = require('lodash/lang/isString');
 var DEFAULT_LENGTH = 3;
 
 function includes(array, thing) {
@@ -32,7 +31,7 @@ function cvv(value, maxLength) {
   maxLength = maxLength || DEFAULT_LENGTH;
   maxLength = maxLength instanceof Array ? maxLength : [maxLength];
 
-  if (!isString(value)) { return verification(false, false); }
+  if (typeof value !== 'string') { return verification(false, false); }
   if (!/^\d*$/.test(value)) { return verification(false, false); }
   if (includes(maxLength, value.length)) { return verification(true, true); }
   if (value.length < Math.min.apply(null, maxLength)) { return verification(false, true); }

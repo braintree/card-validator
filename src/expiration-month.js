@@ -1,7 +1,5 @@
 'use strict';
 
-var isString = require('lodash/lang/isString');
-
 function verification(isValid, isPotentiallyValid, isValidForThisYear) {
   return {
     isValid: isValid,
@@ -14,7 +12,7 @@ function expirationMonth(value) {
   var month, result;
   var currentMonth = new Date().getMonth() + 1;
 
-  if (!isString(value)) {
+  if (typeof value !== 'string') {
     return verification(false, false);
   }
   if (value.replace(/\s/g, '') === '' || value === '0') {
