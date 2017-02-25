@@ -98,7 +98,7 @@ describe('expirationMonth', function () {
   };
 
   if (currentMonth !== 1) {
-    describe['invalid month'].push([
+    describes['invalid month'].push([
       previousMonth.toString(),
       {
         isValid: currentMonth !== 1,
