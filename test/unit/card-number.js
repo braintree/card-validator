@@ -55,8 +55,8 @@ describe('number validates', function () {
         {card: null, isPotentiallyValid: false, isValid: false}],
       ['41111111111111111111', // Too long
         {card: 'visa', isPotentiallyValid: false, isValid: false}],
-      ['4111111111111112', // right lenght, not Luhn
-        {card: 'visa', isPotentiallyValid: false, isValid: false}]
+      ['4111111111111112', // right length, not Luhn, potentialls valid because visas can be 19 digits
+        {card: 'visa', isPotentiallyValid: true, isValid: false}]
     ]);
   });
 
