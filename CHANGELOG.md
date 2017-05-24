@@ -1,5 +1,5 @@
-UNRELEASED
-==========
+4.1.0
+=====
 
 - Add options object for postal code validation to specify min length
 
