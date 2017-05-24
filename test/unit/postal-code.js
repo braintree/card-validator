@@ -57,4 +57,21 @@ describe('postalCode', function () {
       });
     });
   });
+
+  describe('custom min length', function () {
+    it('allows passing in a custom min length', function () {
+      expect(postalCode('123')).to.deep.equal({
+        isValid: true,
+        isPotentiallyValid: true
+      });
+      expect(postalCode('123', {minLength: 4})).to.deep.equal({
+        isValid: false,
+        isPotentiallyValid: true
+      });
+      expect(postalCode('1234', {minLength: 4})).to.deep.equal({
+        isValid: true,
+        isPotentiallyValid: true
+      });
+    });
+  });
 });
