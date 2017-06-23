@@ -82,6 +82,14 @@ describe('number validates', function () {
 
   describe('MasterCard', function () {
     table([
+      ['2',
+        {card: null, isPotentiallyValid: true, isValid: false}],
+      ['27',
+        {card: 'master-card', isPotentiallyValid: true, isValid: false}],
+      ['272',
+        {card: 'master-card', isPotentiallyValid: true, isValid: false}],
+      ['2720',
+        {card: 'master-card', isPotentiallyValid: true, isValid: false}],
       ['55555555',
         {card: 'master-card', isPotentiallyValid: true, isValid: false}],
       ['5555555555554444',
