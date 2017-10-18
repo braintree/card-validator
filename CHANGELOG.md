@@ -1,3 +1,8 @@
+unreleased
+==========
+
+- Update `credit-card-type` to v6.0.0
+
 4.1.0
 =====
 
