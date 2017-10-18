@@ -45,8 +45,6 @@ if (numberValidation.card) {
   card: {
     niceType: 'American Express',
     type: 'american-express',
-    pattern: '^3([47]\\d*)?$',
-    isAmex: true,
     gaps: [4, 10],
     lengths: [15],
     code: {name: 'CID', size: 4}
