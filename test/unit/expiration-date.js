@@ -11,6 +11,10 @@ var currentMonth = date.getMonth() + 1;
 var previousMonth = currentMonth - 1 || currentMonth;
 var nextMonth = currentMonth === 12 ? currentMonth : currentMonth + 1;
 
+function yearsFromNow(fromNow) {
+  return String(currentYear + fromNow);
+}
+
 describe('expirationDate validates', function () {
   context('String Argument', function () {
     var describes = {
@@ -305,6 +309,18 @@ describe('expirationDate validates', function () {
           });
         });
       });
+    });
+  });
+
+  context('maxElapsedYear', function () {
+    it('defaults maxElapsedYear is 19', function () {
+      expect(expirationDate(currentMonth + ' / ' + yearsFromNow(19))).to.deep.equal({isValid: true, isPotentiallyValid: true, month: currentMonth.toString(), year: yearsFromNow(19).toString()});
+      expect(expirationDate(currentMonth + ' / ' + yearsFromNow(20))).to.deep.equal({isValid: false, isPotentiallyValid: false, month: null, year: null});
+    });
+
+    it('accepts maxElapsedYear', function () {
+      expect(expirationDate(currentMonth + ' / ' + yearsFromNow(20), 20)).to.deep.equal({isValid: true, isPotentiallyValid: true, month: currentMonth.toString(), year: yearsFromNow(20).toString()});
+      expect(expirationDate(currentMonth + ' / ' + yearsFromNow(21), 20)).to.deep.equal({isValid: false, isPotentiallyValid: false, month: null, year: null});
     });
   });
 });

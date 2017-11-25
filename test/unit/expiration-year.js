@@ -103,4 +103,14 @@ describe('expirationYear', function () {
       });
     });
   });
+
+  it('defaults maxElapsedYear is 19', function () {
+    expect(expirationYear(yearsFromNow(19))).to.deep.equal({isValid: true, isPotentiallyValid: true, isCurrentYear: false});
+    expect(expirationYear(yearsFromNow(20))).to.deep.equal({isValid: false, isPotentiallyValid: false, isCurrentYear: false});
+  });
+
+  it('accepts maxElapsedYear', function () {
+    expect(expirationYear(yearsFromNow(20), 20)).to.deep.equal({isValid: true, isPotentiallyValid: true, isCurrentYear: false});
+    expect(expirationYear(yearsFromNow(21), 20)).to.deep.equal({isValid: false, isPotentiallyValid: false, isCurrentYear: false});
+  });
 });
