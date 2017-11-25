@@ -210,7 +210,9 @@ A fake session where a user is entering a card number may look like:
 
 - - -
 
-#### `valid.expirationDate(value: string|object): object`
+#### `valid.expirationDate(value: string|object, maxElapsedYear: integer): object`
+
+The `maxElapsedYear` can be overridden by passing in an `integer` as a second argument.
 
 ```javascript
 {
@@ -246,9 +248,9 @@ A fake session where a user is entering a card number may look like:
 
 - - -
 
-#### `valid.expirationYear(value: string): object`
+#### `valid.expirationYear(value: string, maxElapsedYear: integer): object`
 
-`expirationYear` accepts 2 or 4 digit years. `16` and `2016` are both valid entries.
+`expirationYear` accepts 2 or 4 digit years. `16` and `2016` are both valid entries. The `maxElapsedYear` can be overridden by passing in an `integer` as a second argument.
 
 ```javascript
 {
@@ -297,7 +299,7 @@ valid.postalCode('123', {minLength: 5});
 
 ## Design decisions
 
-- The maximum expiration year is 19 years from now. ([view in source](src/expiration-year.js))
+- The default maximum expiration year is 19 years from now. ([view in source](src/expiration-year.js))
 - `valid.expirationDate` will only return `month:` and `year:` as strings if the two are valid, otherwise they will be `null`.
 - Since non-US postal codes are alpha-numeric, the `postalCode` will allow non-number characters to be used in validation.
 
