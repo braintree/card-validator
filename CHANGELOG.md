@@ -1,7 +1,7 @@
 unreleased
 ==========
 
-- Allow `maxElapsedYear` to be configurable in `expirationYear` and `expirationDate`
+- Allow `maxElapsedYear` to be configurable in `expirationYear` and `expirationDate` (thanks @wozaki)
 
 4.1.1
 =====
