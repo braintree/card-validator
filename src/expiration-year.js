@@ -1,6 +1,6 @@
 'use strict';
 
-var DEFAULT_MAX_ELAPSED_YEAR = 19;
+var DEFAULT_VALID_NUMBER_OF_YEARS_IN_THE_FUTURE = 19;
 
 function verification(isValid, isPotentiallyValid, isCurrentYear) {
   return {
@@ -13,7 +13,7 @@ function verification(isValid, isPotentiallyValid, isCurrentYear) {
 function expirationYear(value, maxElapsedYear) {
   var currentFirstTwo, currentYear, firstTwo, len, twoDigitYear, valid, isCurrentYear;
 
-  maxElapsedYear = maxElapsedYear || DEFAULT_MAX_ELAPSED_YEAR;
+  maxElapsedYear = maxElapsedYear || DEFAULT_VALID_NUMBER_OF_YEARS_IN_THE_FUTURE;
 
   if (typeof value !== 'string') {
     return verification(false, false);
