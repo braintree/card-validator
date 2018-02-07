@@ -299,6 +299,25 @@ valid.postalCode('123', {minLength: 5});
 }
 ```
 
+## Custom Card Brands
+
+Card Validator exposes the [`credit-card-type` module](https://github.com/braintree/credit-card-type) as `creditCardType`. You can add custom card brands by [utilizing the `addCard` method](https://github.com/braintree/credit-card-type#adding-card-types).
+
+```javascript
+valid.creditCardType.addCard({
+  niceType: 'NewCard',
+  type: 'new-card',
+  prefixPattern: /^(2|23|234)$/,
+  exactPattern: /^(2345)\d*$/,
+  gaps: [4, 8, 12],
+  lengths: [16],
+  code: {
+    name: 'CVV',
+    size: 3
+  }
+});
+```
+
 ## Design decisions
 
 - The default maximum expiration year is 19 years from now.
