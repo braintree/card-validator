@@ -1,5 +1,5 @@
-unreleased
-==========
+4.3.0
+=====
 
 - Support custom card brands
 - Require minimum version of credit-card-type to be v6.2.0
