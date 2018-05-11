@@ -85,17 +85,17 @@ describe('number validates', function () {
       ['2',
         {card: null, isPotentiallyValid: true, isValid: false}],
       ['27',
-        {card: 'master-card', isPotentiallyValid: true, isValid: false}],
+        {card: 'mastercard', isPotentiallyValid: true, isValid: false}],
       ['272',
-        {card: 'master-card', isPotentiallyValid: true, isValid: false}],
+        {card: 'mastercard', isPotentiallyValid: true, isValid: false}],
       ['2720',
-        {card: 'master-card', isPotentiallyValid: true, isValid: false}],
+        {card: 'mastercard', isPotentiallyValid: true, isValid: false}],
       ['55555555',
-        {card: 'master-card', isPotentiallyValid: true, isValid: false}],
+        {card: 'mastercard', isPotentiallyValid: true, isValid: false}],
       ['5555555555554444',
-        {card: 'master-card', isPotentiallyValid: true, isValid: true}],
+        {card: 'mastercard', isPotentiallyValid: true, isValid: true}],
       ['5555555555554446',
-        {card: 'master-card', isPotentiallyValid: false, isValid: false}]
+        {card: 'mastercard', isPotentiallyValid: false, isValid: false}]
     ]);
   });
 

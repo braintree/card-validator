@@ -23,6 +23,6 @@
     "sinon-chai": "^2.7.0"
   },
   "dependencies": {
-    "credit-card-type": "^6.2.0"
+    "credit-card-type": "^7.0.0"
   }
 }
