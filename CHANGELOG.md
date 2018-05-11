@@ -1,3 +1,11 @@
+unreleased
+==========
+
+- Update `credit-card-type` to v7.0.0
+
+*Breaking Changes*
+- Mastercard enum changed from `master-card` to `mastercard`
+
 4.3.0
 =====
 
