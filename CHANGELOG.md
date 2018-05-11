@@ -1,5 +1,5 @@
-unreleased
-==========
+5.0.0
+=====
 
 - Update `credit-card-type` to v7.0.0
 
