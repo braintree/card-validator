@@ -38,7 +38,7 @@ if (numberValidation.card) {
 
 - - -
 
-#### `valid.number(value: string): object`
+#### `valid.number(value: string, [options: object]): object`
 
 ```javascript
 {
@@ -209,6 +209,39 @@ A fake session where a user is entering a card number may look like:
 </table>
 
 - - -
+
+You can also pass in a creditCardType option to override the default `credit-card-type` module that is used to determine what type of card it is. This is particularly useful when using [`credit-card-type`](https://www.npmjs.com/package/credit-card-type) separately and you want to ensure that the same version of credit-card-type is used in `card-validator`.
+
+```javascript
+var result = valid.number('', {
+  // in this contrived example, we're forcing
+  // credit card type to always return the same
+  // card type. Not a lot of real world application
+  // here, but could be useful for unit tests
+  creditCardType: function () {
+    return [{
+      type: 'foo',
+      niceType 'Foo Card',
+      gaps: [4, 10],
+      lengths: [15],
+      code: {name: 'FOO', size: 4}
+    }]
+  }
+})
+
+// result equals
+// {
+//   card: {
+//     type: 'foo',
+//     niceType 'Foo Card',
+//     gaps: [4, 10],
+//     lengths: [15],
+//     code: {name: 'FOO', size: 4}
+//   },
+//   isPotentiallyValid: true, // if false, indicates there is no way the card could be valid
+//   isValid: true // if true, number is valid for submission
+// }
+```
 
 #### `valid.expirationDate(value: string|object, maxElapsedYear: integer): object`
 

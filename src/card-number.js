@@ -1,14 +1,17 @@
 'use strict';
 
 var luhn10 = require('./luhn-10');
-var getCardTypes = require('credit-card-type');
+var creditCardType = require('credit-card-type');
 
 function verification(card, isPotentiallyValid, isValid) {
   return {card: card, isPotentiallyValid: isPotentiallyValid, isValid: isValid};
 }
 
-function cardNumber(value) {
-  var potentialTypes, cardType, isPotentiallyValid, isValid, i, maxLength;
+function cardNumber(value, options) {
+  var getCardTypes, potentialTypes, cardType, isPotentiallyValid, isValid, i, maxLength;
+
+  options = options || {};
+  getCardTypes = options.creditCardType || creditCardType;
 
   if (typeof value === 'number') {
     value = String(value);
