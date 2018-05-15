@@ -1,3 +1,8 @@
+unreleased
+==========
+
+- Allow passing in custom credit-card-type object
+
 5.0.0
 =====
 

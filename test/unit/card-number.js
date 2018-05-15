@@ -157,6 +157,22 @@ describe('number validates', function () {
         {card: null, isPotentiallyValid: false, isValid: false}]
     ]);
   });
+
+  describe('custom credit card type', function () {
+    it('can pass a custom credit card type module', function () {
+      var result;
+
+      function fakeCreditCardType() {
+        return [{type: 'visa', lengths: [16]}];
+      }
+
+      result = cardNumber('5000000000000611', {
+        creditCardType: fakeCreditCardType
+      });
+
+      expect(result.card.type).to.equal('visa');
+    });
+  });
 });
 
 function table(tests) {
