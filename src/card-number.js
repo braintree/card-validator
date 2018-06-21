@@ -30,7 +30,7 @@ function cardNumber(value) {
 
   cardType = potentialTypes[0];
 
-  if (cardType.type === 'unionpay') {  // UnionPay is not Luhn 10 compliant
+  if (cardType.type === getCardTypes.types.UNIONPAY) {  // UnionPay is not Luhn 10 compliant
     isValid = true;
   } else {
     isValid = luhn10(value);
