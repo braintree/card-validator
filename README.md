@@ -54,7 +54,7 @@ if (numberValidation.card) {
 }
 ```
 
-If a valid card type cannot be determined, `number()` will return `null`;
+If a valid card type cannot be determined, the `card` field in the response will be `null`.
 
 A fake session where a user is entering a card number may look like:
 
