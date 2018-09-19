@@ -17,7 +17,7 @@ describe('number validates', function () {
       ['6011',
         {card: 'discover', isPotentiallyValid: true, isValid: false}],
       ['4',
-        {card: 'visa', isPotentiallyValid: true, isValid: false}],
+        {card: null, isPotentiallyValid: true, isValid: false}],
       ['41',
         {card: 'visa', isPotentiallyValid: true, isValid: false}],
       ['411',
