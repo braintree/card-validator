@@ -135,6 +135,43 @@ describe('number validates', function () {
     ]);
   });
 
+  describe('UnionPay', function () {
+    table([
+      ['6',
+        {card: null, isPotentiallyValid: true, isValid: false}],
+      ['62',
+        {card: null, isPotentiallyValid: true, isValid: false}],
+      ['623456',
+        {card: 'unionpay', isPotentiallyValid: true, isValid: false}],
+      ['6212345678901232',
+        {card: 'unionpay', isPotentiallyValid: true, isValid: true}]
+    ]);
+
+    context('where card number is luhn invalid', function () {
+      var number = '6212345000000001';
+
+      it('marks card valid by default', function () {
+        var actual = cardNumber(number);
+
+        expect(actual.card.type).to.equal('unionpay');
+        expect(actual.isPotentiallyValid).to.equal(true);
+        expect(actual.isValid).to.equal(true);
+      });
+
+      it('marks card invalid when "luhnValidateUnionPay" is present', function () {
+        var options = {
+          luhnValidateUnionPay: true
+        };
+
+        var actual = cardNumber(number, options);
+
+        expect(actual.card.type).to.equal('unionpay');
+        expect(actual.isPotentiallyValid).to.equal(true);
+        expect(actual.isValid).to.equal(false);
+      });
+    });
+  });
+
   describe('edge cases', function () {
     table([
       ['',

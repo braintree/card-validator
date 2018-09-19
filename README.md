@@ -38,7 +38,7 @@ if (numberValidation.card) {
 
 - - -
 
-#### `valid.number(value: string): object`
+#### `valid.number(value: string, [options: object]): object`
 
 ```javascript
 {
@@ -51,6 +51,24 @@ if (numberValidation.card) {
   },
   isPotentiallyValid: true, // if false, indicates there is no way the card could be valid
   isValid: true // if true, number is valid for submission
+}
+```
+
+You can optionally pass `luhnValidateUnionPay` as a property of an object as a second argument. This will override the default behavior to ignore luhn validity of UnionPay cards.
+
+```javascript
+valid.number(<Luhn Invalid UnionPay Card Number>, {luhnValidateUnionPay: true});
+
+{
+  card: {
+    niceType: 'UnionPay',
+    type: 'unionpay',
+    gaps: [4, 8, 12],
+    lengths: [16, 17, 18, 19],
+    code: {name: 'CVN', size: 3}
+  },
+  isPotentiallyValid: true,
+  isValid: false // Would be true if no options were included
 }
 ```
 
