@@ -7,8 +7,10 @@ function verification(card, isPotentiallyValid, isValid) {
   return {card: card, isPotentiallyValid: isPotentiallyValid, isValid: isValid};
 }
 
-function cardNumber(value) {
+function cardNumber(value, options) {
   var potentialTypes, cardType, isPotentiallyValid, isValid, i, maxLength;
+
+  options = options || {};
 
   if (typeof value === 'number') {
     value = String(value);
@@ -30,7 +32,7 @@ function cardNumber(value) {
 
   cardType = potentialTypes[0];
 
-  if (cardType.type === getCardTypes.types.UNIONPAY) {  // UnionPay is not Luhn 10 compliant
+  if (cardType.type === getCardTypes.types.UNIONPAY && options.luhnValidateUnionPay !== true) {
     isValid = true;
   } else {
     isValid = luhn10(value);
