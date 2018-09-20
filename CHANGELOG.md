@@ -2,6 +2,7 @@
 =====
 
 - Add optional options object with `luhnValidateUnionPay` parameter to force luhn validity check of UnionPay cards
+- Update tests to account for ELO cards
 
 5.0.0
 =====
