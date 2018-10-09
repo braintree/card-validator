@@ -1,5 +1,5 @@
-unreleased
-==========
+6.0.0
+=====
 
 - Update credit-card-type to v8.0.0
 
