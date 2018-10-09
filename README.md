@@ -325,8 +325,9 @@ Card Validator exposes the [`credit-card-type` module](https://github.com/braint
 valid.creditCardType.addCard({
   niceType: 'NewCard',
   type: 'new-card',
-  prefixPattern: /^(2|23|234)$/,
-  exactPattern: /^(2345)\d*$/,
+  patterns: [
+    1234
+  ],
   gaps: [4, 8, 12],
   lengths: [16],
   code: {
