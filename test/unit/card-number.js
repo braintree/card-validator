@@ -194,6 +194,25 @@ describe('number validates', function () {
         {card: null, isPotentiallyValid: false, isValid: false}]
     ]);
   });
+
+  it('marks card invalid when "maxCardLength" option is used and card is longer than the max length', function () {
+    var options = {
+      maxLength: 16
+    };
+
+    var actual = cardNumber('4111 1111 1111 1111 110', options);
+
+    expect(actual.card.type).to.equal('visa');
+    expect(actual.isPotentiallyValid).to.equal(false);
+    expect(actual.isValid).to.equal(false);
+
+    options.maxLength = 19;
+    actual = cardNumber('4111 1111 1111 1111 110', options);
+
+    expect(actual.card.type).to.equal('visa');
+    expect(actual.isPotentiallyValid).to.equal(true);
+    expect(actual.isValid).to.equal(true);
+  });
 });
 
 function table(tests) {

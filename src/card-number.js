@@ -32,6 +32,10 @@ function cardNumber(value, options) {
 
   cardType = potentialTypes[0];
 
+  if (options.maxLength && value.length > options.maxLength) {
+    return verification(cardType, false, false);
+  }
+
   if (cardType.type === getCardTypes.types.UNIONPAY && options.luhnValidateUnionPay !== true) {
     isValid = true;
   } else {
