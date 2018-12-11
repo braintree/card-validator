@@ -195,23 +195,49 @@ describe('number validates', function () {
     ]);
   });
 
-  it('marks card invalid when "maxCardLength" option is used and card is longer than the max length', function () {
-    var options = {
-      maxLength: 16
-    };
+  describe('with "maxCardLength" option', function () {
+    it('marks card invalid when card is longer than the max length', function () {
+      var options = {
+        maxLength: 16
+      };
 
-    var actual = cardNumber('4111 1111 1111 1111 110', options);
+      var actual = cardNumber('4111 1111 1111 1111 110', options);
 
-    expect(actual.card.type).to.equal('visa');
-    expect(actual.isPotentiallyValid).to.equal(false);
-    expect(actual.isValid).to.equal(false);
+      expect(actual.card.type).to.equal('visa');
+      expect(actual.isPotentiallyValid).to.equal(false);
+      expect(actual.isValid).to.equal(false);
 
-    options.maxLength = 19;
-    actual = cardNumber('4111 1111 1111 1111 110', options);
+      options.maxLength = 19;
+      actual = cardNumber('4111 1111 1111 1111 110', options);
 
-    expect(actual.card.type).to.equal('visa');
-    expect(actual.isPotentiallyValid).to.equal(true);
-    expect(actual.isValid).to.equal(true);
+      expect(actual.card.type).to.equal('visa');
+      expect(actual.isPotentiallyValid).to.equal(true);
+      expect(actual.isValid).to.equal(true);
+    });
+
+    it('marks card as not potentially valid when card is equal to max length and not luhn valid', function () {
+      var options = {
+        maxLength: 16
+      };
+
+      var actual = cardNumber('4111 1111 1111 1112', options);
+
+      expect(actual.card.type).to.equal('visa');
+      expect(actual.isPotentiallyValid).to.equal(false);
+      expect(actual.isValid).to.equal(false);
+    });
+
+    it('marks card as valid and potentially valid when card is equal to max length and luhn valid', function () {
+      var options = {
+        maxLength: 16
+      };
+
+      var actual = cardNumber('4111 1111 1111 1111', options);
+
+      expect(actual.card.type).to.equal('visa');
+      expect(actual.isPotentiallyValid).to.equal(true);
+      expect(actual.isValid).to.equal(true);
+    });
   });
 });
 

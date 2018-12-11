@@ -42,11 +42,11 @@ function cardNumber(value, options) {
     isValid = luhn10(value);
   }
 
-  maxLength = Math.max.apply(null, cardType.lengths);
+  maxLength = options.maxLength || Math.max.apply(null, cardType.lengths);
 
   for (i = 0; i < cardType.lengths.length; i++) {
     if (cardType.lengths[i] === value.length) {
-      isPotentiallyValid = value.length !== maxLength || isValid;
+      isPotentiallyValid = value.length < maxLength || isValid;
       return verification(cardType, isPotentiallyValid, isValid);
     }
   }
