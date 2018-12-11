@@ -238,6 +238,19 @@ describe('number validates', function () {
       expect(actual.isPotentiallyValid).to.equal(true);
       expect(actual.isValid).to.equal(true);
     });
+
+    it('uses the lesser value for max length if the card brands largest length value is smaller than the configured one', function () {
+      var options = {
+        maxLength: 16
+      };
+
+      // amex has a max length of 15
+      var actual = cardNumber('378282246310005', options);
+
+      expect(actual.card.type).to.equal('american-express');
+      expect(actual.isPotentiallyValid).to.equal(true);
+      expect(actual.isValid).to.equal(true);
+    });
   });
 });
 

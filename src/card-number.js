@@ -42,7 +42,10 @@ function cardNumber(value, options) {
     isValid = luhn10(value);
   }
 
-  maxLength = options.maxLength || Math.max.apply(null, cardType.lengths);
+  maxLength = Math.max.apply(null, cardType.lengths);
+  if (options.maxLength) {
+    maxLength = Math.min(options.maxLength, maxLength);
+  }
 
   for (i = 0; i < cardType.lengths.length; i++) {
     if (cardType.lengths[i] === value.length) {
