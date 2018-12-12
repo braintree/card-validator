@@ -1,5 +1,5 @@
-unreleased
-==========
+6.1.0
+=====
 
 - Add option to set a `maxLength` for card number valiation
 
