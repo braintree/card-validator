@@ -72,7 +72,7 @@ valid.number(<Luhn Invalid UnionPay Card Number>, {luhnValidateUnionPay: true});
 }
 ```
 
-You can optionally pass `maxLength` as a property of an object as a second argument. This will override the default behavior to use the card type's max length property and mark any cards that exceed the max length as invalid.
+You can optionally pass `maxLength` as a property of an object as a second argument. This will override the default behavior to use the card type's max length property and mark any cards that exceed the max length as invalid. If a card brand has a normal max length that is shorter than the passed in max length, the validator will use the shorter one.
 
 ```javascript
 valid.number(<Maestro Card with 19 Digits>, {maxLength: 16});
