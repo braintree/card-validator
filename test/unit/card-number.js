@@ -194,6 +194,64 @@ describe('number validates', function () {
         {card: null, isPotentiallyValid: false, isValid: false}]
     ]);
   });
+
+  describe('with "maxCardLength" option', function () {
+    it('marks card invalid when card is longer than the max length', function () {
+      var options = {
+        maxLength: 16
+      };
+
+      var actual = cardNumber('4111 1111 1111 1111 110', options);
+
+      expect(actual.card.type).to.equal('visa');
+      expect(actual.isPotentiallyValid).to.equal(false);
+      expect(actual.isValid).to.equal(false);
+
+      options.maxLength = 19;
+      actual = cardNumber('4111 1111 1111 1111 110', options);
+
+      expect(actual.card.type).to.equal('visa');
+      expect(actual.isPotentiallyValid).to.equal(true);
+      expect(actual.isValid).to.equal(true);
+    });
+
+    it('marks card as not potentially valid when card is equal to max length and not luhn valid', function () {
+      var options = {
+        maxLength: 16
+      };
+
+      var actual = cardNumber('4111 1111 1111 1112', options);
+
+      expect(actual.card.type).to.equal('visa');
+      expect(actual.isPotentiallyValid).to.equal(false);
+      expect(actual.isValid).to.equal(false);
+    });
+
+    it('marks card as valid and potentially valid when card is equal to max length and luhn valid', function () {
+      var options = {
+        maxLength: 16
+      };
+
+      var actual = cardNumber('4111 1111 1111 1111', options);
+
+      expect(actual.card.type).to.equal('visa');
+      expect(actual.isPotentiallyValid).to.equal(true);
+      expect(actual.isValid).to.equal(true);
+    });
+
+    it('uses the lesser value for max length if the card brands largest length value is smaller than the configured one', function () {
+      var options = {
+        maxLength: 16
+      };
+
+      // amex has a max length of 15
+      var actual = cardNumber('378282246310005', options);
+
+      expect(actual.card.type).to.equal('american-express');
+      expect(actual.isPotentiallyValid).to.equal(true);
+      expect(actual.isValid).to.equal(true);
+    });
+  });
 });
 
 function table(tests) {
