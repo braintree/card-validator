@@ -1,6 +1,6 @@
 {
   "name": "card-validator",
-  "version": "5.1.0",
+  "version": "6.1.0",
   "description": "A library for validating credit card fields",
   "main": "index.js",
   "repository": {
@@ -23,6 +23,6 @@
     "sinon-chai": "^2.7.0"
   },
   "dependencies": {
-    "credit-card-type": "^7.0.0"
+    "credit-card-type": "^8.0.0"
   }
 }

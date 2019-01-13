@@ -32,6 +32,10 @@ function cardNumber(value, options) {
 
   cardType = potentialTypes[0];
 
+  if (options.maxLength && value.length > options.maxLength) {
+    return verification(cardType, false, false);
+  }
+
   if (cardType.type === getCardTypes.types.UNIONPAY && options.luhnValidateUnionPay !== true) {
     isValid = true;
   } else {
@@ -39,10 +43,13 @@ function cardNumber(value, options) {
   }
 
   maxLength = Math.max.apply(null, cardType.lengths);
+  if (options.maxLength) {
+    maxLength = Math.min(options.maxLength, maxLength);
+  }
 
   for (i = 0; i < cardType.lengths.length; i++) {
     if (cardType.lengths[i] === value.length) {
-      isPotentiallyValid = value.length !== maxLength || isValid;
+      isPotentiallyValid = value.length < maxLength || isValid;
       return verification(cardType, isPotentiallyValid, isValid);
     }
   }

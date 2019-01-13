@@ -1,3 +1,17 @@
+6.1.0
+=====
+
+- Add option to set a `maxLength` for card number valiation
+
+6.0.0
+=====
+
+- Update credit-card-type to v8.0.0
+
+*Breaking Changes*
+
+- When adding or updating cards, this module no longer uses an `exactPattern` and `prefixPattern` model. Instead, it takes an array of patterns. See https://github.com/braintree/credit-card-type#pattern-detection for details.
+
 5.1.0
 =====
 
