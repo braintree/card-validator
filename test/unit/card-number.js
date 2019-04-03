@@ -35,6 +35,10 @@ describe('number validates', function () {
     table([
       ['4012888888881881',
         {card: 'visa', isPotentiallyValid: true, isValid: true}],
+      ['62123456789002',
+        {card: 'unionpay', isPotentiallyValid: true, isValid: true}],
+      ['621234567890003',
+        {card: 'unionpay', isPotentiallyValid: true, isValid: true}],
       ['6288997715452584',
         {card: 'unionpay', isPotentiallyValid: true, isValid: true}],
       ['6282001509099283',
