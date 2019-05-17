@@ -15,12 +15,12 @@
   "author": "Braintree <code@getbraintree.com> (https://www.braintreepayments.com/)",
   "license": "MIT",
   "devDependencies": {
-    "chai": "^2.1.2",
-    "eslint": "2.7.0",
-    "eslint-config-braintree": "1.0.0",
-    "mocha": "^3.0.0",
-    "sinon": "^1.14.1",
-    "sinon-chai": "^2.7.0"
+    "chai": "^4.2.0",
+    "eslint": "^5.16.0",
+    "eslint-config-braintree": "^2.0.0",
+    "mocha": "^6.1.4",
+    "sinon": "^7.3.2",
+    "sinon-chai": "^3.3.0"
   },
   "dependencies": {
     "credit-card-type": "^8.0.0"

@@ -34,6 +34,7 @@ function expirationDate(value, maxElapsedYear) {
   if (monthValid.isValid) {
     if (yearValid.isCurrentYear) {
       isValidForThisYear = monthValid.isValidForThisYear;
+
       return verification(isValidForThisYear, isValidForThisYear, date.month, date.year);
     }
 

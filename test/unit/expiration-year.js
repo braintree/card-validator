@@ -10,6 +10,7 @@ function yearsFromNow(fromNow, digits) {
   if (digits === 2) {
     result = result.substr(2, 2);
   }
+
   return result;
 }
 

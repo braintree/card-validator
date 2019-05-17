@@ -37,6 +37,7 @@ function expirationYear(value, maxElapsedYear) {
     // 20x === 20x
     firstTwo = value.slice(0, 2);
     currentFirstTwo = String(currentYear).slice(0, 2);
+
     return verification(false, firstTwo === currentFirstTwo);
   }
 

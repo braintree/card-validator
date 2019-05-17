@@ -253,7 +253,7 @@ describe('expirationDate validates', function () {
       ],
 
       'valid expiration dates': [
-        [{month: currentMonth, year: currentYear}, {isValid: true, isPotentiallyValid: true, month: currentMonth.toString(), year: currentYear.toString()}],
+        [{month: currentMonth, year: currentYear}, {isValid: true, isPotentiallyValid: true, month: currentMonth.toString(), year: currentYear.toString()}], // eslint-disable-line max-len
         [{month: '10', year: nextYear}, {isValid: true, isPotentiallyValid: true, month: '10', year: nextYear.toString()}],
         [{month: '01', year: twoDigitYear + 1}, {isValid: true, isPotentiallyValid: true, month: '01', year: (twoDigitYear + 1).toString()}],
         [{month: '1', year: twoDigitYear + 1}, {isValid: true, isPotentiallyValid: true, month: '1', year: (twoDigitYear + 1).toString()}]

@@ -50,6 +50,7 @@ function cardNumber(value, options) {
   for (i = 0; i < cardType.lengths.length; i++) {
     if (cardType.lengths[i] === value.length) {
       isPotentiallyValid = value.length < maxLength || isValid;
+
       return verification(cardType, isPotentiallyValid, isValid);
     }
   }
