@@ -6,7 +6,9 @@ var isArray = require('./lib/is-array');
 function parseDate(value) {
   var month, len, year, yearValid;
 
-  if (/\//.test(value)) {
+  if (/^\d{4}-\d{1,2}$/.test(value)) {
+    value = value.split('-').reverse();
+  } else if (/\//.test(value)) {
     value = value.split(/\s*\/\s*/g);
   } else if (/\s/.test(value)) {
     value = value.split(/ +/g);
