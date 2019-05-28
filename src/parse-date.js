@@ -14,7 +14,7 @@ function parseDate(value) {
 
   if (isArray(value)) {
     return {
-      month: value[0],
+      month: value[0] || '',
       year: value.slice(1).join()
     };
   }
