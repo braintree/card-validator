@@ -3,6 +3,26 @@
 var expirationYear = require('./expiration-year');
 var isArray = require('./lib/is-array');
 
+function getLen(value) {
+  if (value[0] === '0') {
+    return 2;
+  }
+
+  if (value.length > 5) {
+    return 2;
+  }
+
+  if (value[value.length - 1] === '0') {
+    return 1;
+  }
+
+  if (value.length < 4) {
+    return 2;
+  }
+
+  return 1;
+}
+
 function parseDate(value) {
   var month, len, year, yearValid;
 
@@ -19,7 +39,7 @@ function parseDate(value) {
     };
   }
 
-  len = value[0] === '0' || value.length > 5 ? 2 : 1;
+  len = getLen(value);
 
   if (value[0] === '1') {
     year = value.substr(1);
