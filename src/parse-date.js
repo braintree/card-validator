@@ -4,22 +4,50 @@ var expirationYear = require('./expiration-year');
 var isArray = require('./lib/is-array');
 
 function monthLength(value) {
+  /*
+    if the first character in the string starts from `0`, 
+    we assume that the first two characters are a month
+
+    '0122' => {month: '01', year: '22'}
+  */
   if (value[0] === '0') {
     return 2;
   }
 
+  /*
+    If the length of the value is more than five characters, 
+    we assume that the first two characters are a month
+
+    '112020' => {month: '11', year: '2020'}
+  */
   if (value.length > 5) {
     return 2;
   }
 
+  /*
+    If the last value is zero then 
+    we assume that the last two values are ready 
+    and the first character is a month
+
+    '120' => {month: '1', year: '20'}
+  */
   if (value[value.length - 1] === '0') {
     return 1;
   }
 
+  /*
+    If the length of the value is less than four, 
+    we consider the first two values to be a month
+
+    '122' => {month: '1', year: '22'}
+  */
   if (value.length < 4) {
     return 2;
   }
 
+  /*
+    By default, the month value is the first value
+  */
   return 1;
 }
 
