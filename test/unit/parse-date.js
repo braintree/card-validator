@@ -5,7 +5,7 @@ var parseDate = require('../../src/parse-date');
 
 describe('parse-date', function () {
   var describes = {
-    'returns empty monyh and empty year': [
+    'returns empty month and empty year': [
       ['', {month: '', year: ''}],
       [' ', {month: '', year: ''}],
       ['/', {month: '', year: ''}],
@@ -21,6 +21,7 @@ describe('parse-date', function () {
       ['122', {month: '12', year: '2'}],
       ['920', {month: '9', year: '20'}],
       ['120', {month: '1', year: '20'}],
+      ['022', {month: '02', year: '2'}],
       ['12 2', {month: '12', year: '2'}],
       ['12/2', {month: '12', year: '2'}],
       [['12', '2'], {month: '12', year: '2'}]
