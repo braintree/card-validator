@@ -5,7 +5,7 @@ var isArray = require('./lib/is-array');
 
 function monthLength(value) {
   /*
-    if the first character in the string starts from `0`, 
+    if the first character in the string starts from `0`,
     we assume that the first two characters are a month
 
     '0122' => {month: '01', year: '22'}
@@ -15,7 +15,7 @@ function monthLength(value) {
   }
 
   /*
-    If the length of the value is more than five characters, 
+    If the length of the value is more than five characters,
     we assume that the first two characters are a month
 
     '112020' => {month: '11', year: '2020'}
@@ -25,8 +25,8 @@ function monthLength(value) {
   }
 
   /*
-    If the last value is zero then 
-    we assume that the last two values are ready 
+    If the last value is zero then
+    we assume that the last two values are ready
     and the first character is a month
 
     '120' => {month: '1', year: '20'}
@@ -36,7 +36,7 @@ function monthLength(value) {
   }
 
   /*
-    If the length of the value is less than four, 
+    If the length of the value is less than four,
     we consider the first two values to be a month
 
     '122' => {month: '1', year: '22'}
