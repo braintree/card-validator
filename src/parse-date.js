@@ -3,14 +3,14 @@
 var expirationYear = require('./expiration-year');
 var isArray = require('./lib/is-array');
 
-function monthLength(value) {
+function getNumberOfMonthDigitsInDateString(dateString) {
   /*
     if the first character in the string starts from `0`,
     we assume that the first two characters are a month
 
     '0122' => {month: '01', year: '22'}
   */
-  if (value[0] === '0') {
+  if (dateString[0] === '0') {
     return 2;
   }
 
@@ -20,7 +20,7 @@ function monthLength(value) {
 
     '112020' => {month: '11', year: '2020'}
   */
-  if (value.length > 5) {
+  if (dateString.length > 5) {
     return 2;
   }
 
@@ -31,7 +31,7 @@ function monthLength(value) {
 
     '120' => {month: '1', year: '20'}
   */
-  if (value[value.length - 1] === '0') {
+  if (dateString[dateString.length - 1] === '0') {
     return 1;
   }
 
@@ -41,7 +41,7 @@ function monthLength(value) {
 
     '122' => {month: '1', year: '22'}
   */
-  if (value.length < 4) {
+  if (dateString.length < 4) {
     return 2;
   }
 
@@ -67,7 +67,7 @@ function parseDate(value) {
     };
   }
 
-  len = monthLength(value);
+  len = getNumberOfMonthDigitsInDateString(value);
 
   if (value[0] === '1') {
     year = value.substr(1);
