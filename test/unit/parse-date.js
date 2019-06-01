@@ -15,7 +15,8 @@ describe('parse-date', function () {
     'wth deliminators': [
       ['12 21', {month: '12', year: '21'}],
       ['12 / 21', {month: '12', year: '21'}],
-      ['12/21', {month: '12', year: '21'}]
+      ['12/21', {month: '12', year: '21'}],
+      ['2020-10', {month: '10', year: '2020'}]
     ],
     'when the datestrings starts with "0"': [
       ['0', {month: '0', year: ''}],

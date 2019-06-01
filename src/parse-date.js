@@ -85,7 +85,9 @@ function getNumberOfMonthDigitsInDateString(dateString) {
 function parseDate(date) {
   var month, numberOfDigitsInMonth;
 
-  if (/\//.test(date)) {
+  if (/^\d{4}-\d{1,2}$/.test(date)) {
+    date = date.split('-').reverse();
+  } else if (/\//.test(date)) {
     date = date.split(/\s*\/\s*/g);
   } else if (/\s/.test(date)) {
     date = date.split(/ +/g);

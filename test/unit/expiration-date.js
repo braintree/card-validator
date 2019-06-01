@@ -48,6 +48,25 @@ describe('expirationDate validates', function () {
         ]
       ],
 
+      'valid expiration dates with dashes': [
+        [currentYear + '-' + currentMonth, {isValid: true, isPotentiallyValid: true, month: currentMonth.toString(), year: currentYear.toString()}],
+        [nextYear + '-10', {isValid: true, isPotentiallyValid: true, month: '10', year: nextYear.toString()}],
+        [nextYear + '-10', {isValid: true, isPotentiallyValid: true, month: '10', year: nextYear.toString()}],
+        [nextYear + '-12', {isValid: true, isPotentiallyValid: true, month: '12', year: nextYear.toString()}],
+        [nextYear + '-01', {isValid: true, isPotentiallyValid: true, month: '01', year: nextYear.toString()}],
+        [nextYear + '-1', {isValid: true, isPotentiallyValid: true, month: '1', year: nextYear.toString()}],
+        [nextYear + '-09', {isValid: true, isPotentiallyValid: true, month: '09', year: nextYear.toString()}],
+        [nextYear + '-01', {isValid: true, isPotentiallyValid: true, month: '01', year: nextYear.toString()}],
+        [nextYear + '-01', {isValid: true, isPotentiallyValid: true, month: '01', year: nextYear.toString()}]
+      ],
+
+      'invalid expiration dates with dashes': [
+        [nextYear + '-00', {isValid: false, isPotentiallyValid: false, month: null, year: null}],
+        [nextYear + '-13', {isValid: false, isPotentiallyValid: false, month: null, year: null}],
+        ['1999-01', {isValid: false, isPotentiallyValid: false, month: null, year: null}],
+        ['2100-01', {isValid: false, isPotentiallyValid: false, month: null, year: null}]
+      ],
+
       'valid expiration dates with slashes': [
         [currentMonth + ' / ' + currentYear, {isValid: true, isPotentiallyValid: true, month: currentMonth.toString(), year: currentYear.toString()}],
         ['10 / ' + nextYear, {isValid: true, isPotentiallyValid: true, month: '10', year: nextYear.toString()}],
