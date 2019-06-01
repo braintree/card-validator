@@ -1,3 +1,8 @@
+unreleased
+==========
+
+- Adjust expiration date to accept dates formatted as `YYYY-MM` (the HTML autofill spec). Closes #69 (thanks @schuylr)
+
 6.1.0
 =====
 
