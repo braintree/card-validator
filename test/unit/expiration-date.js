@@ -144,8 +144,7 @@ describe('expirationDate validates', function () {
         ['01201', {isValid: false, isPotentiallyValid: true, month: null, year: null}],
         ['01211', {isValid: false, isPotentiallyValid: false, month: null, year: null}],
         ['01199', {isValid: false, isPotentiallyValid: false, month: null, year: null}],
-        ['01199', {isValid: false, isPotentiallyValid: false, month: null, year: null}],
-        ['122', {isValid: false, isPotentiallyValid: true, month: null, year: null}]
+        ['01199', {isValid: false, isPotentiallyValid: false, month: null, year: null}]
       ],
 
       'empty strings': [

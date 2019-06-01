@@ -4,44 +4,75 @@ var expirationYear = require('./expiration-year');
 var isArray = require('./lib/is-array');
 
 function getNumberOfMonthDigitsInDateString(dateString) {
+  var firstCharacter = Number(dateString[0]);
+  var assumedYear;
+
   /*
-    if the first character in the string starts from `0`,
-    we assume that the first two characters are a month
+    if the first character in the string starts with `0`,
+    we know that the month will be 2 digits.
 
     '0122' => {month: '01', year: '22'}
   */
-  if (dateString[0] === '0') {
+  if (firstCharacter === 0) {
     return 2;
   }
 
   /*
-    If the length of the value is more than five characters,
-    we assume that the first two characters are a month
+    if the first character in the string starts with
+    number greater than 1, it must be a 1 digit month
 
-    '112020' => {month: '11', year: '2020'}
+    '322' => {month: '3', year: '22'}
   */
-  if (dateString.length > 5) {
-    return 2;
-  }
-
-  /*
-    If the last value is zero then
-    we assume that the last two values are ready
-    and the first character is a month
-
-    '120' => {month: '1', year: '20'}
-  */
-  if (dateString[dateString.length - 1] === '0') {
+  if (firstCharacter > 1) {
     return 1;
   }
 
   /*
-    If the length of the value is less than four,
-    we consider the first two values to be a month
+    if the first 2 characters make up a number between
+    13-19, we know that the month portion must be 1
 
-    '122' => {month: '1', year: '22'}
+    '139' => {month: '1', year: '39'}
   */
-  if (dateString.length < 4) {
+  if (firstCharacter === 1 && Number(dateString[1]) > 2) {
+    return 1;
+  }
+
+  /*
+    if the first 2 characters make up a number between
+    10-12, we check if the year portion would be considered
+    valid if we assumed that the month was 1. If it is
+    not potentially valid, we assume the month must have
+    2 digits.
+
+    '109' => {month: '10', year: '9'}
+    '120' => {month: '1', year: '20'} // when checked in the year 2019
+    '120' => {month: '12', year: '0'} // when checked in the year 2021
+  */
+  if (firstCharacter === 1) {
+    assumedYear = dateString.substr(1);
+
+    return expirationYear(assumedYear).isPotentiallyValid ? 1 : 2;
+  }
+
+  /*
+    If the length of the value is exactly 5 characters,
+    we assume a full year was passed in, meaning the remaining
+    single leading digit must be the month value.
+
+    '12202' => {month: '1', year: '2202'}
+  */
+  if (dateString.length === 5) {
+    return 1;
+  }
+
+  /*
+    If the length of the value is more than five characters,
+    we assume a full year was passed in addition to the month
+    and therefore the month portion must be 2 digits.
+
+    '112020' => {month: '11', year: '2020'}
+  */
+  if (dateString.length > 5) {
     return 2;
   }
 
@@ -51,37 +82,29 @@ function getNumberOfMonthDigitsInDateString(dateString) {
   return 1;
 }
 
-function parseDate(value) {
-  var month, len, year, yearValid;
+function parseDate(date) {
+  var month, numberOfDigitsInMonth;
 
-  if (/\//.test(value)) {
-    value = value.split(/\s*\/\s*/g);
-  } else if (/\s/.test(value)) {
-    value = value.split(/ +/g);
+  if (/\//.test(date)) {
+    date = date.split(/\s*\/\s*/g);
+  } else if (/\s/.test(date)) {
+    date = date.split(/ +/g);
   }
 
-  if (isArray(value)) {
+  if (isArray(date)) {
     return {
-      month: value[0] || '',
-      year: value.slice(1).join()
+      month: date[0] || '',
+      year: date.slice(1).join()
     };
   }
 
-  len = getNumberOfMonthDigitsInDateString(value);
+  numberOfDigitsInMonth = getNumberOfMonthDigitsInDateString(date);
 
-  if (value[0] === '1') {
-    year = value.substr(1);
-    yearValid = expirationYear(year);
-    if (!yearValid.isPotentiallyValid) {
-      len = 2;
-    }
-  }
-
-  month = value.substr(0, len);
+  month = date.substr(0, numberOfDigitsInMonth);
 
   return {
     month: month,
-    year: value.substr(month.length)
+    year: date.substr(month.length)
   };
 }
 
