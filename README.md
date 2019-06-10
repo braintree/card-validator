@@ -265,7 +265,7 @@ The `maxElapsedYear` has a default value of 19. It can be overridden by passing 
 | `'10/2019'`<br/>`'10 / 2019'`<br />`'102019'`<br/>`'10 2019'`<br/>`'10 19'`               | `{month: '10', year: '2019'}` |
 | `'2019-10'`                                                                               | `{month: '10', year: '2019'}` |
 | `{month: '01', year: '19'}`<br/>`{month: '1', year: '19'}`<br/>`{month: 1, year: 19}`     | `{month: '01', year: '19'}`   |
-| `{month: '10', year: '2019'}`<br/>`{month: '1', year: '2019'}`<br/>`{month: 1, year: 19}` | `{month: '10', year: '2019'}` |
+| `{month: '10', year: '2019'}`<br/>`{month: '1', year: '2019'}`<br/>`{month: 1, year: 2019}` | `{month: '01', year: '2019'}` |
 
 - - -
 
