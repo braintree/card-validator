@@ -16,10 +16,10 @@
   "license": "MIT",
   "devDependencies": {
     "chai": "^4.2.0",
-    "eslint": "^5.16.0",
-    "eslint-config-braintree": "^2.0.0",
-    "mocha": "^6.1.4",
-    "sinon": "^7.3.2",
+    "eslint": "^6.2.2",
+    "eslint-config-braintree": "^4.0.0",
+    "mocha": "^6.2.0",
+    "sinon": "^7.4.1",
     "sinon-chai": "^3.3.0"
   },
   "dependencies": {

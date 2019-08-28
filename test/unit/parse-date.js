@@ -77,7 +77,7 @@ describe('parse-date', function () {
       // keep working once the year is over
       var fixedDate = new Date('2019', '9');
 
-      this.clock = sinon.useFakeTimers({ // eslint-disable-line no-invalid-this
+      this.clock = sinon.useFakeTimers({// eslint-disable-line no-invalid-this
         now: fixedDate
       });
     });
