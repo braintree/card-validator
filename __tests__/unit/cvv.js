@@ -1,6 +1,3 @@
-'use strict';
-
-var expect = require('chai').expect;
 var cvv = require('../../src/cvv');
 
 describe('cvv', function () {
@@ -60,7 +57,7 @@ describe('cvv', function () {
           var output = test[1];
 
           it('returns ' + JSON.stringify(output) + ' for "' + arg + '"', function () {
-            expect(cvv(arg, maxLength)).to.deep.equal(output);
+            expect(cvv(arg, maxLength)).toEqual(output);
           });
         });
       });
@@ -69,17 +66,17 @@ describe('cvv', function () {
 
   describe('maxLength', function () {
     it('defaults maxLength to 3', function () {
-      expect(cvv('1234')).to.deep.equal({isValid: false, isPotentiallyValid: false});
-      expect(cvv('123')).to.deep.equal({isValid: true, isPotentiallyValid: true});
+      expect(cvv('1234')).toEqual({isValid: false, isPotentiallyValid: false});
+      expect(cvv('123')).toEqual({isValid: true, isPotentiallyValid: true});
     });
 
     it('accepts maxLength', function () {
-      expect(cvv('1234', 4)).to.deep.equal({isValid: true, isPotentiallyValid: true});
+      expect(cvv('1234', 4)).toEqual({isValid: true, isPotentiallyValid: true});
     });
 
     it('returns invalid if beyond maxLength', function () {
-      expect(cvv('1234')).to.deep.equal({isValid: false, isPotentiallyValid: false});
-      expect(cvv('12345', 4)).to.deep.equal({isValid: false, isPotentiallyValid: false});
+      expect(cvv('1234')).toEqual({isValid: false, isPotentiallyValid: false});
+      expect(cvv('12345', 4)).toEqual({isValid: false, isPotentiallyValid: false});
     });
   });
 });

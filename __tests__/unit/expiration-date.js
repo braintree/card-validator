@@ -1,6 +1,3 @@
-'use strict';
-
-var expect = require('chai').expect;
 var expirationDate = require('../../src/expiration-date');
 
 var date = new Date();
@@ -16,7 +13,7 @@ function yearsFromNow(fromNow) {
 }
 
 describe('expirationDate validates', function () {
-  context('String Argument', function () {
+  describe('String Argument', function () {
     var describes = {
       'within current year': [
         [
@@ -232,14 +229,14 @@ describe('expirationDate validates', function () {
           var output = test[1];
 
           it('and returns ' + JSON.stringify(output) + ' for "' + arg + '"', function () {
-            expect(expirationDate(arg)).to.deep.equal(output);
+            expect(expirationDate(arg)).toEqual(output);
           });
         });
       });
     });
   });
 
-  context('Object Argument', function () {
+  describe('Object Argument', function () {
     var describes = {
       'within current year with number values': [
         [
@@ -324,22 +321,26 @@ describe('expirationDate validates', function () {
           var output = test[1];
 
           it('and returns ' + JSON.stringify(output) + ' for "' + arg + '"', function () {
-            expect(expirationDate(arg)).to.deep.equal(output);
+            expect(expirationDate(arg)).toEqual(output);
           });
         });
       });
     });
   });
 
-  context('maxElapsedYear', function () {
+  describe('maxElapsedYear', function () {
     it('defaults maxElapsedYear is 19', function () {
-      expect(expirationDate(currentMonth + ' / ' + yearsFromNow(19))).to.deep.equal({isValid: true, isPotentiallyValid: true, month: currentMonth.toString(), year: yearsFromNow(19).toString()});
-      expect(expirationDate(currentMonth + ' / ' + yearsFromNow(20))).to.deep.equal({isValid: false, isPotentiallyValid: false, month: null, year: null});
+      expect(expirationDate(currentMonth + ' / ' + yearsFromNow(19))).toEqual(
+        {isValid: true, isPotentiallyValid: true, month: currentMonth.toString(), year: yearsFromNow(19).toString()}
+      );
+      expect(expirationDate(currentMonth + ' / ' + yearsFromNow(20))).toEqual({isValid: false, isPotentiallyValid: false, month: null, year: null});
     });
 
     it('accepts maxElapsedYear', function () {
-      expect(expirationDate(currentMonth + ' / ' + yearsFromNow(20), 20)).to.deep.equal({isValid: true, isPotentiallyValid: true, month: currentMonth.toString(), year: yearsFromNow(20).toString()});
-      expect(expirationDate(currentMonth + ' / ' + yearsFromNow(21), 20)).to.deep.equal({isValid: false, isPotentiallyValid: false, month: null, year: null});
+      expect(expirationDate(currentMonth + ' / ' + yearsFromNow(20), 20)).toEqual(
+        {isValid: true, isPotentiallyValid: true, month: currentMonth.toString(), year: yearsFromNow(20).toString()}
+      );
+      expect(expirationDate(currentMonth + ' / ' + yearsFromNow(21), 20)).toEqual({isValid: false, isPotentiallyValid: false, month: null, year: null});
     });
   });
 });

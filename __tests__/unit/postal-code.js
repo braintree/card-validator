@@ -1,6 +1,3 @@
-'use strict';
-
-var expect = require('chai').expect;
 var postalCode = require('../../src/postal-code');
 
 describe('postalCode', function () {
@@ -52,7 +49,7 @@ describe('postalCode', function () {
         var output = test[1];
 
         it('returns ' + JSON.stringify(output) + ' for "' + arg + '"', function () {
-          expect(postalCode(arg)).to.deep.equal(output);
+          expect(postalCode(arg)).toEqual(output);
         });
       });
     });
@@ -60,30 +57,30 @@ describe('postalCode', function () {
 
   describe('custom min length', function () {
     it('uses default min length when no minLength option is passed', function () {
-      expect(postalCode('123')).to.deep.equal({
+      expect(postalCode('123')).toEqual({
         isValid: true,
         isPotentiallyValid: true
       });
-      expect(postalCode('123', {})).to.deep.equal({
+      expect(postalCode('123', {})).toEqual({
         isValid: true,
         isPotentiallyValid: true
       });
-      expect(postalCode('12')).to.deep.equal({
+      expect(postalCode('12')).toEqual({
         isValid: false,
         isPotentiallyValid: true
       });
-      expect(postalCode('12', {})).to.deep.equal({
+      expect(postalCode('12', {})).toEqual({
         isValid: false,
         isPotentiallyValid: true
       });
     });
 
     it('allows passing in a custom min length', function () {
-      expect(postalCode('123', {minLength: 4})).to.deep.equal({
+      expect(postalCode('123', {minLength: 4})).toEqual({
         isValid: false,
         isPotentiallyValid: true
       });
-      expect(postalCode('1234', {minLength: 4})).to.deep.equal({
+      expect(postalCode('1234', {minLength: 4})).toEqual({
         isValid: true,
         isPotentiallyValid: true
       });

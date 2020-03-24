@@ -1,6 +1,3 @@
-'use strict';
-
-var expect = require('chai').expect;
 var cardNumber = require('../../src/card-number');
 
 describe('number validates', function () {
@@ -151,15 +148,15 @@ describe('number validates', function () {
         {card: 'unionpay', isPotentiallyValid: true, isValid: true}]
     ]);
 
-    context('where card number is luhn invalid', function () {
+    describe('where card number is luhn invalid', function () {
       var number = '6212345000000001';
 
       it('marks card valid by default', function () {
         var actual = cardNumber(number);
 
-        expect(actual.card.type).to.equal('unionpay');
-        expect(actual.isPotentiallyValid).to.equal(true);
-        expect(actual.isValid).to.equal(true);
+        expect(actual.card.type).toBe('unionpay');
+        expect(actual.isPotentiallyValid).toBe(true);
+        expect(actual.isValid).toBe(true);
       });
 
       it('marks card invalid when "luhnValidateUnionPay" is present', function () {
@@ -169,9 +166,9 @@ describe('number validates', function () {
 
         var actual = cardNumber(number, options);
 
-        expect(actual.card.type).to.equal('unionpay');
-        expect(actual.isPotentiallyValid).to.equal(true);
-        expect(actual.isValid).to.equal(false);
+        expect(actual.card.type).toBe('unionpay');
+        expect(actual.isPotentiallyValid).toBe(true);
+        expect(actual.isValid).toBe(false);
       });
     });
   });
@@ -207,16 +204,16 @@ describe('number validates', function () {
 
       var actual = cardNumber('4111 1111 1111 1111 110', options);
 
-      expect(actual.card.type).to.equal('visa');
-      expect(actual.isPotentiallyValid).to.equal(false);
-      expect(actual.isValid).to.equal(false);
+      expect(actual.card.type).toBe('visa');
+      expect(actual.isPotentiallyValid).toBe(false);
+      expect(actual.isValid).toBe(false);
 
       options.maxLength = 19;
       actual = cardNumber('4111 1111 1111 1111 110', options);
 
-      expect(actual.card.type).to.equal('visa');
-      expect(actual.isPotentiallyValid).to.equal(true);
-      expect(actual.isValid).to.equal(true);
+      expect(actual.card.type).toBe('visa');
+      expect(actual.isPotentiallyValid).toBe(true);
+      expect(actual.isValid).toBe(true);
     });
 
     it('marks card as not potentially valid when card is equal to max length and not luhn valid', function () {
@@ -226,9 +223,9 @@ describe('number validates', function () {
 
       var actual = cardNumber('4111 1111 1111 1112', options);
 
-      expect(actual.card.type).to.equal('visa');
-      expect(actual.isPotentiallyValid).to.equal(false);
-      expect(actual.isValid).to.equal(false);
+      expect(actual.card.type).toBe('visa');
+      expect(actual.isPotentiallyValid).toBe(false);
+      expect(actual.isValid).toBe(false);
     });
 
     it('marks card as valid and potentially valid when card is equal to max length and luhn valid', function () {
@@ -238,9 +235,9 @@ describe('number validates', function () {
 
       var actual = cardNumber('4111 1111 1111 1111', options);
 
-      expect(actual.card.type).to.equal('visa');
-      expect(actual.isPotentiallyValid).to.equal(true);
-      expect(actual.isValid).to.equal(true);
+      expect(actual.card.type).toBe('visa');
+      expect(actual.isPotentiallyValid).toBe(true);
+      expect(actual.isValid).toBe(true);
     });
 
     it('uses the lesser value for max length if the card brands largest length value is smaller than the configured one', function () {
@@ -251,9 +248,9 @@ describe('number validates', function () {
       // amex has a max length of 15
       var actual = cardNumber('378282246310005', options);
 
-      expect(actual.card.type).to.equal('american-express');
-      expect(actual.isPotentiallyValid).to.equal(true);
-      expect(actual.isValid).to.equal(true);
+      expect(actual.card.type).toBe('american-express');
+      expect(actual.isPotentiallyValid).toBe(true);
+      expect(actual.isValid).toBe(true);
     });
   });
 });
@@ -266,16 +263,16 @@ function table(tests) {
 
     it('card: is ' + expected.card + ' for ' + number, function () {
       if (expected.card) {
-        expect(actual.card.type).to.equal(expected.card);
+        expect(actual.card.type).toBe(expected.card);
       } else {
-        expect(actual.card).to.equal(null);
+        expect(actual.card).toBeNull();
       }
     });
     it('isPotentiallyValid: is ' + expected.isPotentiallyValid + ' for ' + number, function () {
-      expect(actual.isPotentiallyValid).to.equal(expected.isPotentiallyValid);
+      expect(actual.isPotentiallyValid).toBe(expected.isPotentiallyValid);
     });
     it('valid: is ' + expected.isValid + ' for ' + number, function () {
-      expect(actual.isValid).to.equal(expected.isValid);
+      expect(actual.isValid).toBe(expected.isValid);
     });
   });
 }

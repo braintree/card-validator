@@ -1,6 +1,3 @@
-'use strict';
-
-var expect = require('chai').expect;
 var expirationMonth = require('../../src/expiration-month');
 
 var currentMonth = new Date().getMonth() + 1;
@@ -117,7 +114,7 @@ describe('expirationMonth', function () {
         var output = test[1];
 
         it('returns ' + JSON.stringify(output) + ' for "' + arg + '"', function () {
-          expect(expirationMonth(arg)).to.deep.equal(output);
+          expect(expirationMonth(arg)).toEqual(output);
         });
       });
     });

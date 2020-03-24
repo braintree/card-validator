@@ -1,6 +1,3 @@
-'use strict';
-
-var expect = require('chai').expect;
 var expirationYear = require('../../src/expiration-year');
 var currentYear = new Date().getFullYear();
 
@@ -99,19 +96,19 @@ describe('expirationYear', function () {
         var output = test[1];
 
         it('returns ' + JSON.stringify(output) + ' for "' + arg + '"', function () {
-          expect(expirationYear(arg)).to.deep.equal(output);
+          expect(expirationYear(arg)).toEqual(output);
         });
       });
     });
   });
 
   it('defaults maxElapsedYear is 19', function () {
-    expect(expirationYear(yearsFromNow(19))).to.deep.equal({isValid: true, isPotentiallyValid: true, isCurrentYear: false});
-    expect(expirationYear(yearsFromNow(20))).to.deep.equal({isValid: false, isPotentiallyValid: false, isCurrentYear: false});
+    expect(expirationYear(yearsFromNow(19))).toEqual({isValid: true, isPotentiallyValid: true, isCurrentYear: false});
+    expect(expirationYear(yearsFromNow(20))).toEqual({isValid: false, isPotentiallyValid: false, isCurrentYear: false});
   });
 
   it('accepts maxElapsedYear', function () {
-    expect(expirationYear(yearsFromNow(20), 20)).to.deep.equal({isValid: true, isPotentiallyValid: true, isCurrentYear: false});
-    expect(expirationYear(yearsFromNow(21), 20)).to.deep.equal({isValid: false, isPotentiallyValid: false, isCurrentYear: false});
+    expect(expirationYear(yearsFromNow(20), 20)).toEqual({isValid: true, isPotentiallyValid: true, isCurrentYear: false});
+    expect(expirationYear(yearsFromNow(21), 20)).toEqual({isValid: false, isPotentiallyValid: false, isCurrentYear: false});
   });
 });
