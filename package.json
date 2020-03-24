@@ -16,11 +16,11 @@
   "author": "Braintree <code@getbraintree.com> (https://www.braintreepayments.com/)",
   "license": "MIT",
   "devDependencies": {
-    "eslint": "^6.2.2",
+    "eslint": "^6.8.0",
     "eslint-config-braintree": "^4.0.0",
     "jest": "^25.1.0"
   },
   "dependencies": {
-    "credit-card-type": "^8.0.0"
+    "credit-card-type": "^8.3.0"
   }
 }
