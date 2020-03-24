@@ -1,7 +1,7 @@
-var postalCode = require('../../src/postal-code');
+const postalCode = require('../../src/postal-code');
 
-describe('postalCode', function () {
-  var describes = {
+describe('postalCode', () => {
+  const describes = {
     'returns false for non-string types': [
       [0, {isValid: false, isPotentiallyValid: false}],
       [0, {isValid: false, isPotentiallyValid: false}],
@@ -40,42 +40,45 @@ describe('postalCode', function () {
     ]
   };
 
-  Object.keys(describes).forEach(function (key) {
-    var tests = describes[key];
+  Object.keys(describes).forEach(key => {
+    const tests = describes[key];
 
-    describe(key, function () {
-      tests.forEach(function (test) {
-        var arg = test[0];
-        var output = test[1];
+    describe(key, () => {
+      tests.forEach(test => {
+        const arg = test[0];
+        const output = test[1];
 
-        it('returns ' + JSON.stringify(output) + ' for "' + arg + '"', function () {
+        it(`returns ${JSON.stringify(output)} for "${arg}"`, () => {
           expect(postalCode(arg)).toEqual(output);
         });
       });
     });
   });
 
-  describe('custom min length', function () {
-    it('uses default min length when no minLength option is passed', function () {
-      expect(postalCode('123')).toEqual({
-        isValid: true,
-        isPotentiallyValid: true
-      });
-      expect(postalCode('123', {})).toEqual({
-        isValid: true,
-        isPotentiallyValid: true
-      });
-      expect(postalCode('12')).toEqual({
-        isValid: false,
-        isPotentiallyValid: true
-      });
-      expect(postalCode('12', {})).toEqual({
-        isValid: false,
-        isPotentiallyValid: true
-      });
-    });
+  describe('custom min length', () => {
+    it(
+      'uses default min length when no minLength option is passed',
+      () => {
+        expect(postalCode('123')).toEqual({
+          isValid: true,
+          isPotentiallyValid: true
+        });
+        expect(postalCode('123', {})).toEqual({
+          isValid: true,
+          isPotentiallyValid: true
+        });
+        expect(postalCode('12')).toEqual({
+          isValid: false,
+          isPotentiallyValid: true
+        });
+        expect(postalCode('12', {})).toEqual({
+          isValid: false,
+          isPotentiallyValid: true
+        });
+      }
+    );
 
-    it('allows passing in a custom min length', function () {
+    it('allows passing in a custom min length', () => {
       expect(postalCode('123', {minLength: 4})).toEqual({
         isValid: false,
         isPotentiallyValid: true

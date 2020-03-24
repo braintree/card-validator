@@ -1,8 +1,8 @@
-var cardValidator = require('../../');
-var creditCardType = require('credit-card-type');
+const cardValidator = require('../../');
+const creditCardType = require('credit-card-type');
 
-describe('creditCardType', function () {
-  it('exposes creditCardType', function () {
+describe('creditCardType', () => {
+  it('exposes creditCardType', () => {
     expect(cardValidator.creditCardType).toBe(creditCardType);
   });
 });

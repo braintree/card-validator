@@ -1,7 +1,7 @@
-var cardNumber = require('../../src/card-number');
+const cardNumber = require('../../src/card-number');
 
-describe('number validates', function () {
-  describe('partial validation sequences', function () {
+describe('number validates', () => {
+  describe('partial validation sequences', () => {
     table([
       ['',
         {card: null, isPotentiallyValid: true, isValid: false}],
@@ -28,7 +28,7 @@ describe('number validates', function () {
     ]);
   });
 
-  describe('normal cases', function () {
+  describe('normal cases', () => {
     table([
       ['4012888888881881',
         {card: 'visa', isPotentiallyValid: true, isValid: true}],
@@ -61,7 +61,7 @@ describe('number validates', function () {
     ]);
   });
 
-  describe('weird formatting', function () {
+  describe('weird formatting', () => {
     table([
       ['4111-1111-1111-1111',
         {card: 'visa', isPotentiallyValid: true, isValid: true}],
@@ -72,7 +72,7 @@ describe('number validates', function () {
     ]);
   });
 
-  describe('Discover', function () {
+  describe('Discover', () => {
     table([
       ['6011111',
         {card: 'discover', isPotentiallyValid: true, isValid: false}],
@@ -81,7 +81,7 @@ describe('number validates', function () {
     ]);
   });
 
-  describe('MasterCard', function () {
+  describe('MasterCard', () => {
     table([
       ['2',
         {card: null, isPotentiallyValid: true, isValid: false}],
@@ -100,7 +100,7 @@ describe('number validates', function () {
     ]);
   });
 
-  describe('Maestro', function () {
+  describe('Maestro', () => {
     table([
       ['602011', {card: 'maestro', isPotentiallyValid: true, isValid: false}],
       ['500000000000', {card: 'maestro', isPotentiallyValid: true, isValid: false}],
@@ -114,7 +114,7 @@ describe('number validates', function () {
     ]);
   });
 
-  describe('Amex', function () {
+  describe('Amex', () => {
     table([
       ['3782',
         {card: 'american-express', isPotentiallyValid: true, isValid: false}],
@@ -123,7 +123,7 @@ describe('number validates', function () {
     ]);
   });
 
-  describe('JCB', function () {
+  describe('JCB', () => {
     table([
       ['1',
         {card: 'jcb', isPotentiallyValid: true, isValid: false}],
@@ -136,7 +136,7 @@ describe('number validates', function () {
     ]);
   });
 
-  describe('UnionPay', function () {
+  describe('UnionPay', () => {
     table([
       ['6',
         {card: null, isPotentiallyValid: true, isValid: false}],
@@ -148,23 +148,23 @@ describe('number validates', function () {
         {card: 'unionpay', isPotentiallyValid: true, isValid: true}]
     ]);
 
-    describe('where card number is luhn invalid', function () {
-      var number = '6212345000000001';
+    describe('where card number is luhn invalid', () => {
+      const number = '6212345000000001';
 
-      it('marks card valid by default', function () {
-        var actual = cardNumber(number);
+      it('marks card valid by default', () => {
+        const actual = cardNumber(number);
 
         expect(actual.card.type).toBe('unionpay');
         expect(actual.isPotentiallyValid).toBe(true);
         expect(actual.isValid).toBe(true);
       });
 
-      it('marks card invalid when "luhnValidateUnionPay" is present', function () {
-        var options = {
+      it('marks card invalid when "luhnValidateUnionPay" is present', () => {
+        const options = {
           luhnValidateUnionPay: true
         };
 
-        var actual = cardNumber(number, options);
+        const actual = cardNumber(number, options);
 
         expect(actual.card.type).toBe('unionpay');
         expect(actual.isPotentiallyValid).toBe(true);
@@ -173,7 +173,7 @@ describe('number validates', function () {
     });
   });
 
-  describe('edge cases', function () {
+  describe('edge cases', () => {
     table([
       ['',
         {card: null, isPotentiallyValid: true, isValid: false}],
@@ -196,82 +196,97 @@ describe('number validates', function () {
     ]);
   });
 
-  describe('with "maxCardLength" option', function () {
-    it('marks card invalid when card is longer than the max length', function () {
-      var options = {
-        maxLength: 16
-      };
+  describe('with "maxCardLength" option', () => {
+    it(
+      'marks card invalid when card is longer than the max length',
+      () => {
+        const options = {
+          maxLength: 16
+        };
 
-      var actual = cardNumber('4111 1111 1111 1111 110', options);
+        let actual = cardNumber('4111 1111 1111 1111 110', options);
 
-      expect(actual.card.type).toBe('visa');
-      expect(actual.isPotentiallyValid).toBe(false);
-      expect(actual.isValid).toBe(false);
+        expect(actual.card.type).toBe('visa');
+        expect(actual.isPotentiallyValid).toBe(false);
+        expect(actual.isValid).toBe(false);
 
-      options.maxLength = 19;
-      actual = cardNumber('4111 1111 1111 1111 110', options);
+        options.maxLength = 19;
+        actual = cardNumber('4111 1111 1111 1111 110', options);
 
-      expect(actual.card.type).toBe('visa');
-      expect(actual.isPotentiallyValid).toBe(true);
-      expect(actual.isValid).toBe(true);
-    });
+        expect(actual.card.type).toBe('visa');
+        expect(actual.isPotentiallyValid).toBe(true);
+        expect(actual.isValid).toBe(true);
+      }
+    );
 
-    it('marks card as not potentially valid when card is equal to max length and not luhn valid', function () {
-      var options = {
-        maxLength: 16
-      };
+    it(
+      'marks card as not potentially valid when card is equal to max length and not luhn valid',
+      () => {
+        const options = {
+          maxLength: 16
+        };
 
-      var actual = cardNumber('4111 1111 1111 1112', options);
+        const actual = cardNumber('4111 1111 1111 1112', options);
 
-      expect(actual.card.type).toBe('visa');
-      expect(actual.isPotentiallyValid).toBe(false);
-      expect(actual.isValid).toBe(false);
-    });
+        expect(actual.card.type).toBe('visa');
+        expect(actual.isPotentiallyValid).toBe(false);
+        expect(actual.isValid).toBe(false);
+      }
+    );
 
-    it('marks card as valid and potentially valid when card is equal to max length and luhn valid', function () {
-      var options = {
-        maxLength: 16
-      };
+    it(
+      'marks card as valid and potentially valid when card is equal to max length and luhn valid',
+      () => {
+        const options = {
+          maxLength: 16
+        };
 
-      var actual = cardNumber('4111 1111 1111 1111', options);
+        const actual = cardNumber('4111 1111 1111 1111', options);
 
-      expect(actual.card.type).toBe('visa');
-      expect(actual.isPotentiallyValid).toBe(true);
-      expect(actual.isValid).toBe(true);
-    });
+        expect(actual.card.type).toBe('visa');
+        expect(actual.isPotentiallyValid).toBe(true);
+        expect(actual.isValid).toBe(true);
+      }
+    );
 
-    it('uses the lesser value for max length if the card brands largest length value is smaller than the configured one', function () {
-      var options = {
-        maxLength: 16
-      };
+    it(
+      'uses the lesser value for max length if the card brands largest length value is smaller than the configured one',
+      () => {
+        const options = {
+          maxLength: 16
+        };
 
-      // amex has a max length of 15
-      var actual = cardNumber('378282246310005', options);
+        // amex has a max length of 15
+        const actual = cardNumber('378282246310005', options);
 
-      expect(actual.card.type).toBe('american-express');
-      expect(actual.isPotentiallyValid).toBe(true);
-      expect(actual.isValid).toBe(true);
-    });
+        expect(actual.card.type).toBe('american-express');
+        expect(actual.isPotentiallyValid).toBe(true);
+        expect(actual.isValid).toBe(true);
+      }
+    );
   });
 });
 
 function table(tests) {
-  tests.forEach(function (test) {
-    var number = test[0];
-    var expected = test[1];
-    var actual = cardNumber(number);
+  tests.forEach(test => {
+    const number = test[0];
+    const expected = test[1];
+    const actual = cardNumber(number);
 
-    it('card: is ' + expected.card + ' for ' + number, function () {
+    it(`card: is ${expected.card} for ${number}`, () => {
       if (expected.card) {
         expect(actual.card.type).toBe(expected.card);
       } else {
         expect(actual.card).toBeNull();
       }
     });
-    it('isPotentiallyValid: is ' + expected.isPotentiallyValid + ' for ' + number, function () {
-      expect(actual.isPotentiallyValid).toBe(expected.isPotentiallyValid);
-    });
-    it('valid: is ' + expected.isValid + ' for ' + number, function () {
+    it(
+      `isPotentiallyValid: is ${expected.isPotentiallyValid} for ${number}`,
+      () => {
+        expect(actual.isPotentiallyValid).toBe(expected.isPotentiallyValid);
+      }
+    );
+    it(`valid: is ${expected.isValid} for ${number}`, () => {
       expect(actual.isValid).toBe(expected.isValid);
     });
   });

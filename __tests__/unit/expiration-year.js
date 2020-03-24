@@ -1,8 +1,8 @@
-var expirationYear = require('../../src/expiration-year');
-var currentYear = new Date().getFullYear();
+const expirationYear = require('../../src/expiration-year');
+const currentYear = new Date().getFullYear();
 
 function yearsFromNow(fromNow, digits) {
-  var result = String(currentYear + fromNow);
+  let result = String(currentYear + fromNow);
 
   if (digits === 2) {
     result = result.substr(2, 2);
@@ -11,10 +11,10 @@ function yearsFromNow(fromNow, digits) {
   return result;
 }
 
-describe('expirationYear', function () {
-  var FALSE_VALIDATION = {isValid: false, isPotentiallyValid: false, isCurrentYear: false};
+describe('expirationYear', () => {
+  const FALSE_VALIDATION = {isValid: false, isPotentiallyValid: false, isCurrentYear: false};
 
-  var describes = {
+  const describes = {
     'returns false if not a string': [
       [[], FALSE_VALIDATION],
       [{}, FALSE_VALIDATION],
@@ -87,27 +87,27 @@ describe('expirationYear', function () {
     ]
   };
 
-  Object.keys(describes).forEach(function (key) {
-    var tests = describes[key];
+  Object.keys(describes).forEach(key => {
+    const tests = describes[key];
 
-    describe(key, function () {
-      tests.forEach(function (test) {
-        var arg = test[0];
-        var output = test[1];
+    describe(key, () => {
+      tests.forEach(test => {
+        const arg = test[0];
+        const output = test[1];
 
-        it('returns ' + JSON.stringify(output) + ' for "' + arg + '"', function () {
+        it(`returns ${JSON.stringify(output)} for "${arg}"`, () => {
           expect(expirationYear(arg)).toEqual(output);
         });
       });
     });
   });
 
-  it('defaults maxElapsedYear is 19', function () {
+  it('defaults maxElapsedYear is 19', () => {
     expect(expirationYear(yearsFromNow(19))).toEqual({isValid: true, isPotentiallyValid: true, isCurrentYear: false});
     expect(expirationYear(yearsFromNow(20))).toEqual({isValid: false, isPotentiallyValid: false, isCurrentYear: false});
   });
 
-  it('accepts maxElapsedYear', function () {
+  it('accepts maxElapsedYear', () => {
     expect(expirationYear(yearsFromNow(20), 20)).toEqual({isValid: true, isPotentiallyValid: true, isCurrentYear: false});
     expect(expirationYear(yearsFromNow(21), 20)).toEqual({isValid: false, isPotentiallyValid: false, isCurrentYear: false});
   });

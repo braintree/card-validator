@@ -1,8 +1,8 @@
-var cvv = require('../../src/cvv');
+const cvv = require('../../src/cvv');
 
-describe('cvv', function () {
-  describe('values', function () {
-    var describes = {
+describe('cvv', () => {
+  describe('values', () => {
+    const describes = {
       potentiallyValid: [
         ['', {isValid: false, isPotentiallyValid: true}],
         ['1', {isValid: false, isPotentiallyValid: true}],
@@ -47,16 +47,16 @@ describe('cvv', function () {
       ]
     };
 
-    Object.keys(describes).forEach(function (key) {
-      var tests = describes[key];
+    Object.keys(describes).forEach(key => {
+      const tests = describes[key];
 
-      describe(key, function () {
-        tests.forEach(function (test) {
-          var arg = test[0];
-          var maxLength = test[2] || 3;
-          var output = test[1];
+      describe(key, () => {
+        tests.forEach(test => {
+          const arg = test[0];
+          const maxLength = test[2] || 3;
+          const output = test[1];
 
-          it('returns ' + JSON.stringify(output) + ' for "' + arg + '"', function () {
+          it(`returns ${JSON.stringify(output)} for "${arg}"`, () => {
             expect(cvv(arg, maxLength)).toEqual(output);
           });
         });
@@ -64,17 +64,17 @@ describe('cvv', function () {
     });
   });
 
-  describe('maxLength', function () {
-    it('defaults maxLength to 3', function () {
+  describe('maxLength', () => {
+    it('defaults maxLength to 3', () => {
       expect(cvv('1234')).toEqual({isValid: false, isPotentiallyValid: false});
       expect(cvv('123')).toEqual({isValid: true, isPotentiallyValid: true});
     });
 
-    it('accepts maxLength', function () {
+    it('accepts maxLength', () => {
       expect(cvv('1234', 4)).toEqual({isValid: true, isPotentiallyValid: true});
     });
 
-    it('returns invalid if beyond maxLength', function () {
+    it('returns invalid if beyond maxLength', () => {
       expect(cvv('1234')).toEqual({isValid: false, isPotentiallyValid: false});
       expect(cvv('12345', 4)).toEqual({isValid: false, isPotentiallyValid: false});
     });

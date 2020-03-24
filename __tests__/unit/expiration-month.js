@@ -1,14 +1,14 @@
-var expirationMonth = require('../../src/expiration-month');
+const expirationMonth = require('../../src/expiration-month');
 
-var currentMonth = new Date().getMonth() + 1;
-var previousMonth = currentMonth - 1 || 1;
-var nextMonth = currentMonth < 12 ? currentMonth + 1 : currentMonth;
+const currentMonth = new Date().getMonth() + 1;
+const previousMonth = currentMonth - 1 || 1;
+const nextMonth = currentMonth < 12 ? currentMonth + 1 : currentMonth;
 
-describe('expirationMonth', function () {
-  var FALSE_VALIDATION = {isValid: false, isPotentiallyValid: false, isValidForThisYear: false};
-  var TRUE_VALIDATION = {isValid: true, isPotentiallyValid: true, isValidForThisYear: true};
+describe('expirationMonth', () => {
+  const FALSE_VALIDATION = {isValid: false, isPotentiallyValid: false, isValidForThisYear: false};
+  const TRUE_VALIDATION = {isValid: true, isPotentiallyValid: true, isValidForThisYear: true};
 
-  var describes = {
+  const describes = {
     'returns false if not a string': [
       [[], FALSE_VALIDATION],
       [{}, FALSE_VALIDATION],
@@ -105,15 +105,15 @@ describe('expirationMonth', function () {
     ]);
   }
 
-  Object.keys(describes).forEach(function (key) {
-    var tests = describes[key];
+  Object.keys(describes).forEach(key => {
+    const tests = describes[key];
 
-    describe(key, function () {
-      tests.forEach(function (test) {
-        var arg = test[0];
-        var output = test[1];
+    describe(key, () => {
+      tests.forEach(test => {
+        const arg = test[0];
+        const output = test[1];
 
-        it('returns ' + JSON.stringify(output) + ' for "' + arg + '"', function () {
+        it(`returns ${JSON.stringify(output)} for "${arg}"`, () => {
           expect(expirationMonth(arg)).toEqual(output);
         });
       });

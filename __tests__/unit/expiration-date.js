@@ -1,23 +1,23 @@
-var expirationDate = require('../../src/expiration-date');
+const expirationDate = require('../../src/expiration-date');
 
-var date = new Date();
-var currentYear = date.getFullYear();
-var twoDigitYear = Number(String(currentYear).substr(2, 2));
-var nextYear = currentYear + 1;
-var currentMonth = date.getMonth() + 1;
-var previousMonth = currentMonth - 1 || currentMonth;
-var nextMonth = currentMonth === 12 ? currentMonth : currentMonth + 1;
+const date = new Date();
+const currentYear = date.getFullYear();
+const twoDigitYear = Number(String(currentYear).substr(2, 2));
+const nextYear = currentYear + 1;
+const currentMonth = date.getMonth() + 1;
+const previousMonth = currentMonth - 1 || currentMonth;
+const nextMonth = currentMonth === 12 ? currentMonth : currentMonth + 1;
 
 function yearsFromNow(fromNow) {
   return String(currentYear + fromNow);
 }
 
-describe('expirationDate validates', function () {
-  describe('String Argument', function () {
-    var describes = {
+describe('expirationDate validates', () => {
+  describe('String Argument', () => {
+    const describes = {
       'within current year': [
         [
-          previousMonth + ' / ' + nextYear,
+          `${previousMonth} / ${nextYear}`,
           {
             isValid: true,
             isPotentiallyValid: true,
@@ -26,7 +26,7 @@ describe('expirationDate validates', function () {
           }
         ],
         [
-          currentMonth + ' / ' + currentYear,
+          `${currentMonth} / ${currentYear}`,
           {
             isValid: true,
             isPotentiallyValid: true,
@@ -35,7 +35,7 @@ describe('expirationDate validates', function () {
           }
         ],
         [
-          nextMonth + ' / ' + currentYear,
+          `${nextMonth} / ${currentYear}`,
           {
             isValid: true,
             isPotentiallyValid: true,
@@ -46,42 +46,48 @@ describe('expirationDate validates', function () {
       ],
 
       'valid expiration dates with dashes': [
-        [currentYear + '-' + currentMonth, {isValid: true, isPotentiallyValid: true, month: currentMonth.toString(), year: currentYear.toString()}],
-        [nextYear + '-10', {isValid: true, isPotentiallyValid: true, month: '10', year: nextYear.toString()}],
-        [nextYear + '-10', {isValid: true, isPotentiallyValid: true, month: '10', year: nextYear.toString()}],
-        [nextYear + '-12', {isValid: true, isPotentiallyValid: true, month: '12', year: nextYear.toString()}],
-        [nextYear + '-01', {isValid: true, isPotentiallyValid: true, month: '01', year: nextYear.toString()}],
-        [nextYear + '-1', {isValid: true, isPotentiallyValid: true, month: '1', year: nextYear.toString()}],
-        [nextYear + '-09', {isValid: true, isPotentiallyValid: true, month: '09', year: nextYear.toString()}],
-        [nextYear + '-01', {isValid: true, isPotentiallyValid: true, month: '01', year: nextYear.toString()}],
-        [nextYear + '-01', {isValid: true, isPotentiallyValid: true, month: '01', year: nextYear.toString()}]
+        [
+          `${currentYear}-${currentMonth}`,
+          {isValid: true, isPotentiallyValid: true, month: currentMonth.toString(), year: currentYear.toString()}
+        ],
+        [`${nextYear}-10`, {isValid: true, isPotentiallyValid: true, month: '10', year: nextYear.toString()}],
+        [`${nextYear}-10`, {isValid: true, isPotentiallyValid: true, month: '10', year: nextYear.toString()}],
+        [`${nextYear}-12`, {isValid: true, isPotentiallyValid: true, month: '12', year: nextYear.toString()}],
+        [`${nextYear}-01`, {isValid: true, isPotentiallyValid: true, month: '01', year: nextYear.toString()}],
+        [`${nextYear}-1`, {isValid: true, isPotentiallyValid: true, month: '1', year: nextYear.toString()}],
+        [`${nextYear}-09`, {isValid: true, isPotentiallyValid: true, month: '09', year: nextYear.toString()}],
+        [`${nextYear}-01`, {isValid: true, isPotentiallyValid: true, month: '01', year: nextYear.toString()}],
+        [`${nextYear}-01`, {isValid: true, isPotentiallyValid: true, month: '01', year: nextYear.toString()}]
       ],
 
       'invalid expiration dates with dashes': [
-        [nextYear + '-00', {isValid: false, isPotentiallyValid: false, month: null, year: null}],
-        [nextYear + '-13', {isValid: false, isPotentiallyValid: false, month: null, year: null}],
+        [`${nextYear}-00`, {isValid: false, isPotentiallyValid: false, month: null, year: null}],
+        [`${nextYear}-13`, {isValid: false, isPotentiallyValid: false, month: null, year: null}],
         ['1999-01', {isValid: false, isPotentiallyValid: false, month: null, year: null}],
         ['2100-01', {isValid: false, isPotentiallyValid: false, month: null, year: null}]
       ],
 
       'valid expiration dates with slashes': [
-        [currentMonth + ' / ' + currentYear, {isValid: true, isPotentiallyValid: true, month: currentMonth.toString(), year: currentYear.toString()}],
-        ['10 / ' + nextYear, {isValid: true, isPotentiallyValid: true, month: '10', year: nextYear.toString()}],
-        ['10/' + nextYear, {isValid: true, isPotentiallyValid: true, month: '10', year: nextYear.toString()}],
-        ['12 / ' + nextYear, {isValid: true, isPotentiallyValid: true, month: '12', year: nextYear.toString()}],
-        ['01 / ' + nextYear, {isValid: true, isPotentiallyValid: true, month: '01', year: nextYear.toString()}],
-        ['1 / ' + nextYear, {isValid: true, isPotentiallyValid: true, month: '1', year: nextYear.toString()}],
-        ['09 / ' + nextYear, {isValid: true, isPotentiallyValid: true, month: '09', year: nextYear.toString()}],
-        ['01 / ' + (twoDigitYear + 1), {isValid: true, isPotentiallyValid: true, month: '01', year: (twoDigitYear + 1).toString()}],
-        ['1 / ' + (twoDigitYear + 1), {isValid: true, isPotentiallyValid: true, month: '1', year: (twoDigitYear + 1).toString()}],
-        ['01  / ' + nextYear, {isValid: true, isPotentiallyValid: true, month: '01', year: nextYear.toString()}],
-        ['01 /  ' + nextYear, {isValid: true, isPotentiallyValid: true, month: '01', year: nextYear.toString()}]
+        [
+          `${currentMonth} / ${currentYear}`,
+          {isValid: true, isPotentiallyValid: true, month: currentMonth.toString(), year: currentYear.toString()}
+        ],
+        [`10 / ${nextYear}`, {isValid: true, isPotentiallyValid: true, month: '10', year: nextYear.toString()}],
+        [`10/${nextYear}`, {isValid: true, isPotentiallyValid: true, month: '10', year: nextYear.toString()}],
+        [`12 / ${nextYear}`, {isValid: true, isPotentiallyValid: true, month: '12', year: nextYear.toString()}],
+        [`01 / ${nextYear}`, {isValid: true, isPotentiallyValid: true, month: '01', year: nextYear.toString()}],
+        [`1 / ${nextYear}`, {isValid: true, isPotentiallyValid: true, month: '1', year: nextYear.toString()}],
+        [`09 / ${nextYear}`, {isValid: true, isPotentiallyValid: true, month: '09', year: nextYear.toString()}],
+        [`01 / ${twoDigitYear + 1}`, {isValid: true, isPotentiallyValid: true, month: '01', year: (twoDigitYear + 1).toString()}],
+        [`1 / ${twoDigitYear + 1}`, {isValid: true, isPotentiallyValid: true, month: '1', year: (twoDigitYear + 1).toString()}],
+        [`01  / ${nextYear}`, {isValid: true, isPotentiallyValid: true, month: '01', year: nextYear.toString()}],
+        [`01 /  ${nextYear}`, {isValid: true, isPotentiallyValid: true, month: '01', year: nextYear.toString()}]
       ],
 
       'invalid expiration dates with slashes': [
         ['11 / 11', {isValid: false, isPotentiallyValid: false, month: null, year: null}],
-        ['00 / ' + nextYear, {isValid: false, isPotentiallyValid: false, month: null, year: null}],
-        ['13 / ' + nextYear, {isValid: false, isPotentiallyValid: false, month: null, year: null}],
+        [`00 / ${nextYear}`, {isValid: false, isPotentiallyValid: false, month: null, year: null}],
+        [`13 / ${nextYear}`, {isValid: false, isPotentiallyValid: false, month: null, year: null}],
         ['01 / 1999', {isValid: false, isPotentiallyValid: false, month: null, year: null}],
         ['01/1999', {isValid: false, isPotentiallyValid: false, month: null, year: null}],
         ['01 / 2100', {isValid: false, isPotentiallyValid: false, month: null, year: null}],
@@ -97,30 +103,30 @@ describe('expirationDate validates', function () {
       ],
 
       'valid expiration dates with no slashes': [
-        ['10' + nextYear, {isValid: true, isPotentiallyValid: true, month: '10', year: nextYear.toString()}],
-        ['10' + nextYear, {isValid: true, isPotentiallyValid: true, month: '10', year: nextYear.toString()}],
-        ['12' + nextYear, {isValid: true, isPotentiallyValid: true, month: '12', year: nextYear.toString()}],
-        ['01' + nextYear, {isValid: true, isPotentiallyValid: true, month: '01', year: nextYear.toString()}],
-        ['09' + nextYear, {isValid: true, isPotentiallyValid: true, month: '09', year: nextYear.toString()}],
-        ['1' + nextYear, {isValid: true, isPotentiallyValid: true, month: '1', year: nextYear.toString()}],
-        ['9' + nextYear, {isValid: true, isPotentiallyValid: true, month: '9', year: nextYear.toString()}],
-        ['1' + (twoDigitYear + 1), {isValid: true, isPotentiallyValid: true, month: '1', year: (twoDigitYear + 1).toString()}],
-        ['9' + (twoDigitYear + 1), {isValid: true, isPotentiallyValid: true, month: '9', year: (twoDigitYear + 1).toString()}],
-        ['12' + (twoDigitYear + 1), {isValid: true, isPotentiallyValid: true, month: '12', year: (twoDigitYear + 1).toString()}],
-        ['01' + (twoDigitYear + 1), {isValid: true, isPotentiallyValid: true, month: '01', year: (twoDigitYear + 1).toString()}]
+        [`10${nextYear}`, {isValid: true, isPotentiallyValid: true, month: '10', year: nextYear.toString()}],
+        [`10${nextYear}`, {isValid: true, isPotentiallyValid: true, month: '10', year: nextYear.toString()}],
+        [`12${nextYear}`, {isValid: true, isPotentiallyValid: true, month: '12', year: nextYear.toString()}],
+        [`01${nextYear}`, {isValid: true, isPotentiallyValid: true, month: '01', year: nextYear.toString()}],
+        [`09${nextYear}`, {isValid: true, isPotentiallyValid: true, month: '09', year: nextYear.toString()}],
+        [`1${nextYear}`, {isValid: true, isPotentiallyValid: true, month: '1', year: nextYear.toString()}],
+        [`9${nextYear}`, {isValid: true, isPotentiallyValid: true, month: '9', year: nextYear.toString()}],
+        [`1${twoDigitYear + 1}`, {isValid: true, isPotentiallyValid: true, month: '1', year: (twoDigitYear + 1).toString()}],
+        [`9${twoDigitYear + 1}`, {isValid: true, isPotentiallyValid: true, month: '9', year: (twoDigitYear + 1).toString()}],
+        [`12${twoDigitYear + 1}`, {isValid: true, isPotentiallyValid: true, month: '12', year: (twoDigitYear + 1).toString()}],
+        [`01${twoDigitYear + 1}`, {isValid: true, isPotentiallyValid: true, month: '01', year: (twoDigitYear + 1).toString()}]
       ],
 
       'valid space separated month and year': [
-        ['01 ' + (currentYear + 4), {isValid: true, isPotentiallyValid: true, month: '01', year: (currentYear + 4).toString()}],
-        ['01 ' + (currentYear + 5), {isValid: true, isPotentiallyValid: true, month: '01', year: (currentYear + 5).toString()}],
-        ['01 ' + (twoDigitYear + 4), {isValid: true, isPotentiallyValid: true, month: '01', year: (twoDigitYear + 4).toString()}],
-        ['01 ' + (twoDigitYear + 6), {isValid: true, isPotentiallyValid: true, month: '01', year: (twoDigitYear + 6).toString()}],
-        ['1 ' + (currentYear + 4), {isValid: true, isPotentiallyValid: true, month: '1', year: (currentYear + 4).toString()}],
-        ['1 ' + (currentYear + 5), {isValid: true, isPotentiallyValid: true, month: '1', year: (currentYear + 5).toString()}],
-        ['1 ' + (twoDigitYear + 4), {isValid: true, isPotentiallyValid: true, month: '1', year: (twoDigitYear + 4).toString()}],
-        ['1 ' + (twoDigitYear + 5), {isValid: true, isPotentiallyValid: true, month: '1', year: (twoDigitYear + 5).toString()}],
-        ['9 ' + (currentYear + 4), {isValid: true, isPotentiallyValid: true, month: '9', year: (currentYear + 4).toString()}],
-        ['9 ' + (currentYear + 5), {isValid: true, isPotentiallyValid: true, month: '9', year: (currentYear + 5).toString()}]
+        [`01 ${currentYear + 4}`, {isValid: true, isPotentiallyValid: true, month: '01', year: (currentYear + 4).toString()}],
+        [`01 ${currentYear + 5}`, {isValid: true, isPotentiallyValid: true, month: '01', year: (currentYear + 5).toString()}],
+        [`01 ${twoDigitYear + 4}`, {isValid: true, isPotentiallyValid: true, month: '01', year: (twoDigitYear + 4).toString()}],
+        [`01 ${twoDigitYear + 6}`, {isValid: true, isPotentiallyValid: true, month: '01', year: (twoDigitYear + 6).toString()}],
+        [`1 ${currentYear + 4}`, {isValid: true, isPotentiallyValid: true, month: '1', year: (currentYear + 4).toString()}],
+        [`1 ${currentYear + 5}`, {isValid: true, isPotentiallyValid: true, month: '1', year: (currentYear + 5).toString()}],
+        [`1 ${twoDigitYear + 4}`, {isValid: true, isPotentiallyValid: true, month: '1', year: (twoDigitYear + 4).toString()}],
+        [`1 ${twoDigitYear + 5}`, {isValid: true, isPotentiallyValid: true, month: '1', year: (twoDigitYear + 5).toString()}],
+        [`9 ${currentYear + 4}`, {isValid: true, isPotentiallyValid: true, month: '9', year: (currentYear + 4).toString()}],
+        [`9 ${currentYear + 5}`, {isValid: true, isPotentiallyValid: true, month: '9', year: (currentYear + 5).toString()}]
       ],
 
       'ambiguous space separated month and year': [
@@ -134,8 +140,8 @@ describe('expirationDate validates', function () {
 
       'invalid space separated month and year': [
         ['11 11', {isValid: false, isPotentiallyValid: false, month: null, year: null}],
-        ['00 ' + nextYear, {isValid: false, isPotentiallyValid: false, month: null, year: null}],
-        ['13 ' + nextYear, {isValid: false, isPotentiallyValid: false, month: null, year: null}],
+        [`00 ${nextYear}`, {isValid: false, isPotentiallyValid: false, month: null, year: null}],
+        [`13 ${nextYear}`, {isValid: false, isPotentiallyValid: false, month: null, year: null}],
         ['01 1999', {isValid: false, isPotentiallyValid: false, month: null, year: null}],
         ['01 1999', {isValid: false, isPotentiallyValid: false, month: null, year: null}],
         ['01 2100', {isValid: false, isPotentiallyValid: false, month: null, year: null}]
@@ -145,8 +151,8 @@ describe('expirationDate validates', function () {
         [' ', {isValid: false, isPotentiallyValid: true, month: null, year: null}],
         ['  ', {isValid: false, isPotentiallyValid: true, month: null, year: null}],
         ['1111', {isValid: false, isPotentiallyValid: false, month: null, year: null}],
-        ['00' + nextYear, {isValid: false, isPotentiallyValid: false, month: null, year: null}],
-        ['13' + nextYear, {isValid: false, isPotentiallyValid: false, month: null, year: null}],
+        [`00${nextYear}`, {isValid: false, isPotentiallyValid: false, month: null, year: null}],
+        [`13${nextYear}`, {isValid: false, isPotentiallyValid: false, month: null, year: null}],
         ['011999', {isValid: false, isPotentiallyValid: false, month: null, year: null}],
         ['011999', {isValid: false, isPotentiallyValid: false, month: null, year: null}],
         ['012100', {isValid: false, isPotentiallyValid: false, month: null, year: null}]
@@ -191,7 +197,7 @@ describe('expirationDate validates', function () {
         ['1.2', {isValid: false, isPotentiallyValid: false, month: null, year: null}],
         [' 1', {isValid: false, isPotentiallyValid: true, month: null, year: null}],
         ['01 / 20015', {isValid: false, isPotentiallyValid: false, month: null, year: null}],
-        ['15  / ' + currentYear, {isValid: false, isPotentiallyValid: false, month: null, year: null}],
+        [`15  / ${currentYear}`, {isValid: false, isPotentiallyValid: false, month: null, year: null}],
         ['01 / 2016 / 2016', {isValid: false, isPotentiallyValid: false, month: null, year: null}],
         ['01 / 16/2016', {isValid: false, isPotentiallyValid: false, month: null, year: null}],
         ['01 / 2016 / 01 / 2016', {isValid: false, isPotentiallyValid: false, month: null, year: null}]
@@ -200,7 +206,7 @@ describe('expirationDate validates', function () {
 
     if (currentMonth !== 1) {
       describes['within current year'].push([
-        previousMonth + ' / ' + currentYear,
+        `${previousMonth} / ${currentYear}`,
         {
           isValid: false,
           isPotentiallyValid: false,
@@ -210,7 +216,7 @@ describe('expirationDate validates', function () {
       ]);
 
       describes['valid expiration dates with slashes'].push([
-        previousMonth + ' / ' + currentYear,
+        `${previousMonth} / ${currentYear}`,
         {
           isValid: false,
           isPotentiallyValid: false,
@@ -220,24 +226,27 @@ describe('expirationDate validates', function () {
       ]);
     }
 
-    Object.keys(describes).forEach(function (key) {
-      var tests = describes[key];
+    Object.keys(describes).forEach(key => {
+      const tests = describes[key];
 
-      describe(key, function () {
-        tests.forEach(function (test) {
-          var arg = test[0];
-          var output = test[1];
+      describe(key, () => {
+        tests.forEach(test => {
+          const arg = test[0];
+          const output = test[1];
 
-          it('and returns ' + JSON.stringify(output) + ' for "' + arg + '"', function () {
-            expect(expirationDate(arg)).toEqual(output);
-          });
+          it(
+            `and returns ${JSON.stringify(output)} for "${arg}"`,
+            () => {
+              expect(expirationDate(arg)).toEqual(output);
+            }
+          );
         });
       });
     });
   });
 
-  describe('Object Argument', function () {
-    var describes = {
+  describe('Object Argument', () => {
+    const describes = {
       'within current year with number values': [
         [
           {month: previousMonth, year: nextYear},
@@ -312,35 +321,48 @@ describe('expirationDate validates', function () {
       ]);
     }
 
-    Object.keys(describes).forEach(function (key) {
-      var tests = describes[key];
+    Object.keys(describes).forEach(key => {
+      const tests = describes[key];
 
-      describe(key, function () {
-        tests.forEach(function (test) {
-          var arg = test[0];
-          var output = test[1];
+      describe(key, () => {
+        tests.forEach(test => {
+          const arg = test[0];
+          const output = test[1];
 
-          it('and returns ' + JSON.stringify(output) + ' for "' + arg + '"', function () {
-            expect(expirationDate(arg)).toEqual(output);
-          });
+          it(
+            `and returns ${JSON.stringify(output)} for "${arg}"`,
+            () => {
+              expect(expirationDate(arg)).toEqual(output);
+            }
+          );
         });
       });
     });
   });
 
-  describe('maxElapsedYear', function () {
-    it('defaults maxElapsedYear is 19', function () {
-      expect(expirationDate(currentMonth + ' / ' + yearsFromNow(19))).toEqual(
+  describe('maxElapsedYear', () => {
+    it('defaults maxElapsedYear is 19', () => {
+      expect(expirationDate(`${currentMonth} / ${yearsFromNow(19)}`)).toEqual(
         {isValid: true, isPotentiallyValid: true, month: currentMonth.toString(), year: yearsFromNow(19).toString()}
       );
-      expect(expirationDate(currentMonth + ' / ' + yearsFromNow(20))).toEqual({isValid: false, isPotentiallyValid: false, month: null, year: null});
+      expect(expirationDate(`${currentMonth} / ${yearsFromNow(20)}`)).toEqual({
+        isValid: false,
+        isPotentiallyValid: false,
+        month: null,
+        year: null
+      });
     });
 
-    it('accepts maxElapsedYear', function () {
-      expect(expirationDate(currentMonth + ' / ' + yearsFromNow(20), 20)).toEqual(
+    it('accepts maxElapsedYear', () => {
+      expect(expirationDate(`${currentMonth} / ${yearsFromNow(20)}`, 20)).toEqual(
         {isValid: true, isPotentiallyValid: true, month: currentMonth.toString(), year: yearsFromNow(20).toString()}
       );
-      expect(expirationDate(currentMonth + ' / ' + yearsFromNow(21), 20)).toEqual({isValid: false, isPotentiallyValid: false, month: null, year: null});
+      expect(expirationDate(`${currentMonth} / ${yearsFromNow(21)}`, 20)).toEqual({
+        isValid: false,
+        isPotentiallyValid: false,
+        month: null,
+        year: null
+      });
     });
   });
 });

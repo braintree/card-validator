@@ -1,7 +1,7 @@
-var parseDate = require('../../src/parse-date');
+const parseDate = require('../../src/parse-date');
 
-describe('parse-date', function () {
-  var describes = {
+describe('parse-date', () => {
+  const describes = {
     'wth empty month and empty year': [
       ['', {month: '', year: ''}],
       [' ', {month: '', year: ''}],
@@ -50,25 +50,25 @@ describe('parse-date', function () {
     ]
   };
 
-  Object.keys(describes).forEach(function (key) {
-    var tests = describes[key];
+  Object.keys(describes).forEach(key => {
+    const tests = describes[key];
 
-    describe(key, function () {
-      tests.forEach(function (test) {
-        var arg = test[0];
-        var output = test[1];
+    describe(key, () => {
+      tests.forEach(test => {
+        const arg = test[0];
+        const output = test[1];
 
-        it('"' + arg + '" returns ' + JSON.stringify(output), function () {
+        it(`"${arg}" returns ${JSON.stringify(output)}`, () => {
           expect(parseDate(arg)).toEqual(output);
         });
       });
     });
   });
 
-  describe('datestrings starting with 10-12', function () {
+  describe('datestrings starting with 10-12', () => {
     let savedDateObject;
 
-    beforeEach(function () {
+    beforeEach(() => {
       savedDateObject = Date;
       // because there's some internal logic to whether or not
       // an expiration date is potentially valid, we must
@@ -79,24 +79,30 @@ describe('parse-date', function () {
       global.Date = jest.fn(() => fixedDate);
     });
 
-    afterEach(function () {
+    afterEach(() => {
       global.Date = savedDateObject;
     });
 
-    it('parses month with 2 digits when it starts with 1 and the remaining year is not potentially valid', function () {
-      expect(parseDate('100')).toEqual({month: '10', year: '0'});
-      expect(parseDate('104')).toEqual({month: '10', year: '4'});
-      expect(parseDate('109')).toEqual({month: '10', year: '9'});
-      expect(parseDate('110')).toEqual({month: '11', year: '0'});
-      expect(parseDate('115')).toEqual({month: '11', year: '5'});
-      expect(parseDate('118')).toEqual({month: '11', year: '8'});
-    });
+    it(
+      'parses month with 2 digits when it starts with 1 and the remaining year is not potentially valid',
+      () => {
+        expect(parseDate('100')).toEqual({month: '10', year: '0'});
+        expect(parseDate('104')).toEqual({month: '10', year: '4'});
+        expect(parseDate('109')).toEqual({month: '10', year: '9'});
+        expect(parseDate('110')).toEqual({month: '11', year: '0'});
+        expect(parseDate('115')).toEqual({month: '11', year: '5'});
+        expect(parseDate('118')).toEqual({month: '11', year: '8'});
+      }
+    );
 
-    it('parses month with 1 digit when it starts with 1 and the remaining year is potentially valid', function () {
-      expect(parseDate('119')).toEqual({month: '1', year: '19'});
-      expect(parseDate('120')).toEqual({month: '1', year: '20'});
-      expect(parseDate('125')).toEqual({month: '1', year: '25'});
-      expect(parseDate('129')).toEqual({month: '1', year: '29'});
-    });
+    it(
+      'parses month with 1 digit when it starts with 1 and the remaining year is potentially valid',
+      () => {
+        expect(parseDate('119')).toEqual({month: '1', year: '19'});
+        expect(parseDate('120')).toEqual({month: '1', year: '20'});
+        expect(parseDate('125')).toEqual({month: '1', year: '25'});
+        expect(parseDate('129')).toEqual({month: '1', year: '29'});
+      }
+    );
   });
 });

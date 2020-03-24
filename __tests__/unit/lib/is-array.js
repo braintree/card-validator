@@ -1,13 +1,13 @@
-var isArray = require('../../../src/lib/is-array');
+const isArray = require('../../../src/lib/is-array');
 
-describe('isArray', function () {
-  it('returns true for arrays', function () {
+describe('isArray', () => {
+  it('returns true for arrays', () => {
     expect(isArray([])).toBe(true);
     expect(isArray([1, 2])).toBe(true);
     expect(isArray([null])).toBe(true);
   });
 
-  it('returns false for non-arrays', function () {
+  it('returns false for non-arrays', () => {
     expect(isArray()).toBe(false);
     expect(isArray(undefined)).toBe(false);  // eslint-disable-line no-undefined
     expect(isArray(null)).toBe(false);
