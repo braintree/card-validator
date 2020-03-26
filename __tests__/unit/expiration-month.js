@@ -8,8 +8,8 @@ describe('expirationMonth', () => {
   const FALSE_VALIDATION = {isValid: false, isPotentiallyValid: false, isValidForThisYear: false};
   const TRUE_VALIDATION = {isValid: true, isPotentiallyValid: true, isValidForThisYear: true};
 
-  const describes = {
-    'returns false if not a string': [
+  const contexts = [
+    ['returns false if not a string', [
       [[], FALSE_VALIDATION],
       [{}, FALSE_VALIDATION],
       [null, FALSE_VALIDATION],
@@ -23,23 +23,23 @@ describe('expirationMonth', () => {
       [13, FALSE_VALIDATION],
       [-1, FALSE_VALIDATION],
       [-12, FALSE_VALIDATION]
-    ],
+    ]],
 
-    'returns false for malformed strings': [
+    ['returns false for malformed strings', [
       ['foo', FALSE_VALIDATION],
       ['1.2', FALSE_VALIDATION],
       ['1/20', FALSE_VALIDATION],
       ['1 2', FALSE_VALIDATION],
       ['1 ', FALSE_VALIDATION],
       [' 1', FALSE_VALIDATION]
-    ],
+    ]],
 
-    'returns null for incomplete input': [
+    ['returns null for incomplete input', [
       ['', {isValid: false, isPotentiallyValid: true, isValidForThisYear: false}],
       ['0', {isValid: false, isPotentiallyValid: true, isValidForThisYear: false}]
-    ],
+    ]],
 
-    'valid month': [
+    ['valid month', [
       [currentMonth.toString(), TRUE_VALIDATION],
       [nextMonth.toString(), TRUE_VALIDATION],
       [
@@ -82,41 +82,31 @@ describe('expirationMonth', () => {
           isValidForThisYear: true
         }
       ]
-    ],
+    ]],
 
-    'invalid month': [
+    ['invalid month', [
       ['14', FALSE_VALIDATION],
       ['30', FALSE_VALIDATION],
       ['-6', FALSE_VALIDATION],
       ['20', FALSE_VALIDATION],
       ['-1', FALSE_VALIDATION],
       ['13', FALSE_VALIDATION]
-    ]
-  };
+    ]]];
 
   if (currentMonth !== 1) {
-    describes['invalid month'].push([
+    contexts.push(['invalid month', [[
       previousMonth.toString(),
       {
         isValid: currentMonth !== 1,
         isPotentiallyValid: true,
         isValidForThisYear: false
       }
-    ]);
+    ]]]);
   }
 
-  Object.keys(describes).forEach(key => {
-    const tests = describes[key];
-
-    describe(key, () => {
-      tests.forEach(test => {
-        const arg = test[0];
-        const output = test[1];
-
-        it(`returns ${JSON.stringify(output)} for "${arg}"`, () => {
-          expect(expirationMonth(arg)).toEqual(output);
-        });
-      });
+  describe.each(contexts)('%s', (description, tests) => {
+    it.each([...tests])('parses %s to be %p', (exp, meta) => {
+      expect(expirationMonth(exp)).toEqual(meta);
     });
   });
 });

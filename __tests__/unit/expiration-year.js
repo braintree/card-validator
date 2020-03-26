@@ -14,8 +14,8 @@ function yearsFromNow(fromNow, digits) {
 describe('expirationYear', () => {
   const FALSE_VALIDATION = {isValid: false, isPotentiallyValid: false, isCurrentYear: false};
 
-  const describes = {
-    'returns false if not a string': [
+  describe.each([
+    ['returns false if not a string', [
       [[], FALSE_VALIDATION],
       [{}, FALSE_VALIDATION],
       [null, FALSE_VALIDATION],
@@ -28,9 +28,9 @@ describe('expirationYear', () => {
       [12, FALSE_VALIDATION],
       [-1, FALSE_VALIDATION],
       [-12, FALSE_VALIDATION]
-    ],
+    ]],
 
-    'returns false for malformed strings': [
+    ['returns false for malformed strings', [
       ['foo', FALSE_VALIDATION],
       ['1.2', FALSE_VALIDATION],
       ['1/20', FALSE_VALIDATION],
@@ -38,17 +38,17 @@ describe('expirationYear', () => {
       ['1 ', FALSE_VALIDATION],
       [' 1', FALSE_VALIDATION],
       ['20015', FALSE_VALIDATION]
-    ],
+    ]],
 
-    'returns the appropriate values for incomplete strings': [
+    ['returns the appropriate values for incomplete strings', [
       ['', {isValid: false, isPotentiallyValid: true, isCurrentYear: false}],
       ['2', {isValid: false, isPotentiallyValid: true, isCurrentYear: false}],
       ['9', {isValid: false, isPotentiallyValid: true, isCurrentYear: false}],
       ['200', {isValid: false, isPotentiallyValid: true, isCurrentYear: false}],
       ['123', {isValid: false, isPotentiallyValid: false, isCurrentYear: false}]
-    ],
+    ]],
 
-    'accepts four-digit years': [
+    ['accepts four-digit years', [
       [yearsFromNow(0), {isValid: true, isPotentiallyValid: true, isCurrentYear: true}],
       [yearsFromNow(-5), {isValid: false, isPotentiallyValid: false, isCurrentYear: false}],
       [yearsFromNow(5), {isValid: true, isPotentiallyValid: true, isCurrentYear: false}],
@@ -59,9 +59,9 @@ describe('expirationYear', () => {
       [yearsFromNow(20), {isValid: false, isPotentiallyValid: false, isCurrentYear: false}],
       [yearsFromNow(25), {isValid: false, isPotentiallyValid: false, isCurrentYear: false}],
       [yearsFromNow(33), {isValid: false, isPotentiallyValid: false, isCurrentYear: false}]
-    ],
+    ]],
 
-    'accepts two-digit years': [
+    ['accepts two-digit years', [
       [yearsFromNow(0, 2), {isValid: true, isPotentiallyValid: true, isCurrentYear: true}],
       [yearsFromNow(-5, 2), {isValid: false, isPotentiallyValid: false, isCurrentYear: false}],
       [yearsFromNow(5, 2), {isValid: true, isPotentiallyValid: true, isCurrentYear: false}],
@@ -72,10 +72,10 @@ describe('expirationYear', () => {
       [yearsFromNow(20, 2), {isValid: false, isPotentiallyValid: false, isCurrentYear: false}],
       [yearsFromNow(25, 2), {isValid: false, isPotentiallyValid: false, isCurrentYear: false}],
       [yearsFromNow(33, 2), {isValid: false, isPotentiallyValid: false, isCurrentYear: false}]
-    ],
+    ]],
 
     // This doesn't take 20xx -> 21xx into account, but probably YAGNI
-    'accepts three-digit years': [
+    ['accepts three-digit years', [
       [yearsFromNow(-3).slice(0, 3), {isValid: false, isPotentiallyValid: true, isCurrentYear: false}],
       [yearsFromNow(-1).slice(0, 3), {isValid: false, isPotentiallyValid: true, isCurrentYear: false}],
       [yearsFromNow(0).slice(0, 3), {isValid: false, isPotentiallyValid: true, isCurrentYear: false}],
@@ -84,21 +84,10 @@ describe('expirationYear', () => {
       [yearsFromNow(11).slice(0, 3), {isValid: false, isPotentiallyValid: true, isCurrentYear: false}],
       [yearsFromNow(17).slice(0, 3), {isValid: false, isPotentiallyValid: true, isCurrentYear: false}],
       [yearsFromNow(23).slice(0, 3), {isValid: false, isPotentiallyValid: true, isCurrentYear: false}]
-    ]
-  };
-
-  Object.keys(describes).forEach(key => {
-    const tests = describes[key];
-
-    describe(key, () => {
-      tests.forEach(test => {
-        const arg = test[0];
-        const output = test[1];
-
-        it(`returns ${JSON.stringify(output)} for "${arg}"`, () => {
-          expect(expirationYear(arg)).toEqual(output);
-        });
-      });
+    ]]
+  ])('%s', (description, tests) => {
+    it.each([...tests])('parses %s to be %p', (exp, meta) => {
+      expect(expirationYear(exp)).toEqual(meta);
     });
   });
 
