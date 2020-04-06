@@ -1,7 +1,7 @@
-const validator = require('../../index');
+import validator = require("../");
 
-describe('validator', () => {
-  it('exports all necessary functions', () => {
+describe("validator", () => {
+  it("exports all necessary functions", () => {
     expect(validator.number).toBeInstanceOf(Function);
     expect(validator.expirationDate).toBeInstanceOf(Function);
     expect(validator.expirationMonth).toBeInstanceOf(Function);
