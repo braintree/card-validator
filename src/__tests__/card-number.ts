@@ -1,5 +1,4 @@
-import cardNumber from "../card-number";
-import { CardNumberVerification } from "../types";
+import cardNumber, { CardNumberVerification } from "../card-number";
 
 describe("number validates", () => {
   describe.each([
@@ -245,6 +244,7 @@ describe("number validates", () => {
   ])("Validator for %s", (description, tests) => {
     describe.each([...tests])(
       "when number is %p",
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (number: any, expected: CardNumberVerification) => {
         const actual = cardNumber(number);
 

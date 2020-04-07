@@ -1,5 +1,4 @@
-import parseDate from "../parse-date";
-import { MonthAndYear } from "../types";
+import parseDate, { MonthAndYear } from "../../lib/parse-date";
 
 describe("parse-date", () => {
   describe.each([
@@ -9,7 +8,6 @@ describe("parse-date", () => {
         ["", { month: "", year: "" }],
         [" ", { month: "", year: "" }],
         ["/", { month: "", year: "" }],
-        [[], { month: "", year: "" }],
       ],
     ],
     [
@@ -73,6 +71,7 @@ describe("parse-date", () => {
   ])("%s", (description, tests) => {
     it.each([...tests])(
       "parses %s to be %p",
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (parseMe: any, meta: MonthAndYear) => {
         expect(parseDate(parseMe)).toEqual(meta);
       }
@@ -90,6 +89,7 @@ describe("parse-date", () => {
       // keep working once the year is over
       const fixedDate = new Date(2019, 9);
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       window.Date = jest.fn().mockImplementation(() => fixedDate) as any;
     });
 

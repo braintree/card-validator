@@ -1,9 +1,16 @@
-import type { Verification, PostalCodeOptions } from "./types";
+import type { Verification } from "./types";
+
+type PostalCodeOptions = {
+  minLength?: number;
+};
 
 const DEFAULT_MIN_POSTAL_CODE_LENGTH = 3;
 
-function verification(isValid, isPotentiallyValid): Verification {
-  return { isValid: isValid, isPotentiallyValid: isPotentiallyValid };
+function verification(
+  isValid: boolean,
+  isPotentiallyValid: boolean
+): Verification {
+  return { isValid, isPotentiallyValid };
 }
 
 function postalCode(value, options: PostalCodeOptions = {}): Verification {

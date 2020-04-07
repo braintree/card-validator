@@ -61,12 +61,14 @@ describe("cvv", () => {
     ])("%s", (description, tests) => {
       it.each(tests)(
         "parses %s to be %p",
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (testCvv: any, meta: Verification, maxLength) => {
           if (typeof maxLength === "function") {
             // maxLength argument got converted to a done callback
             expect(cvv(testCvv)).toEqual(meta);
             maxLength();
           } else {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             expect(cvv(testCvv, maxLength as any)).toEqual(meta);
           }
         }

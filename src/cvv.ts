@@ -24,7 +24,7 @@ function max(array: number[]): number {
 }
 
 function verification(isValid, isPotentiallyValid): Verification {
-  return { isValid: isValid, isPotentiallyValid: isPotentiallyValid };
+  return { isValid, isPotentiallyValid };
 }
 
 function cvv(

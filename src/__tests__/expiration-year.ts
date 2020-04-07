@@ -1,5 +1,5 @@
-import expirationYear from "../expiration-year";
-import { ExpirationYearVerification } from "../types";
+import expirationYear, { ExpirationYearVerification } from "../expiration-year";
+
 const currentYear = new Date().getFullYear();
 
 function yearsFromNow(fromNow: number, digits?: number): string {

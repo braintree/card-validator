@@ -1,8 +1,12 @@
-import expirationYear from "./expiration-year";
-import { isArray } from "./lib/is-array";
-import type { MonthAndYear } from "./types";
+import expirationYear from "../expiration-year";
+import { isArray } from "./is-array";
 
-function getNumberOfMonthDigitsInDateString(dateString): number {
+export type MonthAndYear = {
+  month: string;
+  year: string;
+};
+
+function getNumberOfMonthDigitsInDateString(dateString: string): number {
   const firstCharacter = Number(dateString[0]);
   let assumedYear;
 
@@ -81,13 +85,15 @@ function getNumberOfMonthDigitsInDateString(dateString): number {
   return 1;
 }
 
-function parseDate(date): MonthAndYear {
-  if (/^\d{4}-\d{1,2}$/.test(date)) {
-    date = date.split("-").reverse();
-  } else if (/\//.test(date)) {
-    date = date.split(/\s*\/\s*/g);
-  } else if (/\s/.test(date)) {
-    date = date.split(/ +/g);
+function parseDate(datestring: string): MonthAndYear {
+  let date;
+
+  if (/^\d{4}-\d{1,2}$/.test(datestring)) {
+    date = datestring.split("-").reverse();
+  } else if (/\//.test(datestring)) {
+    date = datestring.split(/\s*\/\s*/g);
+  } else if (/\s/.test(datestring)) {
+    date = datestring.split(/ +/g);
   }
 
   if (isArray(date)) {
@@ -97,12 +103,12 @@ function parseDate(date): MonthAndYear {
     };
   }
 
-  const numberOfDigitsInMonth = getNumberOfMonthDigitsInDateString(date);
-  const month = date.substr(0, numberOfDigitsInMonth);
+  const numberOfDigitsInMonth = getNumberOfMonthDigitsInDateString(datestring);
+  const month = datestring.substr(0, numberOfDigitsInMonth);
 
   return {
-    month: month,
-    year: date.substr(month.length),
+    month,
+    year: datestring.substr(month.length),
   };
 }
 

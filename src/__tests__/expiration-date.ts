@@ -1,5 +1,4 @@
-import expirationDate from "../expiration-date";
-import { ExpirationDateVerification } from "../types";
+import expirationDate, { ExpirationDateVerification } from "../expiration-date";
 
 const date = new Date();
 const currentYear = date.getFullYear();
@@ -1048,6 +1047,7 @@ describe("expirationDate validates", () => {
 
   describe.each(stringContexts)(
     "String argument %s",
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (description, tests: any) => {
       it.each([...tests])(
         "parses %s to be %p",
@@ -1058,6 +1058,7 @@ describe("expirationDate validates", () => {
     }
   );
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const objectContexts: any[] = [
     [
       "within current year with number values",
@@ -1259,6 +1260,7 @@ describe("expirationDate validates", () => {
 
   describe.each(objectContexts)(
     "Object Argument %s",
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (description, tests: any) => {
       it.each([...tests])(
         "parses %s to be %p",

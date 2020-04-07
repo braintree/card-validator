@@ -1,15 +1,19 @@
-import type { ExpirationYearVerification } from "./types";
+import type { Verification } from "./types";
+
+export interface ExpirationYearVerification extends Verification {
+  isCurrentYear: boolean;
+}
 
 const DEFAULT_VALID_NUMBER_OF_YEARS_IN_THE_FUTURE = 19;
 
 function verification(
-  isValid,
-  isPotentiallyValid,
-  isCurrentYear?
+  isValid: boolean,
+  isPotentiallyValid: boolean,
+  isCurrentYear?: boolean
 ): ExpirationYearVerification {
   return {
-    isValid: isValid,
-    isPotentiallyValid: isPotentiallyValid,
+    isValid,
+    isPotentiallyValid,
     isCurrentYear: isCurrentYear || false,
   };
 }

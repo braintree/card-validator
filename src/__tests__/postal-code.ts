@@ -52,6 +52,7 @@ describe("postalCode", () => {
   ])("%s", (description, tests) => {
     it.each([...tests])(
       "parses %s to be %p",
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (parseMe: any, meta: Verification) => {
         expect(postalCode(parseMe)).toEqual(meta);
       }

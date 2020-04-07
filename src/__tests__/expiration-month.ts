@@ -1,5 +1,6 @@
-import expirationMonth from "../expiration-month";
-import { ExpirationMonthVerification } from "../types";
+import expirationMonth, {
+  ExpirationMonthVerification,
+} from "../expiration-month";
 
 const currentMonth = new Date().getMonth() + 1;
 const previousMonth = currentMonth - 1 || 1;
@@ -149,8 +150,10 @@ describe("expirationMonth", () => {
   }
 
   describe.each(contexts)("%s", (description, tests) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     it.each([...(tests as any)])(
       "parses %s to be %p",
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (exp: any, meta: ExpirationMonthVerification) => {
         expect(expirationMonth(exp)).toEqual(meta);
       }

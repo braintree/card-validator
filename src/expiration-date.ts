@@ -1,20 +1,25 @@
-import parseDate from "./parse-date";
+import parseDate from "./lib/parse-date";
 import expirationMonth from "./expiration-month";
 import expirationYear from "./expiration-year";
 
-import type { ExpirationDateVerification } from "./types";
+import type { Verification } from "./types";
+
+export interface ExpirationDateVerification extends Verification {
+  month: string;
+  year: string;
+}
 
 function verification(
-  isValid,
-  isPotentiallyValid,
+  isValid: boolean,
+  isPotentiallyValid: boolean,
   month,
   year
 ): ExpirationDateVerification {
   return {
-    isValid: isValid,
-    isPotentiallyValid: isPotentiallyValid,
-    month: month,
-    year: year,
+    isValid,
+    isPotentiallyValid,
+    month,
+    year,
   };
 }
 
