@@ -1,3 +1,6 @@
+# unreleased
+* Add typescript types
+
 # 6.2.0
 
 - Adjust expiration date to accept dates formatted as `YYYY-MM` (the HTML autofill spec). Closes #69 (thanks @schuylr)
