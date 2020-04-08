@@ -37,7 +37,7 @@ function cardNumber(
     return verification(null, false, false);
   }
 
-  value = value.replace(/\-|\s/g, "");
+  value = value.replace(/-|\s/g, "");
 
   if (!/^\d*$/.test(value)) {
     return verification(null, false, false);
