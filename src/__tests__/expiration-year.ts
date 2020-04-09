@@ -169,7 +169,11 @@ describe("expirationYear", () => {
       ],
     ],
 
-    // This doesn't take 20xx -> 21xx into account, but probably YAGNI
+    /*
+     *  This doesn't take 20xx -> 21xx into account, but probably YAGNI
+     *  (with apologies to whoever is possibly looking at this legacy
+     *  code long after we're dead
+     *  */
     [
       "accepts three-digit years",
       [
@@ -207,14 +211,14 @@ describe("expirationYear", () => {
         ],
       ],
     ],
-  ])("%s", (description, tests) => {
-    it.each([...tests])(
-      "parses %s to be %p",
-      (exp, meta: ExpirationYearVerification) => {
+  ] as Array<[string, Array<[unknown, ExpirationYearVerification]>]>)(
+    "%s",
+    (description, tests) => {
+      it.each(tests)("parses %s to be %p", (exp, meta) => {
         expect(expirationYear(exp)).toEqual(meta);
-      }
-    );
-  });
+      });
+    }
+  );
 
   it("defaults maxElapsedYear is 19", () => {
     expect(expirationYear(yearsFromNow(19))).toEqual({

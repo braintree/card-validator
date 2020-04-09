@@ -241,11 +241,10 @@ describe("number validates", () => {
         [false, { card: null, isPotentiallyValid: false, isValid: false }],
       ],
     ],
-  ])("Validator for %s", (description, tests) => {
-    describe.each([...tests])(
-      "when number is %p",
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (number: any, expected: CardNumberVerification) => {
+  ] as Array<[string, Array<[string, CardNumberVerification]>]>)(
+    "Validator for %s",
+    (description, tests) => {
+      describe.each(tests)("when number is %p", (number, expected) => {
         const actual = cardNumber(number);
 
         it(`card: is ${expected.card} for ${number}`, () => {
@@ -263,9 +262,9 @@ describe("number validates", () => {
         it(`valid: is ${expected.isValid} for ${number}`, () => {
           expect(actual.isValid).toBe(expected.isValid);
         });
-      }
-    );
-  });
+      });
+    }
+  );
 
   describe("UnionPay", () => {
     describe("where card number is luhn invalid", () => {

@@ -19,10 +19,10 @@ function verification(
 }
 
 function expirationYear(
-  value,
+  value: string | unknown,
   maxElapsedYear = DEFAULT_VALID_NUMBER_OF_YEARS_IN_THE_FUTURE
 ): ExpirationYearVerification {
-  let valid, isCurrentYear;
+  let isCurrentYear;
 
   if (typeof value !== "string") {
     return verification(false, false);
@@ -54,15 +54,20 @@ function expirationYear(
     return verification(false, false);
   }
 
-  value = parseInt(value, 10);
+  const numericValue = parseInt(value, 10);
   const twoDigitYear = Number(String(currentYear).substr(2, 2));
+  let valid = false;
 
   if (len === 2) {
-    isCurrentYear = twoDigitYear === value;
-    valid = value >= twoDigitYear && value <= twoDigitYear + maxElapsedYear;
+    isCurrentYear = twoDigitYear === numericValue;
+    valid =
+      numericValue >= twoDigitYear &&
+      numericValue <= twoDigitYear + maxElapsedYear;
   } else if (len === 4) {
-    isCurrentYear = currentYear === value;
-    valid = value >= currentYear && value <= currentYear + maxElapsedYear;
+    isCurrentYear = currentYear === numericValue;
+    valid =
+      numericValue >= currentYear &&
+      numericValue <= currentYear + maxElapsedYear;
   }
 
   return verification(valid, valid, isCurrentYear);

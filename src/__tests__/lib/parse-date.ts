@@ -68,25 +68,26 @@ describe("parse-date", () => {
         ["398760", { month: "3", year: "98760" }],
       ],
     ],
-  ])("%s", (description, tests) => {
-    it.each([...tests])(
-      "parses %s to be %p",
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (parseMe: any, meta: MonthAndYear) => {
+  ] as Array<[string, Array<[string, MonthAndYear]>]>)(
+    "%s",
+    (description, tests) => {
+      it.each(tests)("parses %s to be %p", (parseMe, meta) => {
         expect(parseDate(parseMe)).toEqual(meta);
-      }
-    );
-  });
+      });
+    }
+  );
 
   describe("datestrings starting with 10-12", () => {
-    let savedDateObject;
+    let savedDateObject: DateConstructor;
 
     beforeEach(() => {
       savedDateObject = Date;
-      // because there's some internal logic to whether or not
-      // an expiration date is potentially valid, we must
-      // freeze time at the year 2019 for these tests to
-      // keep working once the year is over
+      /*
+       *  because there's some internal logic to whether or not an
+       *  expiration date is potentially valid, we must freeze time at
+       *  the year 2019 for these tests to keep working once the year is
+       *  over
+       *  */
       const fixedDate = new Date(2019, 9);
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any

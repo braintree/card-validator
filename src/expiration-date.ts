@@ -5,15 +5,15 @@ import expirationYear from "./expiration-year";
 import type { Verification } from "./types";
 
 export interface ExpirationDateVerification extends Verification {
-  month: string;
-  year: string;
+  month: string | null;
+  year: string | null;
 }
 
 function verification(
   isValid: boolean,
   isPotentiallyValid: boolean,
-  month,
-  year
+  month: string | null,
+  year: string | null
 ): ExpirationDateVerification {
   return {
     isValid,
@@ -23,16 +23,20 @@ function verification(
   };
 }
 
-function expirationDate(value, maxElapsedYear?): ExpirationDateVerification {
+function expirationDate(
+  value: string | Record<string, string | number> | unknown,
+  maxElapsedYear?: number
+): ExpirationDateVerification {
   let date;
 
   if (typeof value === "string") {
     value = value.replace(/^(\d\d) (\d\d(\d\d)?)$/, "$1/$2");
-    date = parseDate(value);
+    date = parseDate(String(value));
   } else if (value !== null && typeof value === "object") {
+    const fullDate = { ...value } as ExpirationDateVerification;
     date = {
-      month: String(value.month),
-      year: String(value.year),
+      month: String(fullDate.month),
+      year: String(fullDate.year),
     };
   } else {
     return verification(false, false, null, null);

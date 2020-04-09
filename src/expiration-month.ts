@@ -16,7 +16,7 @@ function verification(
   };
 }
 
-function expirationMonth(value): ExpirationMonthVerification {
+function expirationMonth(value: string | unknown): ExpirationMonthVerification {
   const currentMonth = new Date().getMonth() + 1;
 
   if (typeof value !== "string") {

@@ -24,26 +24,22 @@ function verification(
 }
 
 function cardNumber(
-  value: string,
+  value: string | unknown,
   options: CardNumberOptions = {}
 ): CardNumberVerification {
   let isPotentiallyValid, isValid, maxLength;
 
-  if (typeof value === "number") {
-    value = String(value);
-  }
-
-  if (typeof value !== "string") {
+  if (typeof value !== "string" && typeof value !== "number") {
     return verification(null, false, false);
   }
 
-  value = value.replace(/-|\s/g, "");
+  const testCardValue = String(value).replace(/-|\s/g, "");
 
-  if (!/^\d*$/.test(value)) {
+  if (!/^\d*$/.test(testCardValue)) {
     return verification(null, false, false);
   }
 
-  const potentialTypes = getCardTypes(value);
+  const potentialTypes = getCardTypes(testCardValue);
 
   if (potentialTypes.length === 0) {
     return verification(null, false, false);
@@ -53,7 +49,7 @@ function cardNumber(
 
   const cardType = potentialTypes[0];
 
-  if (options.maxLength && value.length > options.maxLength) {
+  if (options.maxLength && testCardValue.length > options.maxLength) {
     return verification(cardType, false, false);
   }
 
@@ -63,7 +59,7 @@ function cardNumber(
   ) {
     isValid = true;
   } else {
-    isValid = luhn10(value);
+    isValid = luhn10(testCardValue);
   }
 
   maxLength = Math.max.apply(null, cardType.lengths);
@@ -72,14 +68,14 @@ function cardNumber(
   }
 
   for (let i = 0; i < cardType.lengths.length; i++) {
-    if (cardType.lengths[i] === value.length) {
-      isPotentiallyValid = value.length < maxLength || isValid;
+    if (cardType.lengths[i] === testCardValue.length) {
+      isPotentiallyValid = testCardValue.length < maxLength || isValid;
 
       return verification(cardType, isPotentiallyValid, isValid);
     }
   }
 
-  return verification(cardType, value.length < maxLength, false);
+  return verification(cardType, testCardValue.length < maxLength, false);
 }
 
 export default cardNumber;

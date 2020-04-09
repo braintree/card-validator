@@ -23,12 +23,15 @@ function max(array: number[]): number {
   return maximum;
 }
 
-function verification(isValid, isPotentiallyValid): Verification {
+function verification(
+  isValid: boolean,
+  isPotentiallyValid: boolean
+): Verification {
   return { isValid, isPotentiallyValid };
 }
 
 function cvv(
-  value,
+  value: string | unknown,
   maxLength: number | number[] = DEFAULT_LENGTH
 ): Verification {
   maxLength = maxLength instanceof Array ? maxLength : [maxLength];

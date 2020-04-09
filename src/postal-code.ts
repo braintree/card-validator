@@ -13,7 +13,10 @@ function verification(
   return { isValid, isPotentiallyValid };
 }
 
-function postalCode(value, options: PostalCodeOptions = {}): Verification {
+function postalCode(
+  value: string | unknown,
+  options: PostalCodeOptions = {}
+): Verification {
   const minLength = options.minLength || DEFAULT_MIN_POSTAL_CODE_LENGTH;
 
   if (typeof value !== "string") {

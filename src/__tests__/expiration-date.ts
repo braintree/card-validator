@@ -1011,7 +1011,7 @@ describe("expirationDate validates", () => {
         ],
       ],
     ],
-  ];
+  ] as Array<[string, Array<[string, ExpirationDateVerification]>]>;
 
   if (currentMonth !== 1) {
     stringContexts.push([
@@ -1045,21 +1045,16 @@ describe("expirationDate validates", () => {
     ]);
   }
 
-  describe.each(stringContexts)(
-    "String argument %s",
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (description, tests: any) => {
-      it.each([...tests])(
-        "parses %s to be %p",
-        (exp, meta: ExpirationDateVerification) => {
-          expect(expirationDate(exp)).toEqual(meta);
-        }
-      );
-    }
-  );
+  describe.each(stringContexts)("String argument %s", (description, tests) => {
+    it.each(tests)(
+      "parses %s to be %p",
+      (exp: string | number, meta: ExpirationDateVerification) => {
+        expect(expirationDate(exp)).toEqual(meta);
+      }
+    );
+  });
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const objectContexts: any[] = [
+  const objectContexts = [
     [
       "within current year with number values",
       [
@@ -1241,7 +1236,9 @@ describe("expirationDate validates", () => {
         ],
       ],
     ],
-  ];
+  ] as Array<
+    [string, Array<[Record<string, number>, ExpirationDateVerification]>]
+  >;
 
   if (currentMonth !== 1) {
     objectContexts[0][1].push([
@@ -1258,18 +1255,14 @@ describe("expirationDate validates", () => {
     ]);
   }
 
-  describe.each(objectContexts)(
-    "Object Argument %s",
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (description, tests: any) => {
-      it.each([...tests])(
-        "parses %s to be %p",
-        (exp, meta: ExpirationDateVerification) => {
-          expect(expirationDate(exp)).toEqual(meta);
-        }
-      );
-    }
-  );
+  describe.each(objectContexts)("Object Argument %s", (description, tests) => {
+    it.each([...tests])(
+      "parses %s to be %p",
+      (exp, meta: ExpirationDateVerification) => {
+        expect(expirationDate(exp)).toEqual(meta);
+      }
+    );
+  });
 
   describe("maxElapsedYear", () => {
     it("defaults maxElapsedYear is 19", () => {

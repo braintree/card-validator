@@ -49,15 +49,14 @@ describe("postalCode", () => {
         ["12", { isValid: false, isPotentiallyValid: true }],
       ],
     ],
-  ])("%s", (description, tests) => {
-    it.each([...tests])(
-      "parses %s to be %p",
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (parseMe: any, meta: Verification) => {
+  ] as Array<[string, Array<[string, Verification]>]>)(
+    "%s",
+    (description, tests) => {
+      it.each(tests)("parses %s to be %p", (parseMe, meta) => {
         expect(postalCode(parseMe)).toEqual(meta);
-      }
-    );
-  });
+      });
+    }
+  );
 
   describe("custom min length", () => {
     it("uses default min length when no minLength option is passed", () => {

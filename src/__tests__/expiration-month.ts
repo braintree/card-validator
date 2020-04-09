@@ -131,7 +131,7 @@ describe("expirationMonth", () => {
         ["13", FALSE_VALIDATION],
       ],
     ],
-  ];
+  ] as Array<[string, Array<[number | string, ExpirationMonthVerification]>]>;
 
   if (currentMonth !== 1) {
     contexts.push([
@@ -150,13 +150,8 @@ describe("expirationMonth", () => {
   }
 
   describe.each(contexts)("%s", (description, tests) => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    it.each([...(tests as any)])(
-      "parses %s to be %p",
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (exp: any, meta: ExpirationMonthVerification) => {
-        expect(expirationMonth(exp)).toEqual(meta);
-      }
-    );
+    it.each(tests)("parses %s to be %p", (exp, meta) => {
+      expect(expirationMonth(exp)).toEqual(meta);
+    });
   });
 });
