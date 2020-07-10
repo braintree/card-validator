@@ -1,3 +1,4 @@
+/* eslint-disable */
 /*
  * Luhn algorithm implementation in JavaScript
  * Copyright (c) 2009 Nicholas C. Zakas
@@ -20,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-'use strict';
+"use strict";
 
 function luhn10(identifier) {
   var sum = 0;

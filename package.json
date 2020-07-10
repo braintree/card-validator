@@ -2,25 +2,42 @@
   "name": "card-validator",
   "version": "6.2.0",
   "description": "A library for validating credit card fields",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git@github.com:braintree/card-validator"
   },
   "homepage": "https://github.com/braintree/card-validator",
   "scripts": {
-    "lint": "eslint .",
+    "prepublishOnly": "npm run build",
+    "prebuild": "prettier --write .",
+    "build": "tsc --declaration",
+    "lint": "eslint --ext js,ts .",
     "posttest": "npm run lint",
     "test": "jest"
   },
   "author": "Braintree <code@getbraintree.com> (https://www.braintreepayments.com/)",
   "license": "MIT",
   "devDependencies": {
+    "@types/jest": "^25.2.1",
+    "@types/node": "^13.11.1",
     "eslint": "^6.8.0",
-    "eslint-config-braintree": "^4.0.0",
-    "jest": "^25.1.0"
+    "eslint-config-braintree": "^5.0.0-typescript-prep-rc.17",
+    "jest": "^25.3.0",
+    "prettier": "^2.0.4",
+    "ts-jest": "^25.3.1",
+    "typescript": "^3.8.3"
   },
   "dependencies": {
-    "credit-card-type": "^8.3.0"
+    "credit-card-type": "^9.0.0"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "src/__tests__/tsconfig.json"
+      }
+    }
   }
 }

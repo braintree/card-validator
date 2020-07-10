@@ -1,11 +1,14 @@
-'use strict';
+import { expirationYear } from "../expiration-year";
+import { isArray } from "./is-array";
 
-var expirationYear = require('./expiration-year');
-var isArray = require('./lib/is-array');
+export type MonthAndYear = {
+  month: string;
+  year: string;
+};
 
-function getNumberOfMonthDigitsInDateString(dateString) {
-  var firstCharacter = Number(dateString[0]);
-  var assumedYear;
+function getNumberOfMonthDigitsInDateString(dateString: string): number {
+  const firstCharacter = Number(dateString[0]);
+  let assumedYear;
 
   /*
     if the first character in the string starts with `0`,
@@ -82,32 +85,29 @@ function getNumberOfMonthDigitsInDateString(dateString) {
   return 1;
 }
 
-function parseDate(date) {
-  var month, numberOfDigitsInMonth;
+export function parseDate(datestring: string): MonthAndYear {
+  let date;
 
-  if (/^\d{4}-\d{1,2}$/.test(date)) {
-    date = date.split('-').reverse();
-  } else if (/\//.test(date)) {
-    date = date.split(/\s*\/\s*/g);
-  } else if (/\s/.test(date)) {
-    date = date.split(/ +/g);
+  if (/^\d{4}-\d{1,2}$/.test(datestring)) {
+    date = datestring.split("-").reverse();
+  } else if (/\//.test(datestring)) {
+    date = datestring.split(/\s*\/\s*/g);
+  } else if (/\s/.test(datestring)) {
+    date = datestring.split(/ +/g);
   }
 
   if (isArray(date)) {
     return {
-      month: date[0] || '',
-      year: date.slice(1).join()
+      month: date[0] || "",
+      year: date.slice(1).join(),
     };
   }
 
-  numberOfDigitsInMonth = getNumberOfMonthDigitsInDateString(date);
-
-  month = date.substr(0, numberOfDigitsInMonth);
+  const numberOfDigitsInMonth = getNumberOfMonthDigitsInDateString(datestring);
+  const month = datestring.substr(0, numberOfDigitsInMonth);
 
   return {
-    month: month,
-    year: date.substr(month.length)
+    month,
+    year: datestring.substr(month.length),
   };
 }
-
-module.exports = parseDate;

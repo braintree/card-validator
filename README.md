@@ -19,9 +19,9 @@ npm install card-validator
 ### Using a CommonJS build tool (browserify, webpack, etc)
 
 ```javascript
-var valid = require('card-validator');
+var valid = require("card-validator");
 
-var numberValidation = valid.number('4111');
+var numberValidation = valid.number("4111");
 
 if (!numberValidation.isPotentiallyValid) {
   renderInvalidCardNumber();
@@ -36,7 +36,7 @@ if (numberValidation.card) {
 
 ### `var valid = require('card-validator');`
 
-- - -
+---
 
 #### `valid.number(value: string, [options: object]): object`
 
@@ -242,7 +242,7 @@ A fake session where a user is entering a card number may look like:
   </tbody>
 </table>
 
-- - -
+---
 
 #### `valid.expirationDate(value: string|object, maxElapsedYear: integer): object`
 
@@ -259,15 +259,15 @@ The `maxElapsedYear` has a default value of 19. It can be overridden by passing 
 
 `expirationDate` will parse strings in a variety of formats:
 
-| Input                                                                                     | Output                        |
-|-------------------------------------------------------------------------------------------|-------------------------------|
-| `'10/19'`<br/>`'10 / 19'`<br />`'1019'`<br/>`'10 19'`                                     | `{month: '10', year: '19'}`   |
-| `'10/2019'`<br/>`'10 / 2019'`<br />`'102019'`<br/>`'10 2019'`<br/>`'10 19'`               | `{month: '10', year: '2019'}` |
-| `'2019-10'`                                                                               | `{month: '10', year: '2019'}` |
-| `{month: '01', year: '19'}`<br/>`{month: '1', year: '19'}`<br/>`{month: 1, year: 19}`     | `{month: '01', year: '19'}`   |
+| Input                                                                                       | Output                        |
+| ------------------------------------------------------------------------------------------- | ----------------------------- |
+| `'10/19'`<br/>`'10 / 19'`<br />`'1019'`<br/>`'10 19'`                                       | `{month: '10', year: '19'}`   |
+| `'10/2019'`<br/>`'10 / 2019'`<br />`'102019'`<br/>`'10 2019'`<br/>`'10 19'`                 | `{month: '10', year: '2019'}` |
+| `'2019-10'`                                                                                 | `{month: '10', year: '2019'}` |
+| `{month: '01', year: '19'}`<br/>`{month: '1', year: '19'}`<br/>`{month: 1, year: 19}`       | `{month: '01', year: '19'}`   |
 | `{month: '01', year: '2019'}`<br/>`{month: '1', year: '2019'}`<br/>`{month: 1, year: 2019}` | `{month: '01', year: '2019'}` |
 
-- - -
+---
 
 #### `valid.expirationMonth(value: string): object`
 
@@ -281,7 +281,7 @@ The `maxElapsedYear` has a default value of 19. It can be overridden by passing 
 }
 ```
 
-- - -
+---
 
 #### `valid.expirationYear(value: string, maxElapsedYear: integer): object`
 
@@ -297,7 +297,7 @@ The `maxElapsedYear` has a default value of 19. It can be overridden by passing 
 }
 ```
 
-- - -
+---
 
 #### `valid.cvv(value: string, maxLength: integer): object`
 
@@ -310,7 +310,7 @@ The `cvv` validation by default tests for a numeric string of 3 characters in le
 }
 ```
 
-- - -
+---
 
 #### `valid.postalCode(value: string, [options: object]): object`
 
@@ -340,17 +340,15 @@ Card Validator exposes the [`credit-card-type` module](https://github.com/braint
 
 ```javascript
 valid.creditCardType.addCard({
-  niceType: 'NewCard',
-  type: 'new-card',
-  patterns: [
-    1234
-  ],
+  niceType: "NewCard",
+  type: "new-card",
+  patterns: [1234],
   gaps: [4, 8, 12],
   lengths: [16],
   code: {
-    name: 'CVV',
-    size: 3
-  }
+    name: "CVV",
+    size: 3,
+  },
 });
 ```
 
