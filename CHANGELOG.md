@@ -2,6 +2,11 @@
 
 - Add typescript types
 
+_Breaking Changes_
+
+- Upgrade credit-card-type to v9.0.0
+  - Drop support for card numbers instantiated with `new String(number)`
+
 # 6.2.0
 
 - Adjust expiration date to accept dates formatted as `YYYY-MM` (the HTML autofill spec). Closes #69 (thanks @schuylr)

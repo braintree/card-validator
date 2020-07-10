@@ -30,7 +30,7 @@
     "typescript": "^3.8.3"
   },
   "dependencies": {
-    "credit-card-type": "^8.3.0"
+    "credit-card-type": "^9.0.0"
   },
   "jest": {
     "preset": "ts-jest",
