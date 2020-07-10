@@ -1,6 +1,6 @@
-import parseDate from "./lib/parse-date";
-import expirationMonth from "./expiration-month";
-import expirationYear from "./expiration-year";
+import { parseDate } from "./lib/parse-date";
+import { expirationMonth } from "./expiration-month";
+import { expirationYear } from "./expiration-year";
 
 import type { Verification } from "./types";
 
@@ -23,7 +23,7 @@ function verification(
   };
 }
 
-function expirationDate(
+export function expirationDate(
   value: string | Record<string, string | number> | unknown,
   maxElapsedYear?: number
 ): ExpirationDateVerification {
@@ -68,5 +68,3 @@ function expirationDate(
 
   return verification(false, false, null, null);
 }
-
-export default expirationDate;

@@ -16,7 +16,9 @@ function verification(
   };
 }
 
-function expirationMonth(value: string | unknown): ExpirationMonthVerification {
+export function expirationMonth(
+  value: string | unknown
+): ExpirationMonthVerification {
   const currentMonth = new Date().getMonth() + 1;
 
   if (typeof value !== "string") {
@@ -39,5 +41,3 @@ function expirationMonth(value: string | unknown): ExpirationMonthVerification {
 
   return verification(result, result, result && month >= currentMonth);
 }
-
-export default expirationMonth;

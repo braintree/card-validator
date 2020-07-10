@@ -30,7 +30,7 @@ function verification(
   return { isValid, isPotentiallyValid };
 }
 
-function cvv(
+export function cvv(
   value: string | unknown,
   maxLength: number | number[] = DEFAULT_LENGTH
 ): Verification {
@@ -54,5 +54,3 @@ function cvv(
 
   return verification(true, true);
 }
-
-export default cvv;

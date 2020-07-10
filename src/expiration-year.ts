@@ -18,7 +18,7 @@ function verification(
   };
 }
 
-function expirationYear(
+export function expirationYear(
   value: string | unknown,
   maxElapsedYear = DEFAULT_VALID_NUMBER_OF_YEARS_IN_THE_FUTURE
 ): ExpirationYearVerification {
@@ -72,5 +72,3 @@ function expirationYear(
 
   return verification(valid, valid, isCurrentYear);
 }
-
-export default expirationYear;

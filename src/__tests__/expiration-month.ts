@@ -1,4 +1,5 @@
-import expirationMonth, {
+import {
+  expirationMonth,
   ExpirationMonthVerification,
 } from "../expiration-month";
 

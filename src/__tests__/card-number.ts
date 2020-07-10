@@ -1,4 +1,4 @@
-import cardNumber, { CardNumberVerification } from "../card-number";
+import { cardNumber, CardNumberVerification } from "../card-number";
 
 describe("number validates", () => {
   describe.each([

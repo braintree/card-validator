@@ -1,4 +1,4 @@
-import cvv from "../cvv";
+import { cvv } from "../cvv";
 import { Verification } from "../types";
 
 describe("cvv", () => {

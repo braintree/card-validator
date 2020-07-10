@@ -1,4 +1,4 @@
-import parseDate, { MonthAndYear } from "../../lib/parse-date";
+import { parseDate, MonthAndYear } from "../../lib/parse-date";
 
 describe("parse-date", () => {
   describe.each([

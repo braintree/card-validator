@@ -13,7 +13,7 @@ function verification(
   return { isValid, isPotentiallyValid };
 }
 
-function postalCode(
+export function postalCode(
   value: string | unknown,
   options: PostalCodeOptions = {}
 ): Verification {
@@ -27,5 +27,3 @@ function postalCode(
 
   return verification(true, true);
 }
-
-export default postalCode;

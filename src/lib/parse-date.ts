@@ -1,4 +1,4 @@
-import expirationYear from "../expiration-year";
+import { expirationYear } from "../expiration-year";
 import { isArray } from "./is-array";
 
 export type MonthAndYear = {
@@ -85,7 +85,7 @@ function getNumberOfMonthDigitsInDateString(dateString: string): number {
   return 1;
 }
 
-function parseDate(datestring: string): MonthAndYear {
+export function parseDate(datestring: string): MonthAndYear {
   let date;
 
   if (/^\d{4}-\d{1,2}$/.test(datestring)) {
@@ -111,5 +111,3 @@ function parseDate(datestring: string): MonthAndYear {
     year: datestring.substr(month.length),
   };
 }
-
-export default parseDate;

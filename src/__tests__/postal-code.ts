@@ -1,4 +1,4 @@
-import postalCode from "../postal-code";
+import { postalCode } from "../postal-code";
 import type { Verification } from "../types";
 
 describe("postalCode", () => {

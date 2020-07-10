@@ -1,4 +1,4 @@
-import expirationYear, { ExpirationYearVerification } from "../expiration-year";
+import { expirationYear, ExpirationYearVerification } from "../expiration-year";
 
 const currentYear = new Date().getFullYear();
 

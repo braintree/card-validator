@@ -2,8 +2,12 @@ import luhn10 = require("./luhn-10");
 import getCardTypes = require("credit-card-type");
 import type { Verification } from "./types";
 
+type CreditCardType = {
+  // TODO fill this out
+};
+
 export interface CardNumberVerification extends Verification {
-  card: Record<string, any>; // TODO this will be a credit card type
+  card: CreditCardType | null;
 }
 
 type CardNumberOptions = {
@@ -12,7 +16,7 @@ type CardNumberOptions = {
 };
 
 function verification(
-  card, // TODO this will be a CreditCardType
+  card: CreditCardType | null,
   isPotentiallyValid: boolean,
   isValid: boolean
 ): CardNumberVerification {
@@ -23,7 +27,7 @@ function verification(
   };
 }
 
-function cardNumber(
+export function cardNumber(
   value: string | unknown,
   options: CardNumberOptions = {}
 ): CardNumberVerification {
@@ -77,5 +81,3 @@ function cardNumber(
 
   return verification(cardType, testCardValue.length < maxLength, false);
 }
-
-export default cardNumber;
