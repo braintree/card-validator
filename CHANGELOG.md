@@ -1,4 +1,4 @@
-# unreleased
+# 7.0.0
 
 - Add typescript types
 
