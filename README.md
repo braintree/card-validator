@@ -246,7 +246,7 @@ A fake session where a user is entering a card number may look like:
 
 #### `valid.expirationDate(value: string|object, maxElapsedYear: integer): object`
 
-The `maxElapsedYear` has a default value of 19. It can be overridden by passing in an `integer` as a second argument.
+The `maxElapsedYear` parameter determines how many years in the future a card's expiration date should be considered valid. It has a default value of 19, so cards with an expiration date 20 or more years in the future would not be considered valid. It can be overridden by passing in an `integer` as a second argument.
 
 ```javascript
 {
@@ -287,7 +287,7 @@ The `maxElapsedYear` has a default value of 19. It can be overridden by passing 
 
 `expirationYear` accepts 2 or 4 digit years. `16` and `2016` are both valid entries.
 
-The `maxElapsedYear` has a default value of 19. It can be overridden by passing in an `integer` as a second argument.
+The `maxElapsedYear` parameter determines how many years in the future a card's expiration date should be considered valid. It has a default value of 19, so cards with an expiration date 20 or more years in the future would not be considered valid. It can be overridden by passing in an `integer` as a second argument.
 
 ```javascript
 {
