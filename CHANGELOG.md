@@ -1,3 +1,7 @@
+# 7.0.1
+
+- Fixup export for credit-card-type for typescript projects (closes #79)
+
 # 7.0.0
 
 - Add typescript types
