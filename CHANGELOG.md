@@ -8,6 +8,9 @@
 
 _Breaking Changes_
 
+- ES default export no more working:
+  - Must use `import * as cardValidator from 'card-validator'`
+
 - Upgrade credit-card-type to v9.0.0
   - Drop support for card numbers instantiated with `new String(number)`
 
