@@ -14,7 +14,7 @@ const cardValidator = {
   expirationMonth,
   expirationYear,
   cvv,
-  postalCode
+  postalCode,
 };
 
 export default cardValidator;
@@ -26,5 +26,5 @@ export {
   expirationMonth,
   expirationYear,
   cvv,
-  postalCode
+  postalCode,
 };
