@@ -1,10 +1,30 @@
-import * as creditCardType from "credit-card-type";
+import * as creditCardType from "credit-card-type"
 
-export { cardNumber as number } from "./card-number";
-export { expirationDate } from "./expiration-date";
-export { expirationMonth } from "./expiration-month";
-export { expirationYear } from "./expiration-year";
-export { cvv } from "./cvv";
-export { postalCode } from "./postal-code";
+import { cardNumber as number } from "./card-number"
+import { expirationDate } from "./expiration-date"
+import { expirationMonth } from "./expiration-month"
+import { expirationYear } from "./expiration-year"
+import { cvv } from "./cvv"
+import { postalCode } from "./postal-code"
 
-export { creditCardType };
+const cardValidator = {
+  creditCardType,
+  number,
+  expirationDate,
+  expirationMonth,
+  expirationYear,
+  cvv,
+  postalCode
+}
+
+export default cardValidator
+
+export {
+  creditCardType,
+  number,
+  expirationDate,
+  expirationMonth,
+  expirationYear,
+  cvv,
+  postalCode
+}
