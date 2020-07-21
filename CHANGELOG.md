@@ -1,3 +1,9 @@
+# 8.0.0
+
+_Breaking Changes_
+
+- Use `export =` instead of `export default` for main export (use `"esModuleInterop": true` flag in your tsconfig to maintain the `default` module behavior)
+
 # 7.1.0
 
 - The cardValidator object is now available as the `default` import when using es modules (thanks @leomp12)

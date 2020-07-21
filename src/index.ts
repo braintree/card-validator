@@ -17,14 +17,4 @@ const cardValidator = {
   postalCode,
 };
 
-export default cardValidator;
-
-export {
-  creditCardType,
-  number,
-  expirationDate,
-  expirationMonth,
-  expirationYear,
-  cvv,
-  postalCode,
-};
+export = cardValidator;
