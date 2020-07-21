@@ -1,3 +1,7 @@
+# 7.1.0
+
+- The cardValidator object is now available as the `default` import when using es modules (thanks @leomp12)
+
 # 7.0.1
 
 - Fixup export for credit-card-type for typescript projects (closes #79)
