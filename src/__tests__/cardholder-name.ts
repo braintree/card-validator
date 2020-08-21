@@ -42,7 +42,7 @@ describe("cardholderName", () => {
           { isValid: true, isPotentiallyValid: true },
         ],
         [
-          "first last another name",
+          "name with many spaces",
           { isValid: true, isPotentiallyValid: true },
         ],
         [
