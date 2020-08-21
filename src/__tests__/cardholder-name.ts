@@ -36,7 +36,7 @@ describe("cardholderName", () => {
       "accepts valid cardholder names",
       [
         ["name", { isValid: true, isPotentiallyValid: true }],
-        ["first last", { isValid: true, isPotentiallyValid: true }],
+        ["given sur", { isValid: true, isPotentiallyValid: true }],
         [
           "this name is 255 chracters aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           { isValid: true, isPotentiallyValid: true },
