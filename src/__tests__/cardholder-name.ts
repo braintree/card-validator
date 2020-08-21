@@ -41,10 +41,7 @@ describe("cardholderName", () => {
           "this name is 255 chracters aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           { isValid: true, isPotentiallyValid: true },
         ],
-        [
-          "name with many spaces",
-          { isValid: true, isPotentiallyValid: true },
-        ],
+        ["name with many spaces", { isValid: true, isPotentiallyValid: true }],
         [
           "name with number in it 01234",
           { isValid: true, isPotentiallyValid: true },
