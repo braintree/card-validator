@@ -1,3 +1,7 @@
+# unreleased
+
+- Add `cardholderName` verification method
+
 # 8.0.0
 
 _Breaking Changes_

@@ -244,6 +244,35 @@ A fake session where a user is entering a card number may look like:
 
 ---
 
+#### `valid.cardholderName(value: string): object`
+
+The `cardholderName` validation essentially tests for a valid string greater than 0 characters in length that does not look like a card number.
+
+```javascript
+{
+  isPotentiallyValid: true,
+  isValid: true
+}
+```
+
+If a cardholder name is comprised of only numbers, hyphens and spaces, the validator considers it to be too card-like to be valid, but may still be potentially valid if a non-numeric character is added. This is to prevent card number values from being sent along as the cardholder name but not make too many assumptions about a person's cardholder name.
+
+```javascript
+{
+  isPotentiallyValid: true,
+  isValid: false
+}
+```
+
+If a cardholder name is longer than 255 characters, it is assumed to be invalid.
+
+```javascript
+{
+  isPotentiallyValid: false,
+  isValid: false
+}
+```
+
 #### `valid.expirationDate(value: string|object, maxElapsedYear: integer): object`
 
 The `maxElapsedYear` parameter determines how many years in the future a card's expiration date should be considered valid. It has a default value of 19, so cards with an expiration date 20 or more years in the future would not be considered valid. It can be overridden by passing in an `integer` as a second argument.
