@@ -1,4 +1,4 @@
-# unreleased
+# 8.1.0
 
 - Add `cardholderName` verification method
 
