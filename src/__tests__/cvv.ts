@@ -1,5 +1,4 @@
 import { cvv } from "../cvv";
-import { Verification } from "../types";
 
 describe("cvv", () => {
   describe("values", () => {
@@ -58,20 +57,17 @@ describe("cvv", () => {
           [{}, { isValid: false, isPotentiallyValid: false }],
         ],
       ],
-    ] as Array<[string, Array<[string, Verification, (Function | number)?]>]>)(
-      "%s",
-      (description, tests) => {
-        it.each(tests)("parses %s to be %p", (testCvv, meta, maxLength) => {
-          if (typeof maxLength === "function") {
-            // maxLength argument got converted to a done callback
-            expect(cvv(testCvv)).toEqual(meta);
-            maxLength();
-          } else {
-            expect(cvv(testCvv, maxLength)).toEqual(meta);
-          }
-        });
-      }
-    );
+    ])("%s", (description, tests) => {
+      it.each(tests)("parses %s to be %p", (testCvv, meta, maxLength) => {
+        if (typeof maxLength === "function") {
+          // maxLength argument got converted to a done callback
+          expect(cvv(testCvv)).toEqual(meta);
+          maxLength();
+        } else {
+          expect(cvv(testCvv, maxLength)).toEqual(meta);
+        }
+      });
+    });
   });
 
   describe("maxLength", () => {
