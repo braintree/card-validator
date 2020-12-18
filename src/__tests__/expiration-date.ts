@@ -1264,6 +1264,116 @@ describe("expirationDate validates", () => {
     );
   });
 
+  describe("potentiallyValid state for 2 digit year", () => {
+    it("should be isValid: false and isPotentiallyValid: true when MM/YY format is not valid, but adding 2 more characters to make it MM/YYYY would be", () => {
+      const firstTwoDigitsOfCurrentYear = String(currentYear).substr(0, 2);
+
+      expect(expirationDate(`1 / ${firstTwoDigitsOfCurrentYear}`)).toEqual({
+        isValid: false,
+        isPotentiallyValid: true,
+        month: "1",
+        year: firstTwoDigitsOfCurrentYear,
+      });
+
+      let count = 0;
+      let hasSomeFutureValidValue = false;
+
+      while (count < 100) {
+        let stringCount = String(count);
+        if (count < 10) {
+          stringCount = `0${stringCount}`;
+        }
+
+        const isValid = expirationDate(
+          `1 / ${firstTwoDigitsOfCurrentYear}${stringCount}`
+        ).isValid;
+
+        if (isValid) {
+          hasSomeFutureValidValue = true;
+          break;
+        }
+
+        count++;
+      }
+
+      expect(hasSomeFutureValidValue).toBe(true);
+    });
+
+    it("should be isValid: false and isPotentiallyValid: false when MM/YY format is not valid, but adding 2 more characters to make it MM/YYYY would still be too far into the future no matter what the final result", () => {
+      const firstTwoDigitsOfCurrentYearPlus2000 = String(
+        currentYear + 2000
+      ).substr(0, 2);
+
+      expect(
+        expirationDate(`1 / ${firstTwoDigitsOfCurrentYearPlus2000}`)
+      ).toEqual({
+        isValid: false,
+        isPotentiallyValid: false,
+        month: null,
+        year: null,
+      });
+
+      let count = 0;
+
+      while (count < 100) {
+        let stringCount = String(count);
+        if (count < 10) {
+          stringCount = `0${stringCount}`;
+        }
+
+        expect(
+          expirationDate(
+            `1 / ${firstTwoDigitsOfCurrentYearPlus2000}${stringCount}`
+          )
+        ).toEqual({
+          isValid: false,
+          isPotentiallyValid: false,
+          month: null,
+          year: null,
+        });
+
+        count++;
+      }
+    });
+
+    it("should be isValid: false and isPotentiallyValid: false when MM/YY format is not valid, but adding 2 more characters to make it MM/YYYY would still be too far back in the past no matter what the final result", () => {
+      const firstTwoDigitsOfCurrentYearMinus1000 = String(
+        currentYear - 1000
+      ).substr(0, 2);
+
+      expect(
+        expirationDate(`1 / ${firstTwoDigitsOfCurrentYearMinus1000}`)
+      ).toEqual({
+        isValid: false,
+        isPotentiallyValid: false,
+        month: null,
+        year: null,
+      });
+
+      let count = 0;
+
+      while (count < 100) {
+        let stringCount = String(count);
+        if (count < 10) {
+          stringCount = `0${stringCount}`;
+        }
+
+        expect(
+          expirationDate(
+            `1 / ${firstTwoDigitsOfCurrentYearMinus1000}${stringCount}`
+          )
+        ).toEqual({
+          isValid: false,
+          isPotentiallyValid: false,
+          month: null,
+          year: null,
+        });
+
+        count++;
+      }
+    });
+  });
+
   describe("maxElapsedYear", () => {
     it("defaults maxElapsedYear is 19", () => {
       expect(expirationDate(`${currentMonth} / ${yearsFromNow(19)}`)).toEqual({
