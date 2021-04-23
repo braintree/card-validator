@@ -20,14 +20,14 @@
   "author": "Braintree <code@getbraintree.com> (https://www.braintreepayments.com/)",
   "license": "MIT",
   "devDependencies": {
-    "@types/jest": "^26.0.19",
-    "@types/node": "^14.14.20",
-    "eslint": "^7.17.0",
+    "@types/jest": "^26.0.22",
+    "@types/node": "^14.14.41",
+    "eslint": "^7.24.0",
     "eslint-config-braintree": "^5.0.0-typescript-prep-rc.18",
     "jest": "^26.6.3",
     "prettier": "^2.2.1",
-    "ts-jest": "^26.4.4",
-    "typescript": "^4.1.3"
+    "ts-jest": "^26.5.5",
+    "typescript": "^4.2.4"
   },
   "dependencies": {
     "credit-card-type": "^9.1.0"
@@ -36,7 +36,7 @@
     "preset": "ts-jest",
     "globals": {
       "ts-jest": {
-        "tsConfig": "src/__tests__/tsconfig.json"
+        "tsconfig": "src/__tests__/tsconfig.json"
       }
     }
   }
