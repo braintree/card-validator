@@ -3,6 +3,7 @@ import { expirationDate, ExpirationDateVerification } from "../expiration-date";
 const date = new Date();
 const currentYear = date.getFullYear();
 const twoDigitYear = Number(String(currentYear).substr(2, 2));
+const firstTwoDigitsOfCurrentYear = Number(String(currentYear).substr(0, 2));
 const nextYear = currentYear + 1;
 const currentMonth = date.getMonth() + 1;
 const previousMonth = currentMonth - 1 || currentMonth;
@@ -383,6 +384,15 @@ describe("expirationDate validates", () => {
             year: null,
           },
         ],
+        [
+          `02/${firstTwoDigitsOfCurrentYear}`,
+          {
+            isValid: false,
+            isPotentiallyValid: true,
+            month: null,
+            year: null,
+          },
+        ],
       ],
     ],
     [
@@ -596,6 +606,10 @@ describe("expirationDate validates", () => {
           { isValid: false, isPotentiallyValid: true, month: null, year: null },
         ],
         [
+          `1 ${firstTwoDigitsOfCurrentYear}`,
+          { isValid: false, isPotentiallyValid: true, month: null, year: null },
+        ],
+        [
           "1 ",
           { isValid: false, isPotentiallyValid: true, month: null, year: null },
         ],
@@ -788,6 +802,10 @@ describe("expirationDate validates", () => {
             month: null,
             year: null,
           },
+        ],
+        [
+          `02${firstTwoDigitsOfCurrentYear}`,
+          { isValid: false, isPotentiallyValid: true, month: null, year: null },
         ],
       ],
     ],
@@ -1212,6 +1230,15 @@ describe("expirationDate validates", () => {
           {
             isValid: false,
             isPotentiallyValid: false,
+            month: null,
+            year: null,
+          },
+        ],
+        [
+          { month: "02", year: "20" },
+          {
+            isValid: false,
+            isPotentiallyValid: true,
             month: null,
             year: null,
           },
