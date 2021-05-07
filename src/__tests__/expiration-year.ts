@@ -74,6 +74,10 @@ describe("expirationYear", () => {
           "123",
           { isValid: false, isPotentiallyValid: false, isCurrentYear: false },
         ],
+        [
+          "20",
+          { isValid: false, isPotentiallyValid: true, isCurrentYear: false },
+        ],
       ],
     ],
 

@@ -59,6 +59,10 @@ export function expirationYear(
   let valid = false;
 
   if (len === 2) {
+    if (String(currentYear).substr(0, 2) === value) {
+      return verification(false, true);
+    }
+
     isCurrentYear = twoDigitYear === numericValue;
     valid =
       numericValue >= twoDigitYear &&
