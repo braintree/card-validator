@@ -1,4 +1,4 @@
-# unreleased
+# 8.1.1
 
 - Fix issue where a potentially valid year would evaulate as invalid (#93)
 
