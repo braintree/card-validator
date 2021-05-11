@@ -1,3 +1,7 @@
+# unreleased
+
+- Fix issue where a potentially valid year would evaulate as invalid (#93)
+
 # 8.1.0
 
 - Add `cardholderName` verification method
