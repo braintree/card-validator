@@ -20,14 +20,14 @@
   "author": "Braintree <code@getbraintree.com> (https://www.braintreepayments.com/)",
   "license": "MIT",
   "devDependencies": {
-    "@types/jest": "^27.0.1",
-    "@types/node": "^16.6.1",
+    "@types/jest": "^27.0.2",
+    "@types/node": "^16.9.6",
     "eslint": "^7.32.0",
     "eslint-config-braintree": "^5.0.0-typescript-prep-rc.18",
-    "jest": "^27.0.6",
-    "prettier": "^2.3.2",
+    "jest": "^27.2.1",
+    "prettier": "^2.4.1",
     "ts-jest": "^27.0.5",
-    "typescript": "^4.3.5"
+    "typescript": "^4.4.3"
   },
   "dependencies": {
     "credit-card-type": "^9.1.0"
