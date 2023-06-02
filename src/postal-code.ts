@@ -1,8 +1,4 @@
-import type { Verification } from "./types";
-
-type PostalCodeOptions = {
-  minLength?: number;
-};
+import type { Verification, PostalCodeOptions } from "./types";
 
 const DEFAULT_MIN_POSTAL_CODE_LENGTH = 3;
 

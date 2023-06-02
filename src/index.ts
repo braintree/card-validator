@@ -19,4 +19,4 @@ const cardValidator = {
   postalCode,
 };
 
-export = cardValidator;
+export default cardValidator;

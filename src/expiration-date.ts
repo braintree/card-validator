@@ -2,12 +2,7 @@ import { parseDate } from "./lib/parse-date";
 import { expirationMonth } from "./expiration-month";
 import { expirationYear } from "./expiration-year";
 
-import type { Verification } from "./types";
-
-export interface ExpirationDateVerification extends Verification {
-  month: string | null;
-  year: string | null;
-}
+import type { ExpirationDateVerification } from "./types";
 
 function verification(
   isValid: boolean,

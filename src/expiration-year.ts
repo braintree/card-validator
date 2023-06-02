@@ -1,8 +1,4 @@
-import type { Verification } from "./types";
-
-export interface ExpirationYearVerification extends Verification {
-  isCurrentYear: boolean;
-}
+import type { ExpirationYearVerification } from "./types";
 
 const DEFAULT_VALID_NUMBER_OF_YEARS_IN_THE_FUTURE = 19;
 
