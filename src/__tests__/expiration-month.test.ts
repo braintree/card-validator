@@ -1,7 +1,5 @@
-import {
-  expirationMonth,
-  ExpirationMonthVerification,
-} from "../expiration-month";
+import { expirationMonth } from "../expiration-month";
+import { ExpirationMonthVerification } from "../types";
 
 const currentMonth = new Date().getMonth() + 1;
 const previousMonth = currentMonth - 1 || 1;
