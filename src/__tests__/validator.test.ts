@@ -1,4 +1,4 @@
-import validator = require("../");
+import validator from "../";
 
 describe("validator", () => {
   it("exports all necessary functions", () => {

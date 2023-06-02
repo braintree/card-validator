@@ -1,5 +1,5 @@
-import cardValidator = require("../");
-import creditCardType = require("credit-card-type");
+import cardValidator from "../";
+import * as creditCardType from "credit-card-type";
 
 describe("creditCardType", () => {
   it("exposes creditCardType", () => {
