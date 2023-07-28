@@ -3,6 +3,7 @@
     "outDir": "./dist",
     "allowJs": true,
     "esModuleInterop": true,
+    "resolveJsonModule": true,
     "target": "es5",
     "strict": true,
     "lib": ["es2015", "dom"]
