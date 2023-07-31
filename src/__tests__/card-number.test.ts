@@ -1,4 +1,5 @@
-import { cardNumber, CardNumberVerification } from "../card-number";
+import { cardNumber } from "../card-number";
+import { CardNumberVerification } from "../types";
 
 describe("number validates", () => {
   describe.each([

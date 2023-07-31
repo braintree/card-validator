@@ -1,4 +1,6 @@
-import { parseDate, MonthAndYear } from "../../lib/parse-date";
+import { parseDate } from "../../lib/parse-date";
+import { vi } from "vitest";
+import { MonthAndYear } from "../../types";
 
 describe("parse-date", () => {
   describe.each([
@@ -91,7 +93,7 @@ describe("parse-date", () => {
       const fixedDate = new Date(2019, 9);
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      window.Date = jest.fn().mockImplementation(() => fixedDate) as any;
+      window.Date = vi.fn().mockImplementation(() => fixedDate) as any;
     });
 
     afterEach(() => {

@@ -1,28 +1,10 @@
 import luhn10 = require("./luhn-10");
 import getCardTypes = require("credit-card-type");
-import type { Verification } from "./types";
-
-// TODO this should probably come from credit-card-type
-type CreditCardType = {
-  niceType: string;
-  type: string;
-  patterns: Array<number[] | number>;
-  gaps: number[];
-  lengths: number[];
-  code: {
-    name: string;
-    size: number;
-  };
-};
-
-export interface CardNumberVerification extends Verification {
-  card: CreditCardType | null;
-}
-
-type CardNumberOptions = {
-  maxLength?: number;
-  luhnValidateUnionPay?: boolean;
-};
+import type {
+  CardNumberVerification,
+  CreditCardType,
+  CardNumberOptions,
+} from "./types";
 
 function verification(
   card: CreditCardType | null,

@@ -1,10 +1,6 @@
 import { expirationYear } from "../expiration-year";
 import { isArray } from "./is-array";
-
-export type MonthAndYear = {
-  month: string;
-  year: string;
-};
+import type { MonthAndYear } from "../types";
 
 function getNumberOfMonthDigitsInDateString(dateString: string): number {
   const firstCharacter = Number(dateString[0]);

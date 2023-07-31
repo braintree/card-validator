@@ -1,6 +1,3 @@
 {
-  "extends": "braintree/es6",
-  "env": {
-    "jest": true
-  }
+  "extends": "braintree/es6"
 }

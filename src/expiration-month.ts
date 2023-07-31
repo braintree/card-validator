@@ -1,8 +1,4 @@
-import type { Verification } from "./types";
-
-export interface ExpirationMonthVerification extends Verification {
-  isValidForThisYear: boolean;
-}
+import type { ExpirationMonthVerification } from "./types";
 
 function verification(
   isValid: boolean,
