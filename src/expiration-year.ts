@@ -9,7 +9,7 @@ const DEFAULT_VALID_NUMBER_OF_YEARS_IN_THE_FUTURE = 19;
 function verification(
   isValid: boolean,
   isPotentiallyValid: boolean,
-  isCurrentYear?: boolean
+  isCurrentYear?: boolean,
 ): ExpirationYearVerification {
   return {
     isValid,
@@ -20,7 +20,7 @@ function verification(
 
 export function expirationYear(
   value: string | unknown,
-  maxElapsedYear = DEFAULT_VALID_NUMBER_OF_YEARS_IN_THE_FUTURE
+  maxElapsedYear = DEFAULT_VALID_NUMBER_OF_YEARS_IN_THE_FUTURE,
 ): ExpirationYearVerification {
   let isCurrentYear;
 

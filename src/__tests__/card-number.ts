@@ -263,7 +263,7 @@ describe("number validates", () => {
           expect(actual.isValid).toBe(expected.isValid);
         });
       });
-    }
+    },
   );
 
   describe("UnionPay", () => {

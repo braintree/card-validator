@@ -68,6 +68,6 @@ describe("cardholderName", () => {
       it.each(tests)("parses %s to be %p", (parseMe, meta) => {
         expect(cardholderName(parseMe)).toEqual(meta);
       });
-    }
+    },
   );
 });

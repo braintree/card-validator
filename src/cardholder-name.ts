@@ -5,7 +5,7 @@ const MAX_LENGTH = 255;
 
 function verification(
   isValid: boolean,
-  isPotentiallyValid: boolean
+  isPotentiallyValid: boolean,
 ): Verification {
   return { isValid, isPotentiallyValid };
 }

@@ -8,14 +8,14 @@ const DEFAULT_MIN_POSTAL_CODE_LENGTH = 3;
 
 function verification(
   isValid: boolean,
-  isPotentiallyValid: boolean
+  isPotentiallyValid: boolean,
 ): Verification {
   return { isValid, isPotentiallyValid };
 }
 
 export function postalCode(
   value: string | unknown,
-  options: PostalCodeOptions = {}
+  options: PostalCodeOptions = {},
 ): Verification {
   const minLength = options.minLength || DEFAULT_MIN_POSTAL_CODE_LENGTH;
 
