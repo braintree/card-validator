@@ -3,6 +3,7 @@
 - Dependency Updates:
   - Update prettier to v3
   - Update eslint-plugin-prettier to v5
+  - Update node to v18
 
 # 8.1.1
 
