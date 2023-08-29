@@ -55,7 +55,7 @@ describe("postalCode", () => {
       it.each(tests)("parses %s to be %p", (parseMe, meta) => {
         expect(postalCode(parseMe)).toEqual(meta);
       });
-    }
+    },
   );
 
   describe("custom min length", () => {

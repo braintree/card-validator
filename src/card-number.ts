@@ -27,7 +27,7 @@ type CardNumberOptions = {
 function verification(
   card: CreditCardType | null,
   isPotentiallyValid: boolean,
-  isValid: boolean
+  isValid: boolean,
 ): CardNumberVerification {
   return {
     card,
@@ -38,7 +38,7 @@ function verification(
 
 export function cardNumber(
   value: string | unknown,
-  options: CardNumberOptions = {}
+  options: CardNumberOptions = {},
 ): CardNumberVerification {
   let isPotentiallyValid, isValid, maxLength;
 

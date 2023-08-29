@@ -13,7 +13,7 @@ function verification(
   isValid: boolean,
   isPotentiallyValid: boolean,
   month: string | null,
-  year: string | null
+  year: string | null,
 ): ExpirationDateVerification {
   return {
     isValid,
@@ -25,7 +25,7 @@ function verification(
 
 export function expirationDate(
   value: string | Record<string, string | number> | unknown,
-  maxElapsedYear?: number
+  maxElapsedYear?: number,
 ): ExpirationDateVerification {
   let date;
 
@@ -53,7 +53,7 @@ export function expirationDate(
         isValidForThisYear,
         isValidForThisYear,
         date.month,
-        date.year
+        date.year,
       );
     }
 

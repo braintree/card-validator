@@ -74,7 +74,7 @@ describe("parse-date", () => {
       it.each(tests)("parses %s to be %p", (parseMe, meta) => {
         expect(parseDate(parseMe)).toEqual(meta);
       });
-    }
+    },
   );
 
   describe("datestrings starting with 10-12", () => {

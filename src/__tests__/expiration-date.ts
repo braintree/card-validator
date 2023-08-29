@@ -1068,7 +1068,7 @@ describe("expirationDate validates", () => {
       "parses %s to be %p",
       (exp: string | number, meta: ExpirationDateVerification) => {
         expect(expirationDate(exp)).toEqual(meta);
-      }
+      },
     );
   });
 
@@ -1287,7 +1287,7 @@ describe("expirationDate validates", () => {
       "parses %s to be %p",
       (exp, meta: ExpirationDateVerification) => {
         expect(expirationDate(exp)).toEqual(meta);
-      }
+      },
     );
   });
 
@@ -1309,7 +1309,7 @@ describe("expirationDate validates", () => {
 
     it("accepts maxElapsedYear", () => {
       expect(
-        expirationDate(`${currentMonth} / ${yearsFromNow(20)}`, 20)
+        expirationDate(`${currentMonth} / ${yearsFromNow(20)}`, 20),
       ).toEqual({
         isValid: true,
         isPotentiallyValid: true,
@@ -1317,7 +1317,7 @@ describe("expirationDate validates", () => {
         year: yearsFromNow(20).toString(),
       });
       expect(
-        expirationDate(`${currentMonth} / ${yearsFromNow(21)}`, 20)
+        expirationDate(`${currentMonth} / ${yearsFromNow(21)}`, 20),
       ).toEqual({
         isValid: false,
         isPotentiallyValid: false,

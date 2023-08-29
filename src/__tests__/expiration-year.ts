@@ -221,7 +221,7 @@ describe("expirationYear", () => {
       it.each(tests)("parses %s to be %p", (exp, meta) => {
         expect(expirationYear(exp)).toEqual(meta);
       });
-    }
+    },
   );
 
   it("defaults maxElapsedYear is 19", () => {

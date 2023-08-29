@@ -7,7 +7,7 @@ export interface ExpirationMonthVerification extends Verification {
 function verification(
   isValid: boolean,
   isPotentiallyValid: boolean,
-  isValidForThisYear?: boolean
+  isValidForThisYear?: boolean,
 ): ExpirationMonthVerification {
   return {
     isValid,
@@ -17,7 +17,7 @@ function verification(
 }
 
 export function expirationMonth(
-  value: string | unknown
+  value: string | unknown,
 ): ExpirationMonthVerification {
   const currentMonth = new Date().getMonth() + 1;
 
