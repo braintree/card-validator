@@ -1,6 +1,6 @@
-# UNRELEASED
+# 9.0.0
 
-- Dependency Updates:
+- BREAKING CHANGES
   - Update node to v18
 -DevDependency Updates:
   - Update prettier to v3
