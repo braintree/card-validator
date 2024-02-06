@@ -349,4 +349,25 @@ describe("number validates", () => {
       expect(actual.isValid).toBe(true);
     });
   });
+
+  describe("Skip Luhn Validation", () => {
+    const number = "5732806135556590";
+    it("should fail validation for a card with invalid luhn check digit", () => {
+      const actual = cardNumber(number);
+
+      expect(actual.card.type).toBe("maestro");
+      expect(actual.isPotentiallyValid).toBe(true);
+      expect(actual.isValid).toBe(false);
+    });
+
+    it("should succeed validation for a card with invalid luhn check digit when using skipLuhnValidation=true", () => {
+      const actual = cardNumber(number, {
+        skipLuhnValidation: true,
+      });
+
+      expect(actual.card.type).toBe("maestro");
+      expect(actual.isPotentiallyValid).toBe(true);
+      expect(actual.isValid).toBe(true);
+    });
+  });
 });
