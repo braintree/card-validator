@@ -76,6 +76,8 @@ You can optionally pass `maxLength` as a property of an object as a second argum
 
 If a card brand has a normal max length that is shorter than the passed in max length, the validator will use the shorter one. For instance, if a `maxLength` of `16` is provided, the validator will still use `15` as the max length for American Express cards.
 
+You can optionally pass `skipLuhnValidation: true` as a property of an object as a second argument. This will override the default behaviour and will skip the validation of the check digit of the card number using Luhn Algorithm. The `skipLuhnValidation` **should not** be set to `true` in production environment.
+
 ```javascript
 valid.number(<Maestro Card with 19 Digits>, {maxLength: 16});
 

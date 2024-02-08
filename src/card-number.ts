@@ -22,6 +22,7 @@ export interface CardNumberVerification extends Verification {
 type CardNumberOptions = {
   maxLength?: number;
   luhnValidateUnionPay?: boolean;
+  skipLuhnValidation?: boolean;
 };
 
 function verification(
@@ -67,8 +68,9 @@ export function cardNumber(
   }
 
   if (
-    cardType.type === getCardTypes.types.UNIONPAY &&
-    options.luhnValidateUnionPay !== true
+    options.skipLuhnValidation === true ||
+    (cardType.type === getCardTypes.types.UNIONPAY &&
+      options.luhnValidateUnionPay !== true)
   ) {
     isValid = true;
   } else {
