@@ -42,6 +42,16 @@ describe("postalCode", () => {
     ],
 
     [
+      "returns isPotentiallyValid for strings without alphanumeric first three characters",
+      [
+        ["123", { isValid: true, isPotentiallyValid: true }],
+        ["  123", { isValid: true, isPotentiallyValid: true }],
+        ["---", { isValid: false, isPotentiallyValid: true }],
+        ["   ---", { isValid: false, isPotentiallyValid: true }],
+      ],
+    ],
+
+    [
       "returns isPotentiallyValid for shorter-than-3 strings",
       [
         ["", { isValid: false, isPotentiallyValid: true }],
@@ -85,6 +95,10 @@ describe("postalCode", () => {
       });
       expect(postalCode("1234", { minLength: 4 })).toEqual({
         isValid: true,
+        isPotentiallyValid: true,
+      });
+      expect(postalCode(" -$%", { minLength: 0 })).toEqual({
+        isValid: false,
         isPotentiallyValid: true,
       });
     });
