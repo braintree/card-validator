@@ -345,7 +345,7 @@ The `cvv` validation by default tests for a numeric string of 3 characters in le
 
 #### `valid.postalCode(value: string, [options: object]): object`
 
-The `postalCode` validation essentially ignores leading whitespace and tests for a valid string greater than 3 characters in length. It also verifies that the first 3 letters are alphanumeric.
+The `postalCode` validation essentially ignores leading/trailing whitespace and tests for a valid string greater than 3 characters in length. It also verifies that the first 3 letters are alphanumeric.
 
 ```javascript
 {
