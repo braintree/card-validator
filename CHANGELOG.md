@@ -4,6 +4,7 @@
   - strip trailing and leading whitespace
   - verify postal code is at least 3 characters
   - confirm 1st three characters are alphanumeric
+- Update `braces` to 3.0.3
 
 # 9.1.0 
 
