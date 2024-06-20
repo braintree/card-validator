@@ -1,4 +1,4 @@
-# UNRELEASED
+# 10.0.0
 
 - Update postal code validation to:
   - strip trailing and leading whitespace
