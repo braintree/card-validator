@@ -1,8 +1,13 @@
 # UNRELEASED
 
+- Update postal code validation to:
+  - strip trailing and leading whitespace
+  - verify postal code is at least 3 characters
+  - confirm 1st three characters are alphanumeric
 - Update `braces` to 3.0.3
 
 # 9.1.0 
+
 - Support skipping of luhn check digit validation in card number validator. 
 
 # 9.0.0
@@ -50,7 +55,7 @@ _Breaking Changes_
 
   # 6.1.0
 
-- Add option to set a `maxLength` for card number valiation
+- Add option to set a `maxLength` for card number validation
 
   # 6.0.0
 
