@@ -1,7 +1,7 @@
 {
-    // 使用 IntelliSense 了解相关属性。 
-    // 悬停以查看现有属性的描述。
-    // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+    // ä½¿ç”¨ IntelliSense äº†è§£ç›¸å…³å±žæ€§ã€‚ 
+    // æ‚¬å�œä»¥æŸ¥çœ‹çŽ°æœ‰å±žæ€§çš„æ��è¿°ã€‚
+    // æ¬²äº†è§£æ›´å¤šä¿¡æ�¯ï¼Œè¯·è®¿é—®: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": []
 }
