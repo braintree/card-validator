@@ -1,6 +1,9 @@
-# 10.0.1
+# UNRELEASED
 
-- Update dev dependencies
+- Update (sub-) dependencies
+  - `babel` packages to 7.0.6
+  - `micromatch` to 4.0.6
+  - `semver` to 6.3.1
 
 # 10.0.0
 
