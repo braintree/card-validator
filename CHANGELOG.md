@@ -1,3 +1,11 @@
+# 10.0.1
+
+- Update (sub-)dependencies
+  - `cross-spawn` to 7.0.6
+  - `micromatch` to 4.0.8
+  - `picomatch` to 2.3.1 
+  - `semver` to 6.3.1
+
 # 10.0.0
 
 - Update postal code validation to:
