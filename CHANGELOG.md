@@ -1,5 +1,6 @@
-# UNRELEASED
+# 10.0.1
 
+- Update `credit-card-type` to 10.0.2
 - Update (sub-) dependencies
   - `babel` packages to 7.0.6
   - `micromatch` to 4.0.6
@@ -21,7 +22,7 @@
 
 - BREAKING CHANGES
   - Update node to v18
-    -DevDependency Updates:
+- DevDependency Updates:
   - Update prettier to v3
   - Update eslint-plugin-prettier to v5
 
