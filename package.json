@@ -33,7 +33,7 @@
     "typescript": "^5.1.6"
   },
   "dependencies": {
-    "credit-card-type": "^10.0.1"
+    "credit-card-type": "^10.0.2"
   },
   "jest": {
     "testEnvironment": "jsdom",
