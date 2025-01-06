@@ -1,4 +1,4 @@
-# UNRELEASED
+# 10.0.2
 
 - Update `credit-card-type` to 10.0.2
 
