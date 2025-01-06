@@ -1,6 +1,9 @@
-# 10.0.1
+# UNRELEASED
 
 - Update `credit-card-type` to 10.0.2
+
+# 10.0.1
+
 - Update (sub-) dependencies
   - `babel` packages to 7.0.6
   - `micromatch` to 4.0.6
@@ -14,9 +17,9 @@
   - confirm 1st three characters are alphanumeric
 - Update `braces` to 3.0.3
 
-# 9.1.0 
+# 9.1.0
 
-- Support skipping of luhn check digit validation in card number validator. 
+- Support skipping of luhn check digit validation in card number validator.
 
 # 9.0.0
 
