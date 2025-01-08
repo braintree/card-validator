@@ -139,6 +139,9 @@ describe("expirationYear", () => {
           { isValid: false, isPotentiallyValid: true, isCurrentYear: false },
         ],
         [
+          // When this test case fails in 2081 (because 21 will become a valid
+          // year prefix) you can just switch isPotentiallyValid to true and
+          // delete this comment.
           "21",
           { isValid: false, isPotentiallyValid: false, isCurrentYear: false },
         ],
