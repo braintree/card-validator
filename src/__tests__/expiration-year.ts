@@ -131,12 +131,23 @@ describe("expirationYear", () => {
       "accepts two-digit years",
       [
         [
-          yearsFromNow(0, 2),
-          { isValid: true, isPotentiallyValid: true, isCurrentYear: true },
+          "19",
+          { isValid: false, isPotentiallyValid: false, isCurrentYear: false },
         ],
         [
-          yearsFromNow(-5, 2),
+          "20",
+          { isValid: false, isPotentiallyValid: true, isCurrentYear: false },
+        ],
+        [
+          // When this test case fails in 2081 (because 21 will become a valid
+          // year prefix) you can just switch isPotentiallyValid to true and
+          // delete this comment.
+          "21",
           { isValid: false, isPotentiallyValid: false, isCurrentYear: false },
+        ],
+        [
+          yearsFromNow(0, 2),
+          { isValid: true, isPotentiallyValid: true, isCurrentYear: true },
         ],
         [
           yearsFromNow(5, 2),
