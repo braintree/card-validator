@@ -76,19 +76,18 @@ describe("expirationYear", () => {
 
   describe("given a 1 digit string", () => {
     describe("that's not a number", () => {
-      test.each(
-        ["a", "#", ";", "\\", "+"]
-      )("%p is invalid", (value) => {
+      test.each(["a", "#", ";", "\\", "+"])("%p is invalid", (value) => {
         expect(expirationYear(value)).toEqual(INVALID);
       });
     });
 
     describe("that is a number", () => {
-      test.each(
-        ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
-      )("%p is potentially valid", (value) => {
-        expect(expirationYear(value)).toEqual(POTENTIALLY_VALID);
-      });
+      test.each(["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"])(
+        "%p is potentially valid",
+        (value) => {
+          expect(expirationYear(value)).toEqual(POTENTIALLY_VALID);
+        },
+      );
     });
   });
 
@@ -144,11 +143,12 @@ describe("expirationYear", () => {
   });
 
   describe("given a more than 4 digit string", () => {
-    test.each(
-      ["00000", "12345", "20021", "20202", "20211", "30000", "99999"]
-    )("%p is invalid", (value) => {
-      expect(expirationYear(value)).toEqual(INVALID);
-    });
+    test.each(["00000", "12345", "20021", "20202", "20211", "30000", "99999"])(
+      "%p is invalid",
+      (value) => {
+        expect(expirationYear(value)).toEqual(INVALID);
+      },
+    );
   });
 
   describe("given a custom max elapsed year", () => {
