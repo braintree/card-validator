@@ -1,5 +1,6 @@
 import { cardholderName } from "../cardholder-name";
 import type { Verification } from "../types";
+import { cvv } from '../cvv'
 
 describe("cardholderName", () => {
   describe.each([
@@ -23,10 +24,10 @@ describe("cardholderName", () => {
     ],
 
     [
-      "returns false strings that are longer than 255 characters",
+      "returns false strings that are longer than 24 characters",
       [
         [
-          "this name is 256 chracters aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "this name is 25 chracters",
           { isValid: false, isPotentiallyValid: false },
         ],
       ],
@@ -38,12 +39,12 @@ describe("cardholderName", () => {
         ["name", { isValid: true, isPotentiallyValid: true }],
         ["given sur", { isValid: true, isPotentiallyValid: true }],
         [
-          "this name is 255 chracters aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "this name is 24 charssss",
           { isValid: true, isPotentiallyValid: true },
         ],
         ["name with many spaces", { isValid: true, isPotentiallyValid: true }],
         [
-          "name with number in it 01234",
+          "with number in it 01234",
           { isValid: true, isPotentiallyValid: true },
         ],
       ],
@@ -70,4 +71,32 @@ describe("cardholderName", () => {
       });
     },
   );
+
+  describe("maxLength", () => {
+    it("defaults maxLength to 24", () => {
+      expect(cardholderName("this name is 25 chracters")).toEqual({
+        isValid: false,
+        isPotentiallyValid: false,
+      });
+      expect(cardholderName("this name is 24 charssss")).toEqual({ isValid: true, isPotentiallyValid: true });
+    });
+
+    it("accepts maxLength", () => {
+      expect(cardholderName("this name is 25 chracters", 25)).toEqual({
+        isValid: true,
+        isPotentiallyValid: true,
+      });
+    });
+
+    it("returns invalid if beyond maxLength", () => {
+      expect(cardholderName("this name is 25 chracters")).toEqual({
+        isValid: false,
+        isPotentiallyValid: false,
+      });
+      expect(cardholderName("this name is 26 characters", 25)).toEqual({
+        isValid: false,
+        isPotentiallyValid: false,
+      });
+    });
+  });
 });
