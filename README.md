@@ -388,6 +388,7 @@ valid.creditCardType.addCard({
 - The default maximum expiration year is 19 years from now.
 - `valid.expirationDate` will only return `month:` and `year:` as strings if the two are valid, otherwise they will be `null`.
 - Since non-US postal codes are alpha-numeric, the `postalCode` will allow non-number characters to be used in validation.
+- Not all UnionPay cards are luhn valid; therefore we opted to accept as many UnionPay cards by ignoring luhn checks by default
 
 ## Development
 
