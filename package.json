@@ -1,6 +1,6 @@
 {
   "name": "card-validator",
-  "version": "9.1.0",
+  "version": "10.0.2",
   "description": "A library for validating credit card fields",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -33,7 +33,7 @@
     "typescript": "^5.1.6"
   },
   "dependencies": {
-    "credit-card-type": "^9.1.0"
+    "credit-card-type": "^10.0.2"
   },
   "jest": {
     "testEnvironment": "jsdom",
