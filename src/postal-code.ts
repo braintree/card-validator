@@ -11,6 +11,7 @@ function verification(
   isValid: boolean,
   isPotentiallyValid: boolean,
 ): Verification {
+  console.log("testing");
   return { isValid, isPotentiallyValid };
 }
 
