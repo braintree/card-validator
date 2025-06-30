@@ -32,6 +32,8 @@ describe("postalCode", () => {
         ["557016", { isValid: true, isPotentiallyValid: true }], // Romania
         ["110001", { isValid: true, isPotentiallyValid: true }], // India
         ["SE1 2LN", { isValid: true, isPotentiallyValid: true }], // UK
+        ["S9 1DF", { isValid: true, isPotentiallyValid: true }], // UK
+        ["AA9A 9AA", { isValid: true, isPotentiallyValid: true }], // UK
         ["01234567890123456789", { isValid: true, isPotentiallyValid: true }], // some hypothetical country
       ],
     ],
@@ -52,11 +54,11 @@ describe("postalCode", () => {
     ],
 
     [
-      "returns isPotentiallyValid for shorter-than-3 strings",
+      "returns isPotentiallyValid for shorter-than-2 strings",
       [
         ["", { isValid: false, isPotentiallyValid: true }],
         ["1", { isValid: false, isPotentiallyValid: true }],
-        ["12", { isValid: false, isPotentiallyValid: true }],
+        ["12", { isValid: true, isPotentiallyValid: true }],
       ],
     ],
   ] as Array<[string, Array<[string, Verification]>]>)(
@@ -79,10 +81,18 @@ describe("postalCode", () => {
         isPotentiallyValid: true,
       });
       expect(postalCode("12")).toEqual({
-        isValid: false,
+        isValid: true,
         isPotentiallyValid: true,
       });
       expect(postalCode("12", {})).toEqual({
+        isValid: true,
+        isPotentiallyValid: true,
+      });
+      expect(postalCode("1")).toEqual({
+        isValid: false,
+        isPotentiallyValid: true,
+      });
+      expect(postalCode("1", {})).toEqual({
         isValid: false,
         isPotentiallyValid: true,
       });

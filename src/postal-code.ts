@@ -4,7 +4,7 @@ type PostalCodeOptions = {
   minLength?: number;
 };
 
-const DEFAULT_MIN_POSTAL_CODE_LENGTH = 3;
+const DEFAULT_MIN_POSTAL_CODE_LENGTH = 2;
 const ALPHANUM = new RegExp(/^[a-z0-9]+$/i);
 
 function verification(
