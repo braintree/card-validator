@@ -1,3 +1,18 @@
+# UNRELEASED
+
+- Update `credit-card-type` to 10.1.0
+- Update dev dependencies
+  - @types/jest to 30.0.0
+  - @types/node to 25.0.3
+  - eslint to 8.57.1
+  - eslint-plugin-prettier to 5.5.4
+  - jest to 30.2.0
+  - jest-environment-jsdom to 30.2.0
+  - prettier to 3.7.4
+  - ts-jest to 29.4.6
+  - typescript to 5.9.3
+- Update Node to v24
+
 # 10.0.3
 
 - Updating postal code input to consider strings of length 2 to be valid input to support UK postal code format `XX XXX`.
