@@ -1,6 +1,6 @@
 # Card Validator - Release Notes
 
-## UNRELEASED
+## 10.0.4
 
 - Update `credit-card-type` to 10.1.0
 - Update dev dependencies
