@@ -56,7 +56,7 @@
 
 ## 8.1.1
 
-- Fix issue where a potentially valid year would evaulate as invalid (##93)
+- Fix issue where a potentially valid year would evaluate as invalid (##93)
 
 ## 8.1.0
 
@@ -163,7 +163,7 @@
 ## 2.2.4
 
 - Fixes validation of space separated expiration dates
-- Fixes potential validity of slashless expiration dates
+- Fixes potential validity of slash-less expiration dates
 - Fixes validation of expiration dates that are too long
 
 ## 2.2.3
