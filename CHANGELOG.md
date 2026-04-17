@@ -1,4 +1,8 @@
-# Card Validator - Release Notes
+# CHANGELOG
+
+## UNRELEASED
+
+- feat(deps): Add [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/) to the repo
 
 ## 10.0.4
 
