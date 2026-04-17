@@ -44,7 +44,10 @@
       }
     },
     "collectCoverage": true,
-    "collectCoverageFrom": ["src/**/*.ts"],
+    "collectCoverageFrom": [
+      "src/**/*.ts",
+      "!src/__tests__/**"
+    ],
     "coverageThreshold": {
       "global": {
         "lines": 80,
