@@ -16,7 +16,7 @@ jobs:
       github.actor != 'dependabot[bot]' &&
       !contains(github.actor, '[bot]') &&
       github.event.pull_request.draft == false
-    runs-on: gh-2-core-ubuntu-latest
+    runs-on: ubuntu-latest
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
