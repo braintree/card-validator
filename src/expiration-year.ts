@@ -59,14 +59,22 @@ export function expirationYear(
   let valid = false;
 
   if (len === 2) {
-    if (String(currentYear).substr(0, 2) === value) {
-      return verification(false, true);
-    }
-
     isCurrentYear = twoDigitYear === numericValue;
     valid =
       numericValue >= twoDigitYear &&
       numericValue <= twoDigitYear + maxElapsedYear;
+
+    if (isCurrentYear || valid) {
+      return verification(true, true, isCurrentYear);
+    }
+
+    // A value matching the current century prefix (e.g. "20") is likely a
+    // partially-typed 4-digit year, so treat it as potentially valid.
+    if (String(currentYear).substr(0, 2) === value) {
+      return verification(false, true);
+    }
+
+    return verification(false, false);
   } else if (len === 4) {
     isCurrentYear = currentYear === numericValue;
     valid =

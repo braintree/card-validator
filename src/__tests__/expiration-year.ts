@@ -160,4 +160,27 @@ describe("expirationYear", () => {
       expect(expirationYear("2027", 5)).toEqual(INVALID);
     });
   });
+
+  describe("when the current two-digit year equals the century prefix", () => {
+    // In 2020 the century prefix is "20", which is also the two-digit year.
+    // A complete two-digit year of "20" must be recognized as the current
+    // year instead of being short-circuited to "potentially valid".
+    const mockToday = new Date(2020, 0, 1);
+    beforeEach(() => {
+      jest.useFakeTimers().setSystemTime(mockToday);
+    });
+    afterEach(() => {
+      jest.useRealTimers();
+    });
+
+    test.each([
+      ["19", INVALID],
+      ["20", CURRENT_YEAR],
+      ["21", VALID],
+      ["39", VALID],
+      ["40", INVALID],
+    ])("%p gives expected output", (value, output) => {
+      expect(expirationYear(value)).toEqual(output);
+    });
+  });
 });

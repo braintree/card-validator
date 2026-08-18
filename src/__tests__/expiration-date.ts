@@ -1326,4 +1326,35 @@ describe("expirationDate validates", () => {
       });
     });
   });
+
+  describe("when the two-digit year equals the century prefix", () => {
+    // Regression test: in 2020 "07/20" (a future expiration) must validate.
+    // Previously the two-digit year "20" was short-circuited to "potentially
+    // valid" because it matches the current century prefix, making every
+    // "MM/20" expiration invalid for the entire year 2020.
+    const mockToday = new Date(2020, 0, 1);
+    beforeEach(() => {
+      jest.useFakeTimers().setSystemTime(mockToday);
+    });
+    afterEach(() => {
+      jest.useRealTimers();
+    });
+
+    it.each([
+      [
+        "07/20",
+        { isValid: true, isPotentiallyValid: true, month: "07", year: "20" },
+      ],
+      [
+        "06/19",
+        { isValid: false, isPotentiallyValid: false, month: null, year: null },
+      ],
+      [
+        "01/21",
+        { isValid: true, isPotentiallyValid: true, month: "01", year: "21" },
+      ],
+    ])("%s gives expected output", (value, expected) => {
+      expect(expirationDate(value)).toEqual(expected);
+    });
+  });
 });
